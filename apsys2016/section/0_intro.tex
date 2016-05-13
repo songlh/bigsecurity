@@ -5,49 +5,52 @@ like viruses, worms, trojans, and so on.
 VirusTotal applies different antivirus engines to each submitted file and generate an aggregated reports. 
 All submitted files and generated reports are saved and can be accessed through public API. 
 
-
 The repository on VirusTotal provides a good source to conduct data mining. 
 Firstly, there are huge amount of data on VirusTotal.
-Figure~\ref{fig:subnum} shows the number of distinct files submitted from XXX to XXX. 
-We can see that there are XXX distinct suspicious files submitted each day. 
+Figure~\ref{fig:subnum} shows that there were more than 40 million suspicious files 
+submitted last November. 
 This amount of data makes VirusTotal a rough estimation of malwares in the real world. 
 Secondly, all data on VirusTotal are labeled by state-of-the-art antivirus techniques. 
-VirusTotal update each antivirus engine every 5 minutes. 
+VirusTotal updates each antivirus engine every 5 minutes. 
 Besides whether a given a submitted file is detected by an antivirus engine, VirusTotal also keeps exact detection tag returned by each engine. 
 There are also online active malware researchers, 
 who can comment and vote each submitted file and serve as an important supplement of antivirus engines. 
 We believe mining data on VirusTotal could enable many ``Big Security'' applications. 
 
 In industry, antivirus vendors widely use VirusTotal to identify false negatives and false positives of their products. 
-They only utilize VirusTotal reports for each single suspicious file, but fail to leverage the whole repository. 
+They only utilize VirusTotal reports separately for each single suspicious file, but fail to leverage the whole repository. 
 In academia, researchers began to pay attention to correlations among different VirusTotal reports. 
 For example, {\bf [ToDo: discuss Heqing's work]}
 We believe there are much more research opportunities through mining VirusTotal. 
 
-In this paper, we view data on VirusTotal as a stream, based on each submitted file’s ``first\_seen'' time, and design two stream mining applications: 
-hot malware family mining and malware prediction. 
-There are infinite possible malware families. 
+In this paper, we view data on VirusTotal as a stream, based on each file’s submission time, and design two stream mining applications: 
+\textit{hot malware family mining} and \textit{malware prediction}. 
+There are possibly infinite malware families. 
 Hot malware family mining can precisely identify malware families, 
 which occupy more than a given percentage of total malwares, by using a constant number of counters.
-We think malwares does not appear uniformly across different malware families or across time, 
-and they appear in bursts. We built a cache-based algorithm to predict malwares in which families would appear in the near future. 
+Malwares does not appear uniformly across different malware families or across time, 
+and they appear in bursts. 
+We built a cache-based algorithm to predict malwares in which families would appear in the near future. 
 
 In summary, we made the following contributions in this paper:
 
 \begin{itemize}
 
-\item We study the characteristics of data on VirusTotal.
-\item We design two data streaming applications.
-\item We demonstrate the feasibiliy of mining VirusTotal data. 
+\item We collect data submitted to VirusTotal last November, 
+and briefly analyze these data to understand the characteristics of VirusTotal repository (Section~\ref{sec:data}). 
+\item We build two stream mining applications, one could identify hot malware family in a constant number of counters (Section~\ref{sec:hot}), 
+and the other could predict malwares in the near future (Section~\ref{sec:predict}). 
+Experimental results show that we can cover all hot malware family with a very few false positives, and we can predict future malwares with a high precision.
+\item We discuss the future research opportunities through mining data on VirusTotal (Section~\ref{sec:oppo}), 
+and demonstrate the feasibility by using our experience of building stream mining applications. 
 
 \end{itemize}
 
 
 \begin{figure}[t!]
 \begin{center}
-\includegraphics[width=3.2in]{figure/submission_number}
-\caption{The number of files submitted to VirusTotal from 05/08/2016 to 05/14/2016. 
-{\bf [TODO: All numbers in this figure are made up, and they must be changed later.]}}
+\includegraphics[width=3.2in]{figure/nov}
+\caption{The number of files submitted to VirusTotal last November. }
 \label{fig:subnum}
 \end{center}
 \end{figure}
