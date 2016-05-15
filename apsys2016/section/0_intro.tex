@@ -32,12 +32,20 @@ Malwares does not appear uniformly across different malware families or across t
 and they appear in bursts. 
 We built a cache-based algorithm to predict malwares in which families would appear in the near future. 
 
+\begin{figure}[t!]
+\begin{center}
+\includegraphics[width=3.0in]{figure/nov}
+\caption{The number of files submitted to VirusTotal last November. }
+\label{fig:subnum}
+\end{center}
+\end{figure}
+
 In summary, we made the following contributions in this paper:
 
 \begin{itemize}
 
 \item We collect data submitted to VirusTotal last November, 
-and briefly analyze these data to understand the characteristics of VirusTotal repository (Section~\ref{sec:data}). 
+and briefly analyze these data to understand the characteristics of VirusTotal repository (Section~\ref{sec:meth}). 
 \item We build two stream mining applications, one could identify hot malware family in a constant number of counters (Section~\ref{sec:hot}), 
 and the other could predict malwares in the near future (Section~\ref{sec:predict}). 
 Experimental results show that we can cover all hot malware family with a very few false positives, and we can predict future malwares with a high precision.
@@ -47,10 +55,4 @@ and demonstrate the feasibility by using our experience of building stream minin
 \end{itemize}
 
 
-\begin{figure}[t!]
-\begin{center}
-\includegraphics[width=3.2in]{figure/nov}
-\caption{The number of files submitted to VirusTotal last November. }
-\label{fig:subnum}
-\end{center}
-\end{figure}
+
