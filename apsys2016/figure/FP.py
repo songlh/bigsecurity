@@ -28,7 +28,7 @@ xticks[-1].label1.set_visible(False)
 for tick in ax.xaxis.get_major_ticks():
 	tick.label.set_fontsize(18) 
 #ax.set_xscale("log", nonposx='clip')
-plt.xlabel('$\phi$', fontsize=24)
+plt.xlabel('$\phi/\epsilon$', fontsize=24)
 
 ymin = - 5
 ymax = 100
@@ -36,7 +36,7 @@ ax.set_ylim(ymin, ymax)
 for tick in ax.yaxis.get_major_ticks():
 	tick.label.set_fontsize(18) 
 #ax.set_yscale("log", nonposx='clip')
-plt.ylabel('False positives',  fontsize=24)
+plt.ylabel('False positives (%)',  fontsize=24)
 
 plt.gcf().subplots_adjust(bottom=0.15)
 plt.gcf().subplots_adjust(left=0.15)
