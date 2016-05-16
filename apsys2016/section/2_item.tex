@@ -36,11 +36,13 @@
 In this section, we view data on VirusTotal as a stream, according to each submission's timestamp, 
 and apply a frequent item mining algorithm to identify hot malware family. 
 
+\subsection{Overview}
+
 Frequent item mining algorithms take two configuration parameters, $\phi$ and $\epsilon$, where $\phi > \epsilon$. 
 The goal of frequent item mining algorithms are to provide nearly-real time analysis on massive data streams by using constant memory. 
-Assuming the length of the input stream is N, the output of frequent item mining algorithms 
-are all items which appear more than $\lfloor \phi N \rfloor$, 
-and no items which appear less than  $\lfloor \epsilon N \rfloor$. 
+Assuming the length of the input stream is $N$, the output of frequent item mining algorithms 
+are all items which appear more than $\lfloor \phi N \rfloor$ times, 
+and no items which appear less than  $\lfloor \epsilon N \rfloor$ times. 
 
 The frequent item mining algorithm we use is space saving algorithm~\cite{space-saving}, 
 which was proposed for streams in Internet advertising, and has already been applied in other areas, 
@@ -48,45 +50,76 @@ like mining hot calling contexts in profilers~\cite{hot-calling-context}.
 Space saving algorithm tracks $M=1/\epsilon$ pairs of $(f, c)$. 
 $f$ is short for malware family, and $c$ is short for counter.  
 Pair content represents $(\phi, \epsilon)\mbox{-}HMF$ (Hot Malware Family). 
-The M pairs are initialized with the first M encountered malware families and their frequency. 
+The $M$ pairs are initialized with the first $M$ encountered malware families and their frequency. 
 When a new malware submission comes, 
-if the malware family is already under monitored, 
+if the malware family is already under monitoring, 
 the related counter will be increased by 1. 
 And if the malware family is not monitored, 
-we will replace the malware family of the pair with lowest counter value with the new malware family, 
+we will replace the malware family of the pair with lowest counter value with the incomming malware family, 
 and increase its counter value by 1. 
 When querying HMF, 
 all malware families whose counter values are larger than $\lfloor \phi N \rfloor$ will be returned. 
 
+\subsection{Evaluation}
+
+
+We implement the space saving algorithm by using python-2.7.
+We process the downloaded VirusTotal submission data into a stream, 
+based on each submission’s timestamp. 
+Our experiment is conducted on an aws c4.4xlarge virtual machine, which contain 16 virtual cpus and 30G memory. 
 
 Following previous works in frequent item mining~\cite{hot-calling-context}, 
-we will measure the following metrics by using malware submission date we collect:
+We measure the following metrics by using malware submission data we collect:
 
-Degree of \textit{overlap} is used to measure the percentage of malwares covered in $(\phi, \epsilon)\mbox{-}HMF$,
+\begin{enumerate}
+
+\item Degree of \textit{overlap} is used to measure the percentage of malwares covered in $(\phi, \epsilon)\mbox{-}HMF$,
 and it is defined as follows:
 
 $$overlap((\phi, \epsilon)\mbox{-}HMF) = \dfrac{1}{N}\sum_{f \in (\phi, \epsilon)\mbox{-}HMF}w(f)$$
 
-In the above equation, $N$ represents the total number of malware submissions, and 
-$w(f)$ represents the real frequency of malware family $f$.  
+where $w(f)$ represents the real frequency of malware family $f$.  
 
-\textit{maxUncover} (maximum frequency of uncovered malware families) and 
+\item \textit{maxUncover} is short for maximum frequency of uncovered malware families and 
 is used 
-to measure largest frequency of malware familiy not covered in $(\phi, \epsilon)\mbox{-}HMF$. 
-They are defined as follows:
+to measure largest frequency of malware families not covered in $(\phi, \epsilon)\mbox{-}HMF$. 
+It is defined as follows:
 $$maxUncover((\phi, \epsilon)\mbox{-}HMF) = \max_{f \notin (\phi, \epsilon)\mbox{-}HMF}w(f)$$
 
-\textit{aveUncover} (average frequency of uncovered malware families) is defined similarly. 
+\item \textit{aveUncover} is short for average frequency of uncovered malware families 
+and it is defined similar to \textit{maxUncover}. 
 
-\textit{False positives} are defined as malware families returned during querying HMF, but whoese
-real frequencies are less than $\lfloor \phi N \rfloor$. 
+\item \textit{False positives} are defined as malware families returned during querying HMF, 
+but whose real frequencies are less than $\lfloor \phi N \rfloor$. 
+Space saving algorithm is designed to guarantee that there will be no false negatives. 
 
-\textit{maxError} is used to measure relative error of counter values, compared with real frequencies.
+\item \textit{maxError} is used to measure relative error of counter values, 
+compared with their real frequencies.
 It is defined as follows:
 
 $$maxError((\phi, \epsilon)\mbox{-}HMF) = \max_{f \in (\phi, \epsilon)\mbox{-}HMF} \dfrac{\left|c(f) - w(f)\right|}{w(f)}$$
 
 
+\end{enumerate}
 
 
 
+\subsection{Discussion}
+
+
+As discussed in Section~\ref{sec:meth}, 
+the distribution of malware families is highly skewed. 
+This is the reason why we could precisely identify hot malware families. 
+There are in total 11311 distinct malware families in our tested data. 
+Although this number is small, new malware families would appear every day, 
+and our solution can identify hot malware families from possibly 
+infinite malware families by only using constant memory. 
+
+Malware family is a relatively coarse granularity. 
+In the future, we could consider how to conduct stream mining in a finer granularity. 
+Almost all malware samples are only submitted once to VirusTotal (Section~\ref{sec:meth}), 
+so mining hot submitted malware samples would not work. 
+Ssdeep value for each submitted malware sample can also be queried from VirusTotal, 
+and the edit distance between two ssdeep values can be used to measure similarity between the two malware samples. 
+How to leverage ssdeep values to cluster malware samples, 
+and conduct stream mining based on cluster information remains an open issue.  
