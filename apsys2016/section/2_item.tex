@@ -1,2 +1,15 @@
 \section{Hot Malware Family Mining}
 \label{sec:hot}
+
+In this section, we view data on VirusTotal as a stream, according to each submission's timestamp, 
+and apply a frequent item mining algorithm to identify hot malware family. 
+
+Frequent item mining algorithms take two configuration parameters, $\phi$ and $\epsilon$, where $\phi > \epsilon$. 
+The goal of frequent item mining algorithms are to provide nearly-real time analysis on massive data streams by using constant memory. 
+Assuming the length of the input stream is N, the output of frequent item mining algorithms 
+are all items which appear more than $\lfloor \phi N \rfloor$, 
+and no items which appear less than  $\lfloor \epsilon N \rfloor$. 
+
+The frequent item mining algorithm we use is space saving algorithm~\cite{space-saving}, 
+which was proposed for streams in Internet advertising, and has already been applied in other areas, 
+like mining hot calling contexts in profilers~\cite{hot-calling-context}. 
