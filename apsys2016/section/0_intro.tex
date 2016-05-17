@@ -1,5 +1,20 @@
 \section{Introduction}
 
+Computer malwares are always big threats to individual and organizational users. For example, a worn or virus can cause system crash leading to data loss; a trojan or a malicious URL can steal user's sensitive  information leading to economic loss. In 20xx, the loss cause by xxx is about xxxx. Effort to combating malwares have never stopped, and industrial companies and research communities have made various achievements. ~\ref{xxx}
+
+Malwares are still increasing exponentially now, but our effort does scale with the rapidly worsening situation. For example, the volume of mobile malwares tripled in 2015, while the revenue spent on malware research increased only by about 10\% each year. 
+To focus the effort in anti-malware research and engineering, systematic measurement studies are necessary to guide practices. For example, if a anti-malware company can know the malwares that will be prevailing in the current or next time period, they would be able to focus on these malwares.
+However, there are few of such studies to reveal malware characteristics and the characterization methodology now. 
+
+In this paper, we make an empirical study of a malware dataset from VirusTotal. VisualTotal is a free online service using antivirus engines from security companies to identify submitted suspicious malwares.
+We first made use of VirusTotal public API to collect a malware dataset in November, 2015. Our dataset collection focuses on Windows executables and libraries and their analysis result by Microsoft antivirus engine to guarantee accuracy. 
+
+We perform an analysis on the characteristics of the VirusTotal dataset. In addition to general characteristics such as malware family (i.e. category, defined in Section xx) distribution and the generation rate of new malware families, we specifically look into the temporal characteristics of the malware dataset, and find that there is obvious time locality. That is, current malware families are more likely to appear in the next time period.
+
+We then made a study of hot malware family mining algorithms. We compare the performance of frequent item mining algorithm with exhaustive counting algorithm. Our results show that, we acceptable penalty the frequent item mining algorithm gives satisfactory predictive result in terms of memory space. 
+
+\wenfei{edit until here}
+
 As a free online service, VirusTotal~\cite{virustotal} analyzes files submitted by real-world users to identify many different kinds of malwares, 
 like viruses, worms, trojans, and so on. 
 VirusTotal applies different antivirus engines to each submitted file and generate an aggregated reports. 
