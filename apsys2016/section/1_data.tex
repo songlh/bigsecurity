@@ -1,33 +1,40 @@
-\section{Background}
-
-\subsection{VirusTotal}
-
-
-As a free online service, VirusTotal~\cite{virustotal} analyzes files submitted by real-world users to identify many different kinds of malwares, 
-like viruses, worms, trojans, and so on. 
-VirusTotal applies different antivirus engines to each submitted file and generate an aggregated reports. 
-All submitted files and generated reports are saved and can be accessed through public API. 
-
-The repository on VirusTotal provides a good source to conduct data mining. 
-Firstly, there are huge amount of data on VirusTotal.
-Figure~\ref{fig:subnum} shows that there were more than 40 million suspicious files 
-submitted last November. 
-This amount of data makes VirusTotal a rough estimation of malwares in the real world. 
-Secondly, all data on VirusTotal are labeled by state-of-the-art antivirus techniques. 
-VirusTotal updates each antivirus engine every 5 minutes. 
-Besides whether a given a submitted file is detected by an antivirus engine, VirusTotal also keeps exact detection tag returned by each engine. 
-There are also online active malware researchers, 
-who can comment and vote each submitted file and serve as an important supplement of antivirus engines. 
-We believe mining data on VirusTotal could enable many ``Big Security'' applications. 
-
-In industry, antivirus vendors widely use VirusTotal to identify false negatives and false positives of their products. 
-They only utilize VirusTotal reports separately for each single suspicious file, but fail to leverage the whole repository. 
-In academia, researchers began to pay attention to correlations among different VirusTotal reports. 
-For example, {\bf [ToDo: discuss Heqing's work]}
-We believe there are much more research opportunities through mining VirusTotal. 
+\section{Dataset of Malwares}
+We collect a malware dataset from VirusTotal using its public APIs. When we collect malware reports, we filter records and narrow down the scope to Window executables and libraries to improve the analytics accuracy. 
+\subsection{Data Source}
+VirusTotal~\cite{virustotal} is a free online service that analyzes whether files submitted by real-world users are malwares. It can identify  a large variety of malwares such as viruses, worms, and trojans. For each submitted file, VirusTotal applies different antivirus engines to detect and finally generates an aggregated report. All submitted files and generated reports are saved and can be accessed through public API, and they are viewed as malware repository. VirusTotal has been widely used by antivirus vendors to identify the effectiveness of their products. That is, they can submit suspicious files compare the identification results of their products with other vendor, and thus to know the false negatives and false positives of their products.
 
 
-\subsection{Dataset}
+The repository on VirusTotal provides a good source for characterizing malwares. Firstly, the data on VirusTotal covers vast majority of malwares in the real world.\wenfei{need supporting reference.}
+Figure~\ref{fig:subnum} shows that there were more than 40 million suspicious files submitted last November. 
+This huge amount of data is a rough estimation of malwares in the real world. 
+Secondly, all submitted files on VirusTotal are already analyzed and labeled by state-of-the-art antivirus techniques. VirusTotal updates each antivirus engine every 5 minutes. For each submitted file, ViruaTotal keeps both the identification result (i.e. whether the file is malware) and the exact detection tag returned by each engine. To complement the results for antivirus engines, malware researchers can comment and vote each submitted file. Thus, we believe mining the characteristics of data on VirusTotal could lead to representative results for a large variety of application (e.g., ``Big Security"). \wenfei{BTW, what is Big Security?}
+
+
+%As a free online service, VirusTotal~\cite{virustotal} analyzes files submitted by real-world users to identify many different kinds of malwares, 
+%like viruses, worms, trojans, and so on. 
+%VirusTotal applies different antivirus engines to each submitted file and generate an aggregated reports. 
+%All submitted files and generated reports are saved and can be accessed through public API. 
+
+%The repository on VirusTotal provides a good source to conduct data mining. 
+%Firstly, there are huge amount of data on VirusTotal.
+%Figure~\ref{fig:subnum} shows that there were more than 40 million suspicious files 
+%submitted last November. 
+%This amount of data makes VirusTotal a rough estimation of malwares in the real world. 
+%Secondly, all data on VirusTotal are labeled by state-of-the-art antivirus techniques. 
+%VirusTotal updates each antivirus engine every 5 minutes. 
+%Besides whether a given a submitted file is detected by an antivirus engine, VirusTotal also keeps exact detection tag returned by each engine. 
+%There are also online active malware researchers, 
+%who can comment and vote each submitted file and serve as an important supplement of antivirus engines. 
+%We believe mining data on VirusTotal could enable many ``Big Security'' applications. 
+
+%In industry, antivirus vendors widely use VirusTotal to identify false negatives and false positives of their products. 
+%They only utilize VirusTotal reports separately for each single suspicious file, but fail to leverage the whole repository. 
+%In academia, researchers began to pay attention to correlations among different VirusTotal reports. 
+%For example, {\bf [ToDo: discuss Heqing's work]}
+%We believe there are much more research opportunities through mining VirusTotal. 
+
+
+\subsection{Data Collection}
 \label{sec:meth}
 
 
@@ -97,4 +104,23 @@ Although there are huge mount of malwares on VirusTotal, we do believe that ther
 and there are malwares submitted much later than when they appear in the real world.
 However, there are no conceivable ways to study these malwares. 
 We believe that malwares in our study provide a representative malware sample of the real world. 
+
+
+
+
+We observe three characteristics after analyzing data we collect:
+
+{\bf Observation 1:} 
+most malwares are submitted only once to VirusTotal. 
+We have collected 4732502 PE malware submissions, and there are in total 4038647 distinct PE malwares. 
+On average, each PE malware is submitted 1.17 times to VirusTotal. 
+We believe that most malwares are encountered by more than one VirusTotal user. 
+We think this observation is likely to be caused by the fact that VirusTotal users 
+tend to check whether their samples have already been submitted, 
+before conducting their submissions, 
+and the number of submissions is not a good indicator for malware popularity. 
+
+
+
+
 
