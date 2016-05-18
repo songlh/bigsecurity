@@ -28,7 +28,7 @@ while index < len(numList):
 days = mdates.DayLocator(interval=2)
 
 fig, ax = plt.subplots()
-ax.plot(dateList, newList, 'r-',  label='PE Malwares', linewidth=2.0)
+ax.plot(dateList, newList, 'b-',  label='PE Malwares', linewidth=2.0)
 #legend = ax.legend(loc='upper left', fontsize='large')
 plt.ylabel('# of new malware families appeared', fontsize=18)
 
@@ -43,6 +43,8 @@ xticks[0].label1.set_visible(False)
 
 ax.grid(True)
 fig.autofmt_xdate(rotation=90)
+ax.xaxis.set_tick_params(labelsize=16)
+ax.yaxis.set_tick_params(labelsize=16)
 #plt.show()
 
 #pdf = PdfPages('nov.pdf')

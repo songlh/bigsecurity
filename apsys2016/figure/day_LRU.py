@@ -20,7 +20,7 @@ for line in lines:
 days = mdates.DayLocator(interval=2)
 
 fig, ax = plt.subplots()
-ax.plot(dateList, numList, 'r-x', markersize=10, mew=2)
+ax.plot(dateList, numList, 'b-x', linewidth=2.0, markersize=8, mew=2)
 #legend = ax.legend(loc='upper left', fontsize='large')
 plt.ylabel('Cache hit rate (%)', fontsize=18)
 
@@ -40,9 +40,11 @@ ax.set_ylim(ymin, ymax)
 
 ax.grid(True)
 fig.autofmt_xdate(rotation=90)
+ax.xaxis.set_tick_params(labelsize=16)
+ax.yaxis.set_tick_params(labelsize=16)
 #plt.show()
 
 #pdf = PdfPages('nov.pdf')
 #pdf.savefig(plt.gcf())
-fig.savefig('LRU.day.pdf')
+fig.savefig('LRU_day.pdf')
 plt.close(fig)

@@ -20,7 +20,7 @@ for line in lines:
 #	print i, accumList[i]
 
 fig, ax = plt.subplots()
-ax.plot(entryList, accurateList, 'r-x', markersize=6)
+ax.plot(entryList, accurateList, 'b-x',linewidth=2.0, markersize=5, mew=2)
 
 
 major_ticks = np.arange(0, 1001, 100) 
@@ -32,12 +32,14 @@ ax.set_xlim(xmin, xmax)
 #xticks = ax.xaxis.get_major_ticks()
 #xticks[0].label1.set_visible(False)
 ax.set_xticks(major_ticks)
-plt.xlabel('The number of cache entries', fontsize=14)
+plt.xlabel('The number of cache entries', fontsize=18)
 
 ymin = 0
 ymax = 101
 ax.set_ylim(ymin, ymax)
-plt.ylabel('Cache hit rates (%)',  fontsize=14)
+plt.ylabel('Cache hit rates (%)',  fontsize=18)
+ax.xaxis.set_tick_params(labelsize=16)
+ax.yaxis.set_tick_params(labelsize=16)
 
 ax.grid(True)
 #plt.title('Cumulative frequencies')
