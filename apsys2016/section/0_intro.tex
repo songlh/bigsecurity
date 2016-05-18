@@ -1,38 +1,58 @@
 \section{Introduction}
 
-Computer malwares are always big threats to individual and organizational users. For example, a worn or virus can cause system crash leading to data loss; a trojan or a malicious URL can steal user's sensitive  information leading to economic loss. In 20xx, the loss cause by xxx is about xxxx. Effort to combating malwares have never stopped, and industrial companies and research communities have made various achievements. ~\ref{xxx}\wenfei{check reviewers' publications and put them here.}
+As a free online service, VirusTotal~\cite{virustotal} analyzes files submitted by real-world users to identify many different kinds of malwares, 
+like viruses, worms, trojans, and so on. 
+VirusTotal applies different antivirus engines to each submitted file and generate an aggregated reports. 
+All submitted files and generated reports are saved and can be accessed through VirusTotal’s API. 
+Inspired by previous mining software repositories~\cite{GuoICSE2010,bigcode, big-lessons,big-translation,code-completion,big-predicting} 
+work in software engineer and programming languages community, 
+we believe leveraging data on VirusTotal could enable many ``big security'' applications.  
 
-Malwares are still increasing exponentially now, but our effort does scale with the rapidly worsening situation. For example, the volume of mobile malwares tripled in 2015, while the revenue spent on malware research increased only by about 10\% each year. 
-To focus the effort in anti-malware research and engineering, systematic measurement studies are necessary to guide practices. For example, if a anti-malware company can know the malwares that will be prevailing in the current or next time period, they would be able to focus on these malwares.
-However, there are few of such studies to reveal malware characteristics and the characterization methodology now. 
+The repository on VirusTotal provides a valuable source to conduct data mining. 
+Firstly, there are huge amount of data on VirusTotal.
+Figure~\ref{fig:subnum} shows that there were more than 40 million suspicious files 
+submitted in November of 2015. 
+This amount of data makes VirusTotal a rough estimation of malwares in the real world. 
+Secondly, all data on VirusTotal are labeled by state-of-the-art antivirus techniques. 
+VirusTotal updates each antivirus engine every 5 minutes. 
+Besides whether a given a submitted file is detected by an antivirus engine, VirusTotal also keeps exact detection tag returned by each engine. 
+There are also online active malware researchers, 
+who can comment and vote each submitted file 
+and serve as an important supplement of antivirus engines. 
 
-In this paper, we make an empirical study of a malware dataset from VirusTotal. VisualTotal is a free online service using antivirus engines from security companies to identify submitted suspicious malwares.
-We first made use of VirusTotal public API to collect a malware dataset in November, 2015. Our dataset collection focuses on Windows executables and libraries and their analysis result by Microsoft antivirus engine to guarantee accuracy. 
+In industry, antivirus vendors widely use VirusTotal to identify false negatives 
+and false positives in their products. 
+They only utilize VirusTotal reports separately for each single suspicious file, 
+but fail to consider correlations among different suspicious files. 
+In academia, researchers began to pay attention to mining VirusTotal repository. 
+For example, ~\citet{neeles} leverage submission\_id information to identify malware writers, 
+who use VirusTotal as a test platform. 
+We believe there are much more research opportunities through mining VirusTotal. 
 
-We perform an analysis on the characteristics of the VirusTotal dataset. In addition to general characteristics such as malware family (i.e. category, defined in Section xx) distribution and the generation rate of new malware families, we specifically look into the temporal characteristics of the malware dataset, and find that there is obvious time locality. That is, current malware families are more likely to appear in the next time period.
+In this paper, we conduct an empirical study on malware dataset on VirusTotal. 
+An empirical study is the prerequisite to conduct data mining on VirusTotal. 
+We first collect more than 40 million suspicious file submissions on VirusTotal, and then 
+we focus our analysis on Windows executable and binary malwares detected Microsoft
+antivirus engine to guarantee accuracy. 
+Our analysis begins from general characteristics, such as submission frequency and the generation rate of malware families. 
+We then specifically look into the temporal characteristic and family distribution characteristic. 
+We observe that malwares do not appear uniformly across time and malware family, and they observe in bursts, 
+and the family distributions of malwares are highly skewed. 
+To validate our observation, we build two stream mining applications: cache-based malware prediction and hot mining family mining. 
+Our malware prediction solution can achieve more than 90\% 
+precision by using only 100 cache entries. 
+Our hot malware family mining solution can identify hot malware families by using a constant number of counters. 
 
-We then made a study of hot malware family mining algorithms. We compare the performance of frequent item mining algorithm with exhaustive counting algorithm. Our results show that, we acceptable penalty the frequent item mining algorithm gives satisfactory predictive result in terms of memory space. 
-
-\wenfei{edit until here}
-
-In this paper, we view data on VirusTotal as a stream, based on each file’s submission time, and design two stream mining applications: 
-\textit{hot malware family mining} and \textit{malware prediction}. 
-There are possibly infinite malware families. 
-Hot malware family mining can precisely identify malware families, 
-which occupy more than a given percentage of total malwares, by using a constant number of counters.
-Malwares does not appear uniformly across different malware families or across time, 
-and they appear in bursts. 
-We built a cache-based algorithm to predict malwares in which families would appear in the near future. 
 
 \begin{figure}[t!]
 \begin{center}
-\includegraphics[width=3.0in]{figure/nov}
-\caption{The number of files submitted to VirusTotal last November. }
+\includegraphics[width=3.3in]{figure/nov}
+\caption{The number of suspicious files and the number of malwares submitted to VirusTotal in November of 2015. }
 \label{fig:subnum}
 \end{center}
 \end{figure}
 
-In summary, we made the following contributions in this paper:
+To sum up, we made the following contributions in this paper:
 
 \begin{itemize}
 
