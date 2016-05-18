@@ -1,4 +1,33 @@
-\section{Methodology}
+\section{Background}
+
+\subsection{VirusTotal}
+
+
+As a free online service, VirusTotal~\cite{virustotal} analyzes files submitted by real-world users to identify many different kinds of malwares, 
+like viruses, worms, trojans, and so on. 
+VirusTotal applies different antivirus engines to each submitted file and generate an aggregated reports. 
+All submitted files and generated reports are saved and can be accessed through public API. 
+
+The repository on VirusTotal provides a good source to conduct data mining. 
+Firstly, there are huge amount of data on VirusTotal.
+Figure~\ref{fig:subnum} shows that there were more than 40 million suspicious files 
+submitted last November. 
+This amount of data makes VirusTotal a rough estimation of malwares in the real world. 
+Secondly, all data on VirusTotal are labeled by state-of-the-art antivirus techniques. 
+VirusTotal updates each antivirus engine every 5 minutes. 
+Besides whether a given a submitted file is detected by an antivirus engine, VirusTotal also keeps exact detection tag returned by each engine. 
+There are also online active malware researchers, 
+who can comment and vote each submitted file and serve as an important supplement of antivirus engines. 
+We believe mining data on VirusTotal could enable many ``Big Security'' applications. 
+
+In industry, antivirus vendors widely use VirusTotal to identify false negatives and false positives of their products. 
+They only utilize VirusTotal reports separately for each single suspicious file, but fail to leverage the whole repository. 
+In academia, researchers began to pay attention to correlations among different VirusTotal reports. 
+For example, {\bf [ToDo: discuss Heqing's work]}
+We believe there are much more research opportunities through mining VirusTotal. 
+
+
+\subsection{Dataset}
 \label{sec:meth}
 
 
@@ -69,51 +98,3 @@ and there are malwares submitted much later than when they appear in the real wo
 However, there are no conceivable ways to study these malwares. 
 We believe that malwares in our study provide a representative malware sample of the real world. 
 
-\subsection{General characteristics}
-
-We observe three characteristics after analyzing data we collect:
-
-{\bf Observation 1:} 
-most malwares are submitted only once to VirusTotal. 
-We have collected 4732502 PE malware submissions, and there are in total 4038647 distinct PE malwares. 
-On average, each PE malware is submitted 1.17 times to VirusTotal. 
-We believe that most malwares are encountered by more than one VirusTotal user. 
-We think this observation is likely to be caused by the fact that VirusTotal users 
-tend to check whether their samples have already been submitted, 
-before conducting their submissions, 
-and the number of submissions is not a good indicator for malware popularity. 
-
-
-{\bf Observation 2:} 
-100 - 400 new malware families would appear each day. 
-Figure~\ref{fig:new} shows new malwares appeared in November of 2015. 
-We do not have any data before Nov. 1st, 
-so there are much more new malware families in the first few days.
-After that, the number of new malware families is roughly from 100 to 400. 
-In total, there are 11311 malware families. 
-
-
-
-
-\begin{figure}[t!]
-\begin{center}
-\includegraphics[width=3.0in]{figure/new_family}
-\caption{The number of new malware families we observed each day in November of 2015.}
-\label{fig:new}
-\end{center}
-\end{figure}
-
-\begin{figure}[t!]
-\begin{center}
-\includegraphics[width=3.0in]{figure/cum}
-\caption{Skewness of malware families appearing in November of 2015.}
-\label{fig:acum}
-\end{center}
-\end{figure}
-
-{\bf Observation 3:} 
-The distribution of malware families are highly skewed. 
-As shown in Figure~\ref{fig:acum}, only small number of malware families are hot.
-The distribution of malware families follows the well-known Pareto principle, 
-and more than 90\% malware families take place in only 10\% malwares. 
-The skewness of malware family distribution suggests that we could conduct effective hot malware family mining. 

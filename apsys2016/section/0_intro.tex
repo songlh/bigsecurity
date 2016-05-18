@@ -15,29 +15,6 @@ We then made a study of hot malware family mining algorithms. We compare the per
 
 \wenfei{edit until here}
 
-As a free online service, VirusTotal~\cite{virustotal} analyzes files submitted by real-world users to identify many different kinds of malwares, 
-like viruses, worms, trojans, and so on. 
-VirusTotal applies different antivirus engines to each submitted file and generate an aggregated reports. 
-All submitted files and generated reports are saved and can be accessed through public API. 
-
-The repository on VirusTotal provides a good source to conduct data mining. 
-Firstly, there are huge amount of data on VirusTotal.
-Figure~\ref{fig:subnum} shows that there were more than 40 million suspicious files 
-submitted last November. 
-This amount of data makes VirusTotal a rough estimation of malwares in the real world. 
-Secondly, all data on VirusTotal are labeled by state-of-the-art antivirus techniques. 
-VirusTotal updates each antivirus engine every 5 minutes. 
-Besides whether a given a submitted file is detected by an antivirus engine, VirusTotal also keeps exact detection tag returned by each engine. 
-There are also online active malware researchers, 
-who can comment and vote each submitted file and serve as an important supplement of antivirus engines. 
-We believe mining data on VirusTotal could enable many ``Big Security'' applications. 
-
-In industry, antivirus vendors widely use VirusTotal to identify false negatives and false positives of their products. 
-They only utilize VirusTotal reports separately for each single suspicious file, but fail to leverage the whole repository. 
-In academia, researchers began to pay attention to correlations among different VirusTotal reports. 
-For example, {\bf [ToDo: discuss Heqing's work]}
-We believe there are much more research opportunities through mining VirusTotal. 
-
 In this paper, we view data on VirusTotal as a stream, based on each file’s submission time, and design two stream mining applications: 
 \textit{hot malware family mining} and \textit{malware prediction}. 
 There are possibly infinite malware families. 
