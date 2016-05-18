@@ -1,19 +1,23 @@
 \section{Related works}
 
-Many research efforts~\cite{bigcode, big-lessons,code-completion} 
+Many research efforts~\cite{bigcode, big-lessons,big-translation,code-completion,big-predicting} 
 have been spent to explore how to leverage ``big code'' repository, 
-such as GitHub, BitBucket, and CodePlex. 
+such as GitHub, BitBucket, and CodePlex, and these techniques inspire us to explore how to leverage data on VirusTotal. 
 SLANG~\cite{code-completion} can fill uncompleted programs with call innovations, 
 by using statistical models trained from extract sequences of API calls from large code bases.  
+JSNICE~\cite{big-predicting} could predict identifiers' types and obfuscated identifiers' names for Javascript programs. 
+JSNICE translates programs into dependence graphs and learns a CRF model by using a large training set. 
+All predictions are made by optimizing a score function based on the learned CRF model. 
+\citet{big-translation} apply phrase-based statistical translation approaches to translate C\# program to Java.
+To sum up, all these techniques are built based on source code repositories, 
+and their goals are to improve the development stage. 
+However, VirusTotal is a repository containing binary malwares, 
+and the goal to conduct data mining on VirusTotal data is to improve antivirus techniques. 
 
-Learning from Big Code. 
-1. Mining data from virustotal is a special case of  mining from software repository. 
-a. Data is not the same from traditional software repository mining, binary code vs source code
-
-2. Many security problems could also be identified through mining from software repository. 
-
-Previous work on leveraging data on virus total. 
-
-Previous streaming mining work
+There are existing works~\cite{hacker-vt,neeles} to conduct data mining on VirusTotal data to identify malware development cases, 
+where malware writers use VirusTotal as a testing platform and 
+try to develop malwares which can not be detected by antivirus engines. 
+These techniques utilize submission\_id information and similarity between malwares, which are different from information we use. 
+We believe other information on VirusTotal could also be leveraged in the future. 
 
 \section{Conclusion}

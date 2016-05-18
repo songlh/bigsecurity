@@ -1,10 +1,28 @@
 \section{Research Opportunities}
 \label{sec:oppo}
+Beyond the research described above, we illustrate a number of research opportunities as follows: 
 
-1. How to utilize other fields of metadata. 
+{\bf Utilizing other metadata fields.} 
+We currently only leverage timestamp and Microsoft detection report. 
+There are many other metadata fields. 
+Investigating correlations among these fields could enable other big security applications. 
+For example, there are existing techniques leverage submission\_id information to identify malware writers. 
+For example, future research could leverage ssdeep information to cluster malwares, and conduct finer granularity malware prediction. 
 
-2. How to improve the tag. 
+{\bf Utilizing other AV vendors’ reports.}
+We currently only leverage reports from Microsoft. 
+Reports from Microsoft may not be always accurate, 
+and there are more than 40 antivirus vendors' reports on VirusTotal. 
+Which vendors' reports are most precise remains an open issue, 
+and should be investigated in the future. How to combine reports from different vendors also remains an open issue. 
 
-3. What are the characteristics of other type of malware. 
+{\bf Improving antivirus products.} 
+There are also opportunities to improve existing antivirus solutions. 
+For example, most endpoint antivirus software, like ClamAV, are built based on malwares' signatures.
+If we can precisely predict which malware would appear in the near future, 
+we could reduce the size of signatures sent to clients' side and also reduce time to scan viruses. 
 
-4. Improve the current security solution. 
+{\bf Studying other types of malicious files. }
+Besides PE files, there are other types of malicious files on VirusTotal, like malicious apps, 
+malicious URL, and malicious files on other systems. 
+What are the characteristics of these files remains an open issue. 
