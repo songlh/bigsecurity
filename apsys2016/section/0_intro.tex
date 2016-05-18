@@ -36,12 +36,13 @@ we focus our analysis on Windows executable and binary malwares detected Microso
 antivirus engine to guarantee accuracy. 
 Our analysis begins from general characteristics, such as submission frequency and the generation rate of malware families. 
 We then specifically look into the temporal characteristic and family distribution characteristic. 
-We observe that malwares do not appear uniformly across time and malware family, and they observe in bursts, 
-and the family distributions of malwares are highly skewed. 
-To validate our observation, we build two stream mining applications: cache-based malware prediction and hot mining family mining. 
-Our malware prediction solution can achieve more than 90\% 
-precision by using only 100 cache entries. 
-Our hot malware family mining solution can identify hot malware families by using a constant number of counters. 
+We hypothesize that malwares do not appear uniformly across time, and they appear in bursts. 
+To validate our hypothesis, we build a cache-based malware prediction technique, which aims to predict malwares in which family would appear in the near future. 
+Our malware family cache can achieve 90\% cache hit rates by only using 100 cache entries.
+Our technique would allow antivirus vendors to focus their effort. 
+We observe the distribution of malware families is highly skewed. 
+We view malware submissions as a stream, based on their submission timestamp, and apply a frequent item mining algorithm to identify hot malware families. 
+Our solution can precisely answer hot malware family query in nearly-real time, by using a constant number of counters. 
 
 
 \begin{figure}[t!]
@@ -56,15 +57,21 @@ To sum up, we made the following contributions in this paper:
 
 \begin{itemize}
 
-\item We collect data submitted to VirusTotal last November, 
-and briefly analyze these data to understand the characteristics of VirusTotal repository (Section~\ref{sec:meth}). 
-\item We build two stream mining applications, one could identify hot malware family in a constant number of counters (Section~\ref{sec:hot}), 
-and the other could predict malwares in the near future (Section~\ref{sec:predict}). 
-Experimental results show that we can cover all hot malware family with a very few false positives, and we can predict future malwares with a high precision.
-\item We discuss the future research opportunities through mining data on VirusTotal (Section~\ref{sec:oppo}), 
-and demonstrate the feasibility by using our experience of building stream mining applications. 
+\item We collect data submitted to VirusTotal in November of 2015, 
+and analyze their general characteristics. 
+We find that most malware samples are only submitted once to VirusTotal, 
+and roughly 100-400 malware families appear each day~\ref{sec:label}. 
+
+\item We hypothesize that malwares appear in bursts. 
+Our cache-based malware prediction technique confirms our hypothesis, 
+and it can achieve more 90\% prediction precision~\ref{sec:predict}. 
+
+\item We observe that family distributions of malwares are highly skewed. 
+Leveraging this observation, we build a hot malware family mining solution, 
+which can identify hot malware families by using a constant number of counters~\ref{sec:distribution}
+
+\item We discuss the future research opportunities through mining data on VirusTotal~\label{sec:oppo}. 
 
 \end{itemize}
-
 
 
