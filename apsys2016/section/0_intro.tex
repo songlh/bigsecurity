@@ -47,7 +47,7 @@ Our solution can precisely answer hot malware family query in nearly-real time, 
 
 \begin{figure}[t!]
 \begin{center}
-\includegraphics[width=3.3in]{figure/nov}
+\includegraphics[width=2.5in]{figure/nov}
 \caption{The number of suspicious files and the number of malwares submitted to VirusTotal in November of 2015. }
 \label{fig:subnum}
 \end{center}
@@ -59,18 +59,18 @@ To sum up, we made the following contributions in this paper:
 
 \item We collect data submitted to VirusTotal in November of 2015, 
 and analyze their general characteristics. 
-We find that most malware samples are only submitted once to VirusTotal, 
-and roughly 100-400 malware families appear each day~\ref{sec:label}. 
+We find that most malware samples are only submitted once to VirusTotal (Section~\ref{sec:meth}), 
+and roughly 100-400 malware families appear each day (Section~\ref{sec:temporal}). 
 
 \item We hypothesize that malwares appear in bursts. 
 Our cache-based malware prediction technique confirms our hypothesis, 
-and it can achieve more 90\% prediction precision~\ref{sec:predict}. 
+and it can achieve more 90\% prediction precision (Section~\ref{sec:temporal}). 
 
 \item We observe that family distributions of malwares are highly skewed. 
 Leveraging this observation, we build a hot malware family mining solution, 
-which can identify hot malware families by using a constant number of counters~\ref{sec:distribution}
+which can identify hot malware families by using a constant number of counters (Section~\ref{sec:dist}).
 
-\item We discuss the future research opportunities through mining data on VirusTotal~\label{sec:oppo}. 
+\item We discuss the future research opportunities through mining data on VirusTotal (Section~\ref{sec:oppo}). 
 
 \end{itemize}
 

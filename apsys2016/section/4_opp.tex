@@ -3,26 +3,28 @@
 Beyond the research described above, we illustrate a number of research opportunities as follows: 
 
 {\bf Utilizing other metadata fields.} 
-We currently only leverage timestamp and Microsoft detection report. 
+We currently only leverage timestamp and Microsoft detection reports. 
 There are many other metadata fields. 
-Investigating correlations among these fields could enable other big security applications. 
-For example, there are existing techniques leverage submission\_id information to identify malware writers. 
-For example, future research could leverage ssdeep information to cluster malwares, and conduct finer granularity malware prediction. 
+Conducting data mining on these fields could enable 
+Many other ``big security'' applications. 
+For example, there are existing techniques leverage submission\_id information to identify malware writers~\cite{neeles}. 
+For example, future research could leverage ssdeep information to cluster malwares, 
+and conduct malware prediction and hot malware mining in a finer granularity. 
 
-{\bf Utilizing other AV vendors’ reports.}
-We currently only leverage reports from Microsoft. 
-Reports from Microsoft may not be always accurate, 
-and there are more than 40 antivirus vendors' reports on VirusTotal. 
-Which vendors' reports are most precise remains an open issue, 
-and should be investigated in the future. How to combine reports from different vendors also remains an open issue. 
+{\bf Utilizing other antivirus vendors’ reports.}
+We currently only leverage reports from Microsoft, but these reports may not be always accurate.
+There are more than 40 antivirus vendors' reports also provided on VirusTotal.
+Some vendors’ reports may be better than others, or better than others under some special conditions. 
+We leave systematically evaluating all those reports and better combining reports from different vendors in the future. 
 
 {\bf Improving antivirus products.} 
-There are also opportunities to improve existing antivirus solutions. 
-For example, most endpoint antivirus software, like ClamAV, are built based on malwares' signatures.
+There are also opportunities to improve existing antivirus products. 
+For example, many endpoint antivirus softwares, like ClamAV, are built based on a database of malwares' signatures. 
+When these antivirus softwares scan suspicious files, all signatures in the database will be checked. 
 If we can precisely predict which malware would appear in the near future, 
-we could reduce the size of signatures sent to clients' side and also reduce time to scan viruses. 
+we could reduce the size of signatures sent to clients' side and also reduce time to check the signature database. 
 
 {\bf Studying other types of malicious files. }
 Besides PE files, there are other types of malicious files on VirusTotal, like malicious apps, 
-malicious URL, and malicious files on other systems. 
-What are the characteristics of these files remains an open issue. 
+malicious URL, and malicious binary files on other systems. 
+What are the characteristics of these files and whether they follow the same patterns as PE files remain an open issue.  
