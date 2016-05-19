@@ -13,7 +13,7 @@ overlapList = [79.37152483, 95.48188252, 99.70590609]
 #	print i, accumList[i]
 
 fig, ax = plt.subplots()
-ax.plot(phiList, overlapList, 'r-x', linewidth=2.0, markersize=14, mew=4)
+ax.plot(phiList, overlapList, 'b-x', linewidth=2.0, markersize=14, mew=4)
 
 
 #major_ticks = np.arange(0, 101, 10) 
@@ -38,6 +38,8 @@ plt.ylabel('Degree of overlap (%)',  fontsize=24)
 
 plt.gcf().subplots_adjust(bottom=0.15)
 plt.gcf().subplots_adjust(left=0.15)
+
+
 ax.grid(True)
 #plt.title('Cumulative frequencies')
 #plt.show()

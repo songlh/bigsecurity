@@ -26,7 +26,7 @@ for i in range(0, 101, 2):
 #	print i, accumList[i]
 
 fig, ax = plt.subplots()
-ax.plot(rateList, accumList, 'r-x', markersize=6)
+ax.plot(rateList, accumList, 'b-x', linewidth=2.0, markersize=5, mew=2)
 
 
 major_ticks = np.arange(0, 101, 10) 
@@ -38,12 +38,15 @@ ax.set_xlim(xmin, xmax)
 #xticks = ax.xaxis.get_major_ticks()
 #xticks[0].label1.set_visible(False)
 ax.set_xticks(major_ticks)
-plt.xlabel('% of hottest malware families', fontsize=14)
+plt.xlabel('% of hottest malware families', fontsize=18)
 
 ymin = 0
 ymax = 101
 ax.set_ylim(ymin, ymax)
-plt.ylabel('% of the total number of PE malware submissions',  fontsize=14)
+plt.ylabel('% of all PE malware submissions',  fontsize=18)
+ax.xaxis.set_tick_params(labelsize=16)
+ax.yaxis.set_tick_params(labelsize=16)
+
 
 ax.grid(True)
 #plt.title('Cumulative frequencies')

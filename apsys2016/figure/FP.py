@@ -13,7 +13,7 @@ fpList = [0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0,   0, 0, 0]
 #	print i, accumList[i]
 
 fig, ax = plt.subplots()
-ax.plot(ratioList, fpList, 'r-x', linewidth=2.0, markersize=14, mew=4)
+ax.plot(ratioList, fpList, 'b-x', linewidth=2.0, markersize=14, mew=4)
 
 
 #major_ticks = np.arange(0, 101, 10) 

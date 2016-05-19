@@ -13,7 +13,7 @@ overlapList = [2.085636265, 0.05622984261, 6.69E-04]
 #	print i, accumList[i]
 
 fig, ax = plt.subplots()
-ax.plot(phiList, overlapList, 'r-x', linewidth=2.0, markersize=14, mew=4)
+ax.plot(phiList, overlapList, 'b-x', linewidth=2.0, markersize=14, mew=4)
 
 
 #major_ticks = np.arange(0, 101, 10) 

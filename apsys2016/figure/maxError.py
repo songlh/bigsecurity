@@ -13,7 +13,7 @@ overlapList = [2178, 999, 10]
 #	print i, accumList[i]
 
 fig, ax = plt.subplots()
-ax.plot(phiList, overlapList, 'r-x', linewidth=2.0, markersize=14, mew=4)
+ax.plot(phiList, overlapList, 'b-x', linewidth=2.0, markersize=14, mew=4)
 
 
 #major_ticks = np.arange(0, 101, 10) 
@@ -35,7 +35,7 @@ ax.set_ylim(ymin, ymax)
 for tick in ax.yaxis.get_major_ticks():
 	tick.label.set_fontsize(18) 
 ax.set_yscale("log", nonposx='clip')
-plt.ylabel('Maximum error',  fontsize=24)
+plt.ylabel('maxError',  fontsize=24)
 
 plt.gcf().subplots_adjust(bottom=0.15)
 plt.gcf().subplots_adjust(left=0.15)
