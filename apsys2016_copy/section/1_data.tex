@@ -1,8 +1,20 @@
-\section{Methodology}
+\section{Dataset}
 \label{sec:meth}
+\subsection{Data Source}
+VirusTotal~\cite{virustotal} is a free online service that analyzes whether files submitted by real-world users are malwares. It can identify  a large variety of malwares such as viruses, worms, and trojans. For each submitted file, VirusTotal applies different antivirus engines to detect and finally generates an aggregated report. In the report, each antivirus engine would give a result whether the file is malicious and tag a \emph{malware family} to the file if it is malicious. \wenfei{define malware family here.} All submitted files and generated reports are saved and can be accessed through public API, and they are viewed as malware repository. VirusTotal has been widely used by antivirus vendors to identify the effectiveness of their products. That is, they can submit suspicious files compare the identification results of their products with other vendors, and thus to know the false negatives and false positives of their products.
 
 
+The repository on VirusTotal provides a good source for characterizing malwares. Firstly, the data on VirusTotal covers vast majority of malwares in the real world.
+Figure~\ref{fig:subnum} shows that there were more than 40 million suspicious files submitted last November. 
+This huge amount of data is a rough estimation of malwares in the real world. \wenfei{need supporting reference.}
+Secondly, all submitted files on VirusTotal are already analyzed and labeled by state-of-the-art antivirus techniques. VirusTotal updates each antivirus engine every 5 minutes. For each submitted file, ViruaTotal keeps both the identification result (i.e. whether the file is malware) and the exact detection tag returned by each engine. To complement the results for antivirus engines, malware researchers can comment and vote each submitted file. Thus, we believe mining the characteristics of data on VirusTotal could lead to representative results for a large variety of application (e.g., ``Big Security"). \wenfei{BTW, what is Big Security?}
 
+\wenfei{put this to related work.}In academia, researchers began to pay attention to mining VirusTotal repository. 
+For example, ~\citet{neeles} leverage submission\_id information to identify malware writers, 
+who use VirusTotal as a test platform. 
+We believe there are much more research opportunities through mining VirusTotal. 
+
+\subsection{Data Collection}
 \begin{table}[h!]
 \centering
 \footnotesize
@@ -40,16 +52,23 @@ Metadata Fields & Explanation \\
 
 We download submission reports' metadata through private API of VirusTotal. 
 Table~\ref{tab:fields} shows all metadata fields and their meaning. 
-In this paper, we only focus on Portable Executable (PE) files, 
-and we leave the analysis of other types of malicious files in the future. 
-We filter all records by the tag field. If the tag field contains a ``peexe'' or ``pedll'', the record is considered as a PE file. 
-Then we rely on Microsoft antivirus engine to judge whether the PE file is a malware and its malware family.
-
 It is possible that VirusTotal private API returns redundant reports, 
 and we use the combination of md5 and timestamp
  to detect and merge redundant reports.
 
-We downloaded all reports in November 2015, and finally collected 43 million reports, of which 4.7 million are PE malwares. 
+\begin{figure}[t!]
+\begin{center}
+\includegraphics[width=2.5in]{figure/nov}
+\caption{The number of suspicious files and the number of malwares submitted to VirusTotal in November of 2015. }
+\label{fig:subnum}
+\end{center}
+\end{figure}
+
+To guarantee analytic accuracy, we only focus on Portable Executable (PE) files, 
+and we leave the analysis of other types of malicious files in the future. 
+We filter all records by the tag field. If the tag field contains a ``peexe'' or ``pedll'', the record is considered as a PE file. 
+Then we rely on Microsoft antivirus engine to judge whether the PE file is a malware and its malware family.
+Among the 43 million downloaded reports in November 2015, 4.7 million of them are PE malwares. 
 The numbers of reports and PE malwares submitted each day are shown in Figure~\ref{fig:subnum}.
 
 After removing redundancy, we find that most malwares are submitted only once to VirusTotal. 4 million out of the total 4.7 million PE malware submissions are distinct. On average, each PE malware is submitted 1.17 times to VirusTotal. We believe that most malwares are encountered by more than one VirusTotal user. One possible reason of this observation is that VirusTotal users 
