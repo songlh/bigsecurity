@@ -1,0 +1,138 @@
+%% paper.tex
+
+
+%\documentclass[pldi]{sigplanconf-pldi16}
+\documentclass[10pt]{sigplanconf}
+% standard LaTeX packages
+
+% standard LaTeX packages
+%\usepackage{changebar}
+
+\usepackage{balance}
+\usepackage{alltt}
+\usepackage{amsmath}
+\usepackage{balance}
+\usepackage{booktabs}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{boxedminipage}
+\usepackage{hyperref}
+\usepackage{nicefrac}
+\usepackage{subfig}
+\usepackage{xcolor}
+\usepackage{setspace}
+\usepackage{xspace}
+\usepackage{multirow}
+\usepackage{colortbl}
+\usepackage{amsfonts} 
+\usepackage{blindtext}
+\usepackage{chngpage}
+\usepackage{listings}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{pifont}
+%\usepackage{pgfplotstable}
+
+\usepackage[linesnumbered, vlined, ruled]{algorithm2e}
+% font selection
+%\usepackage{courier}
+%\usepackage[scaled]{helvet}
+\usepackage{mathptmx}
+\usepackage{times}
+
+% custom packages for this paper
+\usepackage{double-blind}
+\usepackage{shared-affiliation}
+
+\usepackage[numbers,sort&compress,square]{natbib}
+\newcommand{\wenfei}[1]{\textcolor{red}{$<<$Wenfei: #1$>>$}}
+
+\lstset{
+  basicstyle=\tiny,
+  columns=fullflexible,
+  numbersep=5pt,
+  numberstyle=\scriptsize,
+  showstringspaces=false,
+  escapeinside={/*@}{@*/},
+  belowcaptionskip=1\baselineskip,
+  language=C,
+  showstringspaces=true,
+  keywordstyle=\bfseries,
+  commentstyle=\itshape,
+}
+
+
+%\pgfplotstableset{
+%    color cells/.style={
+%        col sep=comma,
+%        string type,
+%        postproc cell content/.code={%
+%                \pgfkeysalso{@cell content=\rule{0cm}{2.4ex}\cellcolor{black!##10}\pgfmathtruncatemacro\number{##1}\ifnum\number>5\color{white}\fi##1}%
+%                },
+%        columns/x/.style={
+%            column name={},
+%            postproc cell content/.code={}
+%        }
+%    }
+%}
+
+
+\makeatletter
+\def\@copyrightspace{\relax}
+\makeatother
+
+\captionsetup{format=default, font=bf}
+
+
+\newcommand*{\Scale}[2][4]{\scalebox{#1}{$#2$}}%
+\newcommand{\comment}[1]{{}}
+
+%% taken from unknown.sty
+%\DeclareCaptionType{copyrightbox}
+
+\sloppy
+
+\begin{document}
+
+\title{
+  Learning from Big Security
+}
+
+\input macros.tex
+
+%\numberofauthors{2}
+\authorinfo{Linhai Song}
+           {University of Wisconsin--Madison}
+           {\{songlh\}@cs.wisc.edu}
+\maketitle
+\begin{abstract}
+\input section/abstract.tex
+\end{abstract}
+
+
+\input{section/0_intro.tex}
+\input{section/1_data.tex}
+\input{section/2_1_LRU.tex}
+\input{section/2_2_item.tex}
+\input{section/4_opp.tex}
+\input{section/5_related.tex}
+%\input{related}
+%\input{conclusion}
+
+%%\balance
+%\begin{spacing}{0.65}
+
+\balance
+{
+\bibliographystyle{abbrvnat}
+\bibliography{security} 
+}
+%\end{spacing}
+\end{document}
+
+% Local variables:
+% TeX-PDF-mode: t
+% TeX-master: t
+% End:
+
+% LocalWords:  Crug cci
