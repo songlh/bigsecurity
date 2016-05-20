@@ -2,7 +2,7 @@
 \section{Temporal Analysis}
 \label{sec:temporal}
 
-In this section, we study temporal property of VirusTotal malwares. 
+In this section, we study the temporal characteristics of VIrusTotal malware dataset. We summarize the new family appearance rate, and looked into the time locality of family appearance.
 
 \begin{figure}[t!]
 \begin{center}
@@ -11,17 +11,18 @@ In this section, we study temporal property of VirusTotal malwares.
 \label{fig:new}
 \end{center}
 \end{figure}
+\subsection{Appearance Rate of New Families}
+As argued in Section XX, VirusTotal users tend to submit new malware sample, thus the number of new malwares is not a good indicator of prevalence. We aggregate submissions by their family, i.e., the category output by the antivirus engine.
 
-
-We first study how many new malware families appear each day. 
-Figure~\ref{fig:new} shows the number of new malwares appearing each day in November of 2015. 
-We do not have any data before Nov. 1st, 
+Figure~\ref{fig:new} shows the number of new malwares appearing each day in November of 2015. We do not have any historical data before Nov. 1st, 
 so there are much more new malware families in the first few days.
-After that, the number of new malware families become stable, and falling into the range from 100 to 400. 
+After that, the number of new malware families become stable and falls into the range from 100 to 400. 
 In total, there are 11311 malware families. 
 
 {\bf Observation 1:} 
 there are 100-400 new malware families appearing each day. 
+
+\subsection{Time Locality}
 
 
 \begin{figure}[t!]
@@ -89,7 +90,7 @@ Most cache hit rate falls in the range from 70\% to 80\%.
 {\bf Observation 2:} 
 the appearance of malwares in each family has strong time locality.  
 
-\underline{Discussion.}
+\subsection{Discussion}
 Resources to combat malwares are limited. 
 Any techniques which could allow antivirus vendors to focus their efforts are great. 
 Our cache-based malware prediction technique can predict which malware families would appear in the near future with high precision. 

@@ -1,25 +1,48 @@
-\section{Malware Distribution Analysis}
+\section{Distribution Analysis}
+\label{sec:dist}
+In this section, we first measure the distribution of malware families, and then study the effectiveness of an online hot malware family mining algorithm.
 
-\subsection{Overall Distribution}
+\subsection{Skewness of Malwares}
+We draw the CDF of malware family distribution in Figure~\ref{fig:acum}. As is shown, the distribution of malware family follows the well-known Pareto principle, 
+and more than 90\% malware families take place in only 10\% malware families. This distribution shows that only small number of malware families are hot. 
+
+{\bf Observation 3:} the distribution of malware families is highly skewed. 
+\subsection{Hot Malware Family Mining}
+
+
+Researchers or anti-malware providers may want to know the hot malware families in the highly skewed distribution, but naive exhaustive searching is not space efficient. While the skewness of malware families implies that we could apply frequent item mining algorithm to identify hot malware families. 
+
+The goal of frequent item mining algorithms are to provide nearly-real time analysis on massive data streams by using constant memory. 
+The frequent item mining algorithm we use is space saving algorithm~\cite{space-saving}, 
+which was proposed for streams in Internet advertising, and has already been applied in other areas, 
+like mining hot calling contexts in profilers~\cite{hot-calling-context}.
+It takes two configuration parameters, $\phi$ and $\epsilon$, where $\phi > \epsilon$. 
+Assuming the length of the input stream is $N$, the output of frequent item mining algorithms 
+are all items which appear more than $\lfloor \phi N \rfloor$ times, a part of items whose appearance is between $\lfloor \epsilon N \rfloor$ and $\lfloor \phi N \rfloor$,
+and no items which appear less than  $\lfloor \epsilon N \rfloor$ times. 
+
+
+
+Space saving frequent item mining algorithm tracks $M=1/\epsilon$ pairs of $(f, c)$. 
+$f$ is short for malware family, and $c$ is short for counter.  
+Content of these pairs represents $(\phi, \epsilon)\mbox{-}HMF$ (Hot Malware Family). 
+The $M$ pairs are initialized with the first $M$ encountered malware families and their frequency. 
+When a new malware submission comes, 
+if the malware family is already under monitoring, 
+the related counter will be increased by 1. 
+And if the malware family is not monitored, 
+we will replace the malware family of the pair with lowest counter value with the incoming malware family, 
+and increase its counter value by 1. 
+When querying HMF, 
+all malware families whose counter values are larger than $\lfloor \phi N \rfloor$ will be returned. 
+
 \begin{figure}[t!]
 \begin{center}
-\includegraphics[width=3.0in]{figure/cum}
+\includegraphics[width=2.5in]{figure/cum}
 \caption{Skewness of malware families appearing in November of 2015.}
 \label{fig:acum}
 \end{center}
 \end{figure}
-
-{\bf Observation 3:} 
-The distribution of malware families are highly skewed. 
-As shown in Figure~\ref{fig:acum}, only small number of malware families are hot.
-The distribution of malware families follows the well-known Pareto principle, 
-and more than 90\% malware families take place in only 10\% malwares. 
-The skewness of malware family distribution suggests that we could conduct effective hot malware family mining. 
-
-
-
-\subsection{Hot Malware Family Mining}
-\label{sec:hot}
 
 \begin{figure*}[!htb]
 \minipage{0.22\textwidth}
@@ -39,7 +62,7 @@ The skewness of malware family distribution suggests that we could conduct effec
 \endminipage\hfill
 \minipage{0.22\textwidth}%
   \includegraphics[width=\linewidth]{figure/maxError.pdf}
-  \caption{Relation between $\phi$ and maximum error.}
+  \caption{Relation between $\phi$ and maxError.}
   \label{fig:maxError}
 
 \endminipage
@@ -53,42 +76,12 @@ The skewness of malware family distribution suggests that we could conduct effec
 \end{center}
 \end{figure}
 
-In this section, we view data on VirusTotal as a stream, according to each submission's timestamp, 
-and apply a frequent item mining algorithm to identify hot malware family. 
 
-%\subsection{Overview}
 
-Frequent item mining algorithms take two configuration parameters, $\phi$ and $\epsilon$, where $\phi > \epsilon$. 
-The goal of frequent item mining algorithms are to provide nearly-real time analysis on massive data streams by using constant memory. 
-Assuming the length of the input stream is $N$, the output of frequent item mining algorithms 
-are all items which appear more than $\lfloor \phi N \rfloor$ times, 
-and no items which appear less than  $\lfloor \epsilon N \rfloor$ times. 
 
-The frequent item mining algorithm we use is space saving algorithm~\cite{space-saving}, 
-which was proposed for streams in Internet advertising, and has already been applied in other areas, 
-like mining hot calling contexts in profilers~\cite{hot-calling-context}.
-Space saving algorithm tracks $M=1/\epsilon$ pairs of $(f, c)$. 
-$f$ is short for malware family, and $c$ is short for counter.  
-Pair content represents $(\phi, \epsilon)\mbox{-}HMF$ (Hot Malware Family). 
-The $M$ pairs are initialized with the first $M$ encountered malware families and their frequency. 
-When a new malware submission comes, 
-if the malware family is already under monitoring, 
-the related counter will be increased by 1. 
-And if the malware family is not monitored, 
-we will replace the malware family of the pair with lowest counter value with the incoming malware family, 
-and increase its counter value by 1. 
-When querying HMF, 
-all malware families whose counter values are larger than $\lfloor \phi N \rfloor$ will be returned. 
 
-%\subsection{Evaluation}
-\label{sec:eval1}
-
-We implement the space saving algorithm by using python-2.7.
-We process the downloaded VirusTotal submission data into a stream, 
-based on each submission's timestamp. 
-Our experiment is conducted on an aws c4.4xlarge virtual machine, 
-which contains 16 virtual cpus and 30G memory. 
-
+We implement the space saving algorithm by using python-2.7, 
+and conduct experiments in the same system as we did in Section~\ref{sec:temporal}.
 Following previous works in frequent item mining~\cite{hot-calling-context}, 
 we measure the following metrics by using malware submission data we collect:
 
@@ -98,80 +91,76 @@ we measure the following metrics by using malware submission data we collect:
 Degree of \textit{overlap} is used to measure the percentage of malwares covered in $(\phi, \epsilon)\mbox{-}HMF$,
 and it is defined as follows:
 
+\begingroup\makeatletter\def\f@size{8}\check@mathfonts
 $$overlap((\phi, \epsilon)\mbox{-}HMF) = \dfrac{1}{N}\sum_{f \in (\phi, \epsilon)\mbox{-}HMF}w(f)$$
+\endgroup
 
 where $w(f)$ represents the real frequency of malware family $f$.  
 
 \item 
-\textit{maxUncover} is short for maximum frequency of uncovered malware families and 
-is used 
-to measure largest frequency of malware families not covered in $(\phi, \epsilon)\mbox{-}HMF$. 
+\textit{MaxUncover} is short for maximum frequency of uncovered malware families. 
+%is used 
+%to measure largest frequency of malware families not covered in $(\phi, \epsilon)\mbox{-}HMF$. 
 It is defined as follows:
-$$maxUncover((\phi, \epsilon)\mbox{-}HMF) = \max_{f \notin (\phi, \epsilon)\mbox{-}HMF}w(f)$$
+\begingroup\makeatletter\def\f@size{8}\check@mathfonts
+$$maxUncover((\phi, \epsilon)\mbox{-}HMF) = \max_{f \notin (\phi, \epsilon)\mbox{-}HMF}w(f)/H(f)$$
+\endgroup
+where $H(f)$ is the maximum frequency of all malware families. 
 
 \item 
-\textit{aveUncover} is short for average frequency of uncovered malware families 
+\textit{AveUncover} is short for average frequency of uncovered malware families 
 and it is defined similar to \textit{maxUncover}. 
 
 \item 
-\textit{False positives} are defined as malware families returned during querying HMF, 
+\textit{False positives} are defined as malware families returned when querying HMF, 
 but whose real frequencies are less than $\lfloor \phi N \rfloor$. 
 Space saving algorithm is designed to guarantee that there will be no false negatives. 
 
 \item 
-\textit{maxError} is used to measure relative error of counter values, 
+\textit{MaxError} is used to measure relative error of counter values, 
 compared with their real frequencies.
 It is defined as follows:
-
+\begingroup\makeatletter\def\f@size{8}\check@mathfonts
 $$maxError((\phi, \epsilon)\mbox{-}HMF) = \max_{f \in (\phi, \epsilon)\mbox{-}HMF} \dfrac{\left|c(f) - w(f)\right|}{w(f)}$$
-
+\endgroup
 
 \end{enumerate}
 
 There are two configuration parameters in space saving algorithm: $\phi$ and $\epsilon$, 
 and the number of monitored $(f, c)$ pairs is directly controlled by $\epsilon$. 
-Following previous experience of applying space saving algorithm, we set $\epsilon = \phi/5$ as default, 
+Following previous experience of applying space saving algorithm~\cite{hot-calling-context}, 
+we set $\epsilon = \phi/5$ as default, 
 unless we explicitly state.  
 
-We first evaluate how overlap would change after we change $\phi$. 
-Overlap is used to describe how many malwares are monitored in $(\phi, \epsilon)\mbox{-}HMF$, the larger the better. 
-As shown by Figure~\ref{fig:overlap}, after we change $\phi$ from 10 to 100, 
-overlap will increase from 79.93\% to 95.48\%, and overlap will further increase to 99.70\%, after we change $\phi$ to 1000. 
+We first evaluate how the degree of \textit{overlap} would change with the change of $\phi$. 
+The degree of \textit{overlap} is used to describe how many malwares are monitored in $(\phi, \epsilon)\mbox{-}HMF$, and it is the larger the better. 
+As shown by Figure~\ref{fig:overlap}, after we change $\phi$ from 10 to 100, the degree of \textit{overlap} will increase from 79.93\% to 95.48\%. 
+The degree of \textit{overlap} will further increase to 99.70\%, after we change $\phi$ to 1000. 
 
 We then study how maxUncover and aveUncover would change with the change of $\phi$.
 Both maxUncover and aveUncover are used to describe malwares not monitored in $(\phi, \epsilon)\mbox{-}HMF$, 
 and they are the lower the better. As shown by Figure~\ref{fig:maxUncover} and Figure~\ref{fig:aveUncover}, 
 both maxUncover and aveUncover will decrease by an order, as we increase $\phi$ value by an order. 
 
-Figure~\ref{fig:maxError} shows how maxError change, 
-after we change $\phi$. 
-maxError describes how precise counters in $(\phi, \epsilon)\mbox{-}HMF$ are, 
-and it is the lower the better. 
-maxError would drop from 2178 to 999, after we change the value of $\phi$ from 10 to 1000, 
-and maxError value would become to 10, after we change the value $\phi$ to 1000. 
-The large maxError value is due to the fact that space saving algorithm will conservatively 
-assume the frequency of a new malware family is one more than the least counter value of all monitored malware family, 
-when it conducts eviction. 
+Figure~\ref{fig:maxError} shows how \textit{maxError} change, after we change $\phi$. 
+\textit{maxError} describes how precise counters in $(\phi, \epsilon)\mbox{-}HMF$ are, 
+and it is the lower the better. \textit{maxError} would drop from 2178 to 999, 
+after we change the value of $\phi$ from 10 to 100. 
+\textit{maxError} value would become to 10, after we change the value $\phi$ to 1000. 
+The large \textit{maxError} value is due to the fact that space saving algorithm 
+will conservatively assume the frequency of a new malware family is one larger than the least counter value of all monitored malware family. 
 
 In the last experiment, we fix $\phi$ to $10^{-2}$, 
 and change $\phi/\epsilon$ from 2 to 15 to evaluate how false positives would change. 
-As shown by Figure~\ref{fig:fp}, space saving algorithm will constantly report 0 false positives, during our experiments. 
+As shown by Figure~\ref{fig:fp}, space saving algorithm will constantly report 0 false positives in our experiments. 
 
-%\subsection{Discussion}
-\label{sec:discussion1}
-As discussed in Section~\ref{sec:meth}, 
-the distribution of malware families is highly skewed. 
+\subsection{Discussion}
+Distributions of malware families are highly skewed. 
 This is the reason why we could precisely identify hot malware families. 
 There are in total 11311 distinct malware families in our tested data. 
 Although this number is small, new malware families would appear every day, 
-and our solution can identify hot malware families from possibly 
+and applying frequent item mining algorithm can identify hot malware families from possibly 
 infinite malware families by only using constant memory. 
 
-Malware family is a relatively coarse granularity. 
-In the future, we could consider how to conduct stream mining in a finer granularity. 
-Almost all malware samples are only submitted once to VirusTotal (Section~\ref{sec:meth}), 
-so mining hot submitted malware samples would not work. 
-Ssdeep value for each submitted malware sample can also be queried from VirusTotal, 
-and the edit distance between two ssdeep values can be used to measure similarity between the two malware samples. 
-How to leverage ssdeep values to cluster malware samples, 
-and conduct stream mining based on cluster information remains an open issue.  
+As we discussed in Section~\ref{sec:temporal}, malware family is a relative coarse granularity.
+In the future, we could consider how to mining frequent items in a finer granularity. 
