@@ -18,7 +18,10 @@ We then use Microsoft antivirus engines to judge whether a PE file is a malware.
 Within the 43 million reports, 4.7 million are PE malwares. 
 The number of reports and PE malwares submitted each day are shown in Figure~\ref{fig:subnum}.
 
-To decide what family a malware belongs to, we use %%% please fill.
+To decide what family a malware belongs to, we use 
+\textcolor{red}{the malware (family) name returned by Microsoft engine~\cite{microsoft}. 
+If two malware are named in the same way by Microsoft engie, we consider they are from the same family.} 
+
 
 One caveat of VirusTotal is that it is possible that the VirusTotal APIs return redundant reports 
 for the same submitted file. 
