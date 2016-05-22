@@ -61,7 +61,7 @@ For example, studying malwares over a long time period and across all countries 
 can provides a high-level insight into how malwares evolve over time and over geo-locations.
 Studying how antivirus engines change over time together with how malwares change can 
 reveal the effectiveness of responses to new security threats.
-Finally, it is interesting to investigate if we can build malware prediction models 
+Finally, it is interesting to investigate if we can build online malware prediction tools 
 by applying machine learning techniques on the VirusTotal data.
 All these insights could in turn assist future antivirus researchers and engineers
 to better design malware defense mechanisms.
@@ -81,12 +81,14 @@ In academia, only until recent did researchers begin to pay attention to mining 
 Graziano \etal~\cite{neeles} leveraged VirusTotal user ID information to identify malware writers 
 who use VirusTotal as a test platform. 
 
-We propose to investigate in the VirusTotal repository 
-and study its data and metadata along several lines: 
-downloading malware samples and analyzing them to understand their static features and how malwares evolve; 
-studying VirusTotal metadata %including submission information and reports from different vendors, 
-to understand general characteristics of malwares in the real world and correlations among different malwares; 
-and applying machine learning techniques on VirusTotal data to build malware prediction tools.
+We propose to investigate in the VirusTotal repository along two directions:
+offline study of its rich data and metadata, 
+and online analysis and prediction of malwares.
+%The offline study can be conducted along several lines: 
+%downloading malware samples and analyzing them to understand their static features and how malwares evolve; 
+%studying VirusTotal metadata %including submission information and reports from different vendors, 
+%to understand general characteristics of malwares in the real world and correlations among different malwares; 
+%and applying machine learning techniques on VirusTotal data to build malware prediction tools.
 %leveraging behavior information on virustotal, and run malwares in virtual machines to understand their dynamic behaviors. 
 
 As a first step, we collected one month of VirusTotal repository data with more than 40 million suspicious files
@@ -94,26 +96,36 @@ and conducted an early-stage empirical study on them.
 %An empirical study is the prerequisite to conduct data mining on VirusTotal. 
 %We first collect more than 40 million suspicious file submissions from VirusTotal.
 % this para needs total rewriting
-We focus our analysis on all Windows executable (PE) malwares detected by Microsoft
-antivirus engine, 
-\textcolor{red}{because our previous experience shows that Microsoft antivirus engine can generate precise results on PE files.}
 %Using antivirus engines and malwares under the same platform improves malware detection %accuracy. 
 
 We centered our analysis around the concept of {\em malware families}.
 A malware family is a set of malwares that have common behaviors.
+We focus our initial attention on all Windows executable (PE) malwares detected by Microsoft
+antivirus engines, 
+because our previous experience shows that Microsoft engines can generate precise results on PE files.
 %Specifically, we analyzed malware characteristics including
 %the submission frequencies and generation rates of malware families, 
 %the temporal properties of malwares, 
 %and the distribution of malwares across malware families.
-\textcolor{red}{Specifically, we began our analysis from general characteristics including the submission
+
+We focus our analysis on two dimenstions: temporal properties of malwares and 
+malware family distribution.
+In each dimenstion, we investigate both offline and online analysis mechanisms.
+
+We began our temporal analysis with general malware characteristics including the submission
 frequencies and generation rates of malware families. 
-We then study the burstiness of malwares---how closely malwares belonging to the same family appear in time. 
-Our LRU malware family cache can achieve a 90\% cache hit rate by only using 100 cache entries. This experimental result verifies the burstiness of malwares. 
-Our LRU cache can predict malware families appear in the near future, and allow antivirus vendors to focus their efforts. 
-We finally study how malwares distribute among different malware families. 
-We observe that distributions of malware families are highly skewed. 
-This observation motivates us to apply a frequent item mining algorithm~\cite{space-saving} to 
-Identify hot malware family. Our solution can answer historical hot malware families in nearly-real time using constant memory. }
+We then study the burstiness of malwares---how closely malwares belonging to the same family occur in time. 
+To understand malware burstiness, we designed a new cache-based mechanism 
+that can support both offline and online analysis.
+%Our LRU malware family cache can achieve a 90\% cache hit rate by only using 100 cache entries. This experimental result verifies the burstiness of malwares. 
+Moreover, our LRU cache can predict malware families occurrences in the near future, 
+allowing antivirus vendors to better focus their efforts. 
+
+We focus our malware family distribution study on detecting skewness of malware families and identifying hot families---families that have many malwares.
+We observe that the distribution of malware families is highly skewed. 
+To assist online analysis of malware family distribution, 
+we apply a frequent item mining algorithm~\cite{space-saving} to identify hot malware family. 
+This solution can answer historical hot malware families in nearly-real time using constant memory. 
 
 
 %%% the following para needs total rewrite
