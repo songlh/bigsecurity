@@ -15,19 +15,20 @@ to identify various kinds of malwares including viruses, worms, and trojans.
 It then generates a summary report that includes the detection results of all these engines. 
 VirusTotal saves and provides an open access of all submitted files and generated reports. 
 
-With the huge amount of real-world files, 
-the VirusTotal repository provides a valuable resource to gain insights into 
+The VirusTotal repository provides a valuable resource to gain insights into 
 the behavior of malware.
 %Inspired by previous work on mining software repositories~\cite{GuoICSE2010,bigcode, big-lessons,big-translation,code-completion,big-predicting} 
 %in the software engineering and programming languages community, 
 %we believe that leveraging data on VirusTotal could also enable many ``big security'' applications.   
-
+%
 %The VirusTotal repository provides a valuable resource for conducting data mining. 
-First, there is a huge amount of data on VirusTotal.
+%First, there is a huge amount of data on VirusTotal.
+First, it contains a huge amount of real-world files.
 Figure~\ref{fig:subnum} shows that there were more than 40 million suspicious files 
 submitted in November 2015. 
-This amount of data makes VirusTotal a rough estimation of malwares in the real world. 
-Second, all data on VirusTotal are labeled by state-of-the-art antivirus techniques. 
+This amount of data makes VirusTotal a good estimation of malwares in the real world. 
+
+Moreover, all data on VirusTotal are labeled by state-of-the-art antivirus techniques. 
 VirusTotal updates each antivirus engine every five minutes. 
 Besides noting whether a given a submitted file has been detected by an antivirus engine, 
 VirusTotal also keeps the exact detection tag returned by each engine. 
@@ -35,6 +36,11 @@ There are also online active malware researchers
 who can comment and vote on each submitted file 
 and thus serve as an important supplement to antivirus engines. 
 
+There are many research opportunities in mining the VirusTotal repository. 
+List all the possible research questions that one can answer by analyzing VT data.
+For example, ...
+
+Unfortunately, there has been little/no? work in looking at this valuable repository.
 In industry, antivirus vendors widely use VirusTotal to identify false negatives 
 and false positives in their products. 
 However, they only utilize VirusTotal reports separately for each single suspicious file, 
@@ -42,12 +48,16 @@ failing to consider correlations among different suspicious files.
 In academia, researchers have begun to pay attention to mining the VirusTotal repository. 
 For example, ~\citet{neeles} leverage submission\_id information to identify malware writers 
 who use VirusTotal as a test platform. 
-We believe there are many more research opportunities available through mining VirusTotal. 
 
-In this paper, we conduct an empirical study on the malware dataset on VirusTotal. 
-An empirical study is the prerequisite to conduct data mining on VirusTotal. 
-We first collect more than 40 million suspicious file submissions from VirusTotal, and then 
-we focus our analysis on Windows executable malwares detected by Microsoft
+We propose to investigate in the VirusTotal repository by ***.
+
+As a first step, we collected one month of VirusTotal repository data with more than 40 million suspicious files
+and conducted an empirical study on the malware dataset on VirusTotal. 
+%An empirical study is the prerequisite to conduct data mining on VirusTotal. 
+%We first collect more than 40 million suspicious file submissions from VirusTotal.
+
+% this para needs total rewriting
+We focus our analysis on Windows executable malwares detected by Microsoft
 antivirus engine to guarantee accuracy. 
 Our analysis includes general characteristics such as submission frequency and the generation rate of malware families, 
 temporal characteristics, and family distribution characteristics. 
@@ -71,11 +81,12 @@ Our solution can precisely answer hot malware family queries in nearly-real time
 \end{center}
 \end{figure}
 
-To sum up, we make the following contributions in this paper:
+In summary, this paper makes the following contributions:
 
 \begin{itemize}
 
-\item We collect data submitted to VirusTotal in November 2015 
+\item We are the first to collect data from the VirusTotal repository.
+We collected data submitted to VirusTotal in November 2015 
 and analyze their general characteristics. 
 We find that most malware samples are only submitted once to VirusTotal (Section~\ref{sec:meth}) 
 and that roughly 100-400 new malware families appear each day (Section~\ref{sec:temporal}). 
