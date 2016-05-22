@@ -2,20 +2,20 @@
 \section{Temporal Analysis}
 \label{sec:temporal}
 
-In this section, we study the temporal property of VirusTotal malwares. 
+This section presents our study of the temporal property of VirusTotal malwares. 
 
 \input{section/fignewfamily}
 
-
-We first study how many new malware families appear each day. 
-Figure~\ref{fig:new} shows the number of new malware families appearing each day in November 2015. 
-We do not have any data before November 1, 
-so there are many more new malware families in the first few days.
-After that, the number of new malware families becomes stable, falling into a range between 100 and 400. 
-In total, there are 11311 malware families. 
+We first study how many new malware families appear everyday. 
+Figure~\ref{fig:new} shows the number of new malware families appearing on each day in November 2015. 
+Since we do not include data before November 1, 
+there are more new malware families in the first few days.
+After that, the number of new malware families becomes stable, 
+falling into a range between 100 and 400. 
+In total, there are 11311 malware families in this time period. 
 
 {\bf Observation 1:} 
-There are 100-400 new malware families appearing each day. 
+{\em 100-400 new malware families appear each day.}
 
 
 \input{section/hitsize}
@@ -23,7 +23,7 @@ There are 100-400 new malware families appearing each day.
 
 \input{section/hitday}
 
-We then investigate whether there is time locality for malwares.
+We then investigate whether malwares behave temporal locality.
 Specifically, we hypothesize that malwares in the same family would appear in bursts.  
 We borrow the cache mechanism from system research area to validate our hypothesis. 
 Cache was previously used to predict bugs~\cite{predicting}, 
@@ -72,7 +72,7 @@ Most cache hit rate falls in a range between 70\% and 80\%.
 
 
 {\bf Observation 2:} 
-The appearance of malwares in each family has a strong time locality.  
+{\em The appearance of malwares in each family has a strong time locality.}  
 
 \underline{Discussion.}
 Resources to combat malwares are limited. 
