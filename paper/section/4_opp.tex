@@ -37,3 +37,11 @@ Besides the static information we discussed in Section~\ref{sec:meth},
 VirusTotal also hosts some behavior data for each malware sample. 
 Mining these data can help us understand which behaviors are more prominent in malwares, 
 and which vulnerabilities are more likely to be used by malwares, both of which can be used as indicator to detect new maliciousness. 
+
+{\bf Training machine learning models by using VirusTotal data}
+VirusTotal provides a huge set of labeled malwares. 
+It is interesting to consider leveraging VirusTotal data to train a machine learning model, and applying the trained model to conduct malware detection and classification. 
+However, we need to figure out a feature set before training the model. 
+Which information provided by VirusTotal can be included into the feature set remains an open question. If we need features beyond information provided by VirusTotal, does the feature extraction scales with the size of VirusTotal data also remains an open issue. 
+Neural network takes binary as inputs, and can extract features automatically. 
+However, neural network requires all binary inputs with the same size. It is easier to resize images. If we want to apply neural network to malwares, how could we resize malware? 
