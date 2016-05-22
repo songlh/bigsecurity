@@ -11,7 +11,7 @@ For example, there were almost 2 million attempts to
 steal money from online bank accounts 
 with malwares that exploit vulnerabilities in the Adobe Flash player~\cite{kaspersky}. 
 
-Researchers and practitioners continue to build security tools to defend against new malwares,
+Researchers and practitioners continue to build security tools to defend against new malwares.
 To assist the design of these tools, it is essential to understand malwares in the real world. 
 
 Previous works on analyzing the behaviors and evolutions of malwares~\cite{ZhouSP2012,GuptaComsnets2009} 
@@ -50,7 +50,7 @@ There are also online active malware researchers
 who can comment and vote on each submitted file 
 and thus serve as an important supplement to antivirus engines. 
 
-There are many research opportunities in mining the VirusTotal repository. 
+The VirusTotal repository exposes many new research opportunities.
 %List all the possible research questions that one can answer by analyzing VT data.
 %For example, ...
 For example, we can figure out what vulnerabilities malware writers prefer to exploit, 
@@ -65,8 +65,8 @@ In industry, antivirus vendors widely use VirusTotal to identify false negatives
 and false positives in their products. 
 However, they only utilize VirusTotal reports separately for each single suspicious file, 
 failing to consider correlations among different suspicious files. 
-In academia, researchers have begun to pay attention to mining the VirusTotal repository. 
-For example, ~\citet{neeles} leverage submission\_id information to identify malware writers 
+In academia, only until recent did researchers begin to pay attention to mining the VirusTotal repository. 
+Graziano \textit{et al.}~\citet{neeles} leveraged submission\_id information to identify malware writers 
 who use VirusTotal as a test platform. 
 
 We propose to investigate in the VirusTotal repository by ***.
@@ -97,14 +97,7 @@ We view malware submissions as a stream based on their submission timestamps and
 feed this stream into space saving algorithm~\cite{space-saving}. 
 Our solution can precisely answer hot malware family queries in nearly-real time, by using a constant number of counters.  
 
-
-\begin{figure}[t!]
-\begin{center}
-\includegraphics[width=2.5in]{figure/nov}
-\caption{The number of suspicious files and the number of malwares submitted to VirusTotal in November 2015. }
-\label{fig:subnum}
-\end{center}
-\end{figure}
+\input{section/fig1}
 
 In summary, this paper makes the following contributions:
 
