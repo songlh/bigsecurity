@@ -5,23 +5,22 @@
 %\begin{tabular}{@{\hspace{3pt}}l@{\hspace{3pt}}|@{\hspace{3pt}}c@{\hspace{3pt}}}
 \begin{tabular}{l|l}
 \hline
-Metadata Fields & Explanation \\
+Metadata Field & Explanation \\
 \hline                            
 %\cline{1-1}
-{\bf name}      & file name of the submitted sample \\
-{\bf timestamp} & timestamp for when the submission was made \\
-{\bf source\_country} & the country from which the submission was made \\
-{\bf source\_id} & user id of whom made the submission\\
-{\bf tags} & providing more specific information for each {\bf type}\\
-{\bf link} & where to download the submitted sample \\
+{\bf name}      & submitted file name \\
+{\bf timestamp} & timestamp when the submission was made \\
+{\bf source\_country} & the country where the submission was made \\
+{\bf source\_id} & user ID that made the submission\\
 {\bf size} & file size \\
 {\bf type} & file type \\
-{\bf first\_seen} & when the same sample was first submitted \\
-{\bf last\_seen} & when the same sample was last submitted \\
-{\bf hashes} & including sha1, sha256, vhash, md5, and ssdeep\\
-{\bf total} & how many engines analyze the sample\\
-{\bf positives} & how many engines identify the sample as malicious \\
-{\bf positives\_delta} & changes in {\bf positives} fields \\
+{\bf tags} & labels with more specific information for each {\bf type}\\
+{\bf first\_seen} & when the same type of file was first submitted \\
+{\bf last\_seen} & when the same type of file was last submitted \\
+{\bf hashes} & hash value of the submitted file\\
+{\bf total} & number of engines that analyzed the file \\
+{\bf positives} & number of engines that flagged the file as malicious \\
+{\bf positives\_delta} & changes in the {\bf positives} field \\
 {\bf report} & detailed detection report from each AV engine \\
 %\multicolumn{2}{|l|}
 \hline
@@ -31,6 +30,7 @@ Metadata Fields & Explanation \\
 \mycaption{tab:fields}{VirusTotal Metadata.}
 { 
 Fields for each submission retrieved from the VirusTotal private API and their relation explanation.
+The same file can be submitted multiple times by different users.
 }
 \end{table}
 
