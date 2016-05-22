@@ -39,34 +39,43 @@ and involve various security threats.
 This amount of diverse data makes VirusTotal a good representitive of malwares in the real world. 
 
 Second, VirusTotal applies a host of state-of-the-art antivirus engines to all submitted files,
-
-%All data on VirusTotal are labeled by state-of-the-art antivirus engines. 
+VirusTotal captures how these engines evolve over time.
 
 Third, VirusTotal provides rich metadata. 
 %VirusTotal updates each antivirus engine every five minutes. 
 Besides reporting whether or not a submitted file has virus, 
 VirusTotal also captures the exact type of virus, 
-There are also online active malware researchers 
-who can comment and vote on each submitted file 
-and thus serve as an important supplement to antivirus engines. 
+which antivirus engines detected the virus,
+when and by whom the file is submitted,
+and other userful meatadata.
+There are also active malware researchers and engineers
+who comment and vote on each submitted file, 
+providing valuable human inputs. 
 
 The VirusTotal repository exposes many new research opportunities.
 %List all the possible research questions that one can answer by analyzing VT data.
 %For example, ...
-For example, we can figure out what vulnerabilities malware writers prefer to exploit, 
-and design new systems and programming languages without those vulnerabilities. 
-For example, most malwares are created automatically. 
-Could we catch malwares' evolution pattern, and automate the updates of antivirus techniques?
-For example, there are increasing interests in applying machine learning techniques in different areas. 
-Could we leverage VirusTotal data to train a machine learning model and detect malwares we have not seen before? 
+For example, studying malwares over a long time period and across all countries in the world 
+can provides a high-level insight into how malwares evolve over time and over geo-locations.
+Studying how antivirus engines change over time together with how malwares change can 
+reveal the effectiveness of responses to new security threats.
+Finally, it is interesting to investigate if we can build malware prediction models 
+by applying machine learning techniques on the VirusTotal data.
+All these insights could in turn assist future antivirus researchers and engineers.
+%we can figure out what vulnerabilities malware writers prefer to exploit, 
+%and design new systems and programming languages without those vulnerabilities. 
+%For example, most malwares are created automatically. 
+%Could we catch malwares' evolution pattern, and automate the updates of antivirus techniques?
+%For example, there are increasing interests in applying machine learning techniques in different areas. 
+%Could we leverage VirusTotal data to train a machine learning model and detect malwares we have not seen before? 
 
 Unfortunately, there has been little work in looking at this valuable repository.
-In industry, antivirus vendors widely use VirusTotal to identify false negatives 
+In industry, many antivirus vendors use VirusTotal to identify false negatives 
 and false positives in their products. 
-However, they only utilize VirusTotal reports separately for each single suspicious file, 
-failing to consider correlations among different suspicious files. 
+However, they only use VirusTotal to examine suspicious files separately, 
+and do not consider correlations among different suspicious files. 
 In academia, only until recent did researchers begin to pay attention to mining the VirusTotal repository. 
-Graziano \textit{et al.}~\citet{neeles} leveraged submission\_id information to identify malware writers 
+Graziano \textit{et al.}~\cite{neeles} leveraged VirusTotal user ID information to identify malware writers 
 who use VirusTotal as a test platform. 
 
 We propose to investigate in the VirusTotal repository by ***.
