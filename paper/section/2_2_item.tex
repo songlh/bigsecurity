@@ -16,15 +16,24 @@
 \input{section/fimfp}
 
 
-This section presents our study on how malwares are distributed in each malware family. 
+This section presents our study on how malwares distribute in malware families. 
 
-As shown in Figure~\ref{fig:acum}, only a small number of malware families are hot.
-The distributions of malware families follow the well-known Pareto principle, 
-and more than 90\% of malware families take place in only 10\% of malwares. 
+We first count how many malwares fall into different malware families.
+As shown in Figure~\ref{fig:acum}, only a small number of malware families are hot, \ie, containing a large amount of malwares.
+The distributions of malware families follow the well-known Pareto principle:  
+more than 90\% of malware families take place in only 10\% of malwares. 
+The distributions of malware families are highly skewed,
+making it easy to precisely identify hot malware families. 
 
 {\bf Observation 3:} {\em Distributions of malware families are highly skewed.} 
 
-The skewness of malware families indicates we could apply a frequent item mining algorithm to identify hot malware families. 
+While the simple bin-counting mechanism works well on our one-month testing data, 
+a total of 11311 distinct malware families, 
+applying the same mechanism over a large dataset can cause significant memory space and performance overhead.
+
+To reduce these overheads and better support online analysis of huge datasets, 
+we need to seek alternative mechanisms.
+The skewness of malware families indicates we can apply a frequent item mining algorithm to identify hot malware families. 
 
 Frequent item mining algorithms take two configuration parameters, $\phi$ and $\epsilon$, where $\phi > \epsilon$. 
 The goal of frequent item mining algorithms is to provide a nearly-real time analysis on massive data streams by using constant memory. 
@@ -32,10 +41,8 @@ Assuming the length of the input stream is $N$, the output of frequent item mini
 includes all items that appear more than $\lfloor \phi N \rfloor$ times 
 and not include any item that appears less than  $\lfloor \epsilon N \rfloor$ times. 
 
-
-
-The frequent item mining algorithm we use is space saving algorithm~\cite{space-saving} 
-that was proposed for streams in Internet advertising and that has already been applied in other areas, 
+The frequent item mining algorithm we use is a space-efficient algorithm~\cite{space-saving} 
+proposed for streams in Internet advertising and that has already been applied in other areas, 
 like mining hot calling contexts in profilers~\cite{hot-calling-context}.
 Space saving algorithm tracks $M=1/\epsilon$ pairs of $(f, c)$. 
 $f$ is short for malware family, and $c$ is short for counter.  
@@ -51,10 +58,7 @@ When querying HMF,
 all malware families whose counter values are larger than $\lfloor \phi N \rfloor$ will be returned. 
 
 
-
-
-
-We implement the space saving algorithm by using python-2.7
+We implement the space saving algorithm using Python
 and conduct experiments in the same system as we did in Section~\ref{sec:temporal}.
 Following previous works on frequent item mining~\cite{hot-calling-context}, 
 we measure the following metrics by using the malware submission data we collect:
@@ -130,13 +134,3 @@ In the last experiment, we fix $\phi$ to $10^{-2}$
 and change $\phi/\epsilon$ from 2 to 15 to evaluate how false positives would change. 
 As shown by Figure~\ref{fig:fp}, space saving algorithm constantly reports 0 false positives in our experiments. 
 
-\underline{Discussion.}
-The distributions of malware families are highly skewed. 
-This is the reason why we could precisely identify hot malware families. 
-There are in total 11311 distinct malware families in our tested data. 
-Although this number is small, new malware families would appear every day 
-and applying frequent item mining algorithms can identify hot malware families from possibly 
-infinite malware families by using constant memory. 
-
-As we discussed in Section~\ref{sec:temporal}, malware family is a relatively coarse granularity.
-In the future, we could consider how to mine frequent items in the submission stream using a finer granularity. 
