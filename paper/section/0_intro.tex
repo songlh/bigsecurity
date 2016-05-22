@@ -4,36 +4,27 @@
 
 \section{Introduction}
 
-%Viruses are posing increasing threats in the 21st century. 
-%Researchers and practitioners have proposed a host of tools to prevent?kill? viruses. 
-%To assist the design of these tools, it is important to understand viruses.
-The number of malwares grows in an exponential way. 
-The most recent report from AVTest~\cite{avtest} shows that there are more than 140 million new malwares appearing in 2015. 
-These malwares are posing increasing threats every day. For example, 
-Kaspersky~\cite{kaspersky} shows that there were almost 2 million attempts to steal money through online access bank account 
-by malwares exploiting vulnerabilities in Adobe Flash Player. 
-There are increasing pressure on researchers and practitioners 
-to build tools to defense against new malwares. 
-To assist the design of these tools, it is important to understand malwares in the real world. 
+Malwares grow exponentially~\cite{avtest}. 
+AVTest~\cite{avtest} reports that more than 140 million new malwares appeared in 2015. 
+Such malwares are posing increasing threats to the human society every day. 
+For example, there were almost 2 million attempts to 
+steal money from online bank accounts 
+with malwares that exploit vulnerabilities in the Adobe Flash player~\cite{kaspersky}. 
 
-%what we analyze is malware, including virus, worm, and trojan.
-%malware is a concept bigger than virus. 
+Researchers and practitioners continue to build security tools to defend against new malwares,
+To assist the design of these tools, it is essential to understand malwares in the real world. 
 
+Previous works on analyzing the behaviors and evolutions of malwares~\cite{ZhouSP2012,GuptaComsnets2009} 
+have provided insights 
+into how malwares circumvent the detection from existing antivirus techniques and how malware writers create new malwares. 
+However, these works only studied a limited amount of malwares that are targeted for certain types of security threats or antivirus engines.
+Studying malwares in a large scale and with high diversity can expose new insights beyond these isolated studies.
 
-%Analyzing the behavior and ** of files that have been compromised in the past
-%can provide insights into how ***.
-
-Previous works~\cite{ZhouSP2012,GuptaComsnets2009} on analyzing the behaviors and evolutions of malwares have provided insights 
-into how malwares circumvent the detection from existing antivirus techniques, and how malware writers create new malwares. 
-However, these works are limited by the number of malwares under study. 
-
-%As a free online service, 
 VirusTotal~\cite{virustotal} is a popular online service that real-world users use to analyze suspicious files and URLs.
-%that analyzes files submitted by real-world users
 It applies more than 50 antivirus engines to each submitted file 
-to identify various kinds of malwares including viruses, worms, and trojans. 
+to detect various kinds of malwares including viruses, worms, and trojans. 
 It then generates a summary report that includes the detection results of all these engines. 
-VirusTotal saves and provides an open access of all submitted files and generated reports. 
+VirusTotal saves and provides an open access to all user-submitted files and generated reports. 
 
 The VirusTotal repository provides a valuable resource to gain insights into 
 the behavior of malware.
@@ -41,17 +32,20 @@ the behavior of malware.
 %in the software engineering and programming languages community, 
 %we believe that leveraging data on VirusTotal could also enable many ``big security'' applications.   
 %
-%The VirusTotal repository provides a valuable resource for conducting data mining. 
-%First, there is a huge amount of data on VirusTotal.
 First, it contains a huge amount of real-world files.
-Figure~\ref{fig:subnum} shows that there were more than 40 million suspicious files 
-submitted in November 2015. 
-This amount of data makes VirusTotal a good estimation of malwares in the real world. 
+For example, there were more than 40 million suspicious files submitted in November 2015 (Figure~\ref{fig:subnum}). 
+Files from VirusTotal were submitted by real-world users from all over the world since 2004
+and involve various security threats. 
+This amount of diverse data makes VirusTotal a good representitive of malwares in the real world. 
 
-Moreover, all data on VirusTotal are labeled by state-of-the-art antivirus techniques. 
-VirusTotal updates each antivirus engine every five minutes. 
-Besides noting whether a given a submitted file has been detected by an antivirus engine, 
-VirusTotal also keeps the exact detection tag returned by each engine. 
+Second, VirusTotal applies a host of state-of-the-art antivirus engines to all submitted files,
+
+%All data on VirusTotal are labeled by state-of-the-art antivirus engines. 
+
+Third, VirusTotal provides rich metadata. 
+%VirusTotal updates each antivirus engine every five minutes. 
+Besides reporting whether or not a submitted file has virus, 
+VirusTotal also captures the exact type of virus, 
 There are also online active malware researchers 
 who can comment and vote on each submitted file 
 and thus serve as an important supplement to antivirus engines. 
