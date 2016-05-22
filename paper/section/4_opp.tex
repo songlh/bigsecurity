@@ -38,6 +38,12 @@ VirusTotal also hosts some behavior data for each malware sample.
 Mining these data can help us understand which behaviors are more prominent in malwares, 
 and which vulnerabilities are more likely to be used by malwares, both of which can be used as indicator to detect new maliciousness. 
 
+Currently, we use malware family as prediction granularity. 
+In the future, we could try to predict malwares using a finer granularity. 
+For example, ssdeep values are also provided in VirusTotal metadata, 
+and these values can be used to cluster malwares. 
+We could cluster malwares in each family first, and then use cluster as prediction granularity. 
+
 {\bf Training machine learning models by using VirusTotal data}
 VirusTotal provides a huge set of labeled malwares. 
 It is interesting to consider leveraging VirusTotal data to train a machine learning model, and applying the trained model to conduct malware detection and classification. 

@@ -1,8 +1,14 @@
-
 \section{Temporal Analysis}
 \label{sec:temporal}
 
-This section presents our study of the temporal property of VirusTotal malwares. 
+This section presents our study of the temporal properties of VirusTotal malwares
+and answers two fundamental questions: 
+how many malware families appear everyday 
+and whether or not malwares occur in bursts.
+To answer the second question, we design a new caching mechanism 
+that can be used for both offline and online malware predictions.
+This cache-based malware prediction technique can predict which malware families will appear in the near 
+future with high precision. 
 
 \input{section/fignewfamily}
 
@@ -28,22 +34,26 @@ Specifically, we analyze how bursty malwares in the same family appear.
 Inspired by previous usage of cache mechanisms in predicting bugs~\cite{predicting},
 we design a new cache mechanism to study the burstiness of malwares.
 
+This caching mechanism can be used to analyze historical malware reports offline 
+as well as to analyze online malwares and predict near-future malware occurrences.
+
 We view malware submission reports as a stream of inputs 
 and feed the stream into a cache. 
 Each input (\ie, each report) is associated with an address (the family it belongs to) and a time (the submission time of the file).
 Thus, a cache hit means that the new report belongs to a family that is currently in the cache,
 \ie, the new input has the same address as an entry in the cache.
-Therefore, a high cache hit rate implies that the occurance of malwares exhibit temporal locality.
+Therefore, a high cache hit rate implies that the occurrence of malwares exhibit temporal locality.
 
 As with general cache mechanisms such as CPU caches and file system buffer caches, 
 there are several parameters to tune in a cache.
 The cache block size, or cache line size, controls the granularity of cache management, 
 \ie, how many entries are inserted into and evicted from cache together.
-Cache prefetching loads spacially close entries into caches in advance. 
+Cache prefetching loads spatially close entries into caches in advance. 
 Cache replacement policy controls what entries to evict when cache is full.
 We use a simple cache setting in our evaluation. 
 We fix the cache block size to be one, no prefetching, 
 and use the LRU (least recently used) replacement policy.
+We leave the exploration of the effect of other cache configurations for future work. 
 
 Our malware family cache works as follows.
 We start with an empty cache. 
@@ -58,7 +68,7 @@ $$ \mbox{hit rate} = \dfrac{\mbox{\# of hits}}{\mbox{\# of hits + \# of misses}}
 
 We implemented this malware family cache using Python
 and conducted experiments on an AWS c4.4xlarge virtual machine, 
-which contains 16 virtual cpus and 30\,GB memory.
+which contains 16 virtual CPUs and 30\,GB memory.
 
 We conducted two experiments. 
 The first experiment explores how the cache hit rate changes with the number of cache entries. 
@@ -69,27 +79,19 @@ and when using more than 230 cache entries, which is less than 3\% of the total 
 the cache hit rate rises above 95\%. 
 The high cache hit rate confirms that malwares occur in bursts.
 
-In the second experiment, we fix the cache size to 100 
-and lower the cache content update frequency from once per malware report to once per day.
-That is, we keep cache content unchanged to count cache hits and cache misses each day and update the cache content at the end of each day.
-Figure~\ref{fig:batchcache} shows the cache hit rate for each day. 
-Most cache hit rate falls in a range between 70\% and 80\%.  
-
 {\bf Observation 2:} 
-{\em The occurance of malwares in each family has strong temporal locality.}  
+{\em The occurrence of malwares in each family has strong temporal locality.}  
 
-\underline{Discussion.}
-Resources to combat malwares are limited. 
-Any techniques that could allow antivirus vendors to focus their efforts would be great. 
-Our cache-based malware prediction technique can predict which malware families will appear in the near future with high precision. 
+To support online malware occurrence prediction, it is essential to lower the 
+performance overhead of running our cache mechanism.
+To this end, we lower the cache content update frequency from once per malware report to once per day.
+That is, we keep cache content unchanged to count cache hits and cache misses each day and update the cache content at the end of each day.
+In this second experiment, we fix the cache size to 100. 
+Figure~\ref{fig:batchcache} shows the cache hit rate for each day. 
+Most cache hit rate falls in a range between 70\% and 80\%,
+showing that even when lowering performance overhead, our cache mechanism still achieves an good estimation of malware occurrences.  
 
-We note that there are many other cache configurations, for example, those
-with different cache block sizes, different pre-fetch mechanisms, 
-and different replacement policies. 
-We leave the exploration of the effect of their combinations for the future. 
+%\underline{Discussion.}
+%Resources to combat malwares are limited. 
+%Any techniques that could allow antivirus vendors to focus their efforts would be great. 
 
-Currently, we use malware family as prediction granularity. 
-In the future, we could try to predict malwares using a finer granularity. 
-For example, ssdeep values are also provided in VirusTotal metadata, 
-and these values can be used to cluster malwares. 
-We could cluster malwares in each family first, and then use cluster as prediction granularity. 
