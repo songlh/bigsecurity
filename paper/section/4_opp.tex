@@ -1,53 +1,61 @@
 \section{Research Opportunities}
 \label{sec:oppo}
 
-Beyond the research described above, we illustrate a number of research opportunities as follows.
+Although our initial investigation of VirusTotal is successful, 
+there are a many more research opportunities beyond our initial study.
 
 {\bf Studying correlations among metadata fields.} 
 We currently only leverage timestamp and Microsoft detection reports. 
 There are many other metadata fields. 
-Conducting data mining on these fields, especially their correlations, could enable 
+Conducting data mining on these fields, especially their correlations, can enable 
 many other ``big malwares'' applications. 
-For example, there are existing techniques that leverage the correlations between submission\_id and similarity among submitted malwares to identify malware writers~\cite{neeles}, 
-who uses VirusTotal as a test platform. 
-Future research can explore correlations between malwares’ features and their detection rates to understand what features are ignored by existing antivirus engines. 
+%For example, there are existing techniques that leverage the correlations between submission\_id and similarity among submitted malwares to identify malware writers~\cite{neeles}, 
+%who uses VirusTotal as a test platform. 
+For example, future research can explore correlations between the features of malwares and 
+their detection rates to understand what features are ignored by existing antivirus engines. 
 
 {\bf Utilizing other antivirus vendors' reports.}
 We currently only leverage reports from Microsoft, but these reports may not always be accurate.
 There are more than 40 antivirus vendors' reports provided on VirusTotal.
 Some vendors’ reports may be better than others or better than others under some special conditions. 
-We leave efforts evaluat all those reports systematically and to better combine reports from different vendors for future work. 
-
-{\bf Improving antivirus products.} 
-There are also opportunities to improve existing antivirus products. 
-For example, many endpoint antivirus softwares, like ClamAV, are built based on a database of malwares' signatures. 
-When these antivirus softwares scan suspicious files, all signatures in the database will be checked. 
-It is possible to explore how to automatically extract malware signatures by leveraging VIrusTotal data, instead of extracting them manually.
-And if we can precisely predict which malware will appear in the near future, 
-we could reduce the size of signatures sent to clients' side and also reduce time to check the signature database. 
-
+We leave efforts evaluate all those reports systematically and to better combine reports from different vendors for future work. 
 
 {\bf Studying other types of malicious files. }
 Besides PE files, there are other types of malicious files on VirusTotal such as malicious apps, 
-malicious URL, and malicious binary files on other systems. 
-What the characteristics of these files are and whether they follow the same patterns as PE files remain open issues.  
+URL, and binary files on non-Windows OSes. 
+How these malicious file behave remains an open question.
+%What the characteristics of these files are and whether they follow the same patterns as PE files remain open issues.  
+
+{\bf Using other analysis granularity.}
+Currently, we use malware family as prediction granularity. 
+One can predict malwares using finer granularities. 
+For example, {\em ssdeep} values are also provided in VirusTotal metadata, 
+and these values can be used to cluster malwares. 
+One promising approach is to cluster malwares in each family first, and then use cluster as prediction granularity. 
 
 {\bf Leveraging other information on VirusTotal.}
-Besides the static information we discussed in Section~\ref{sec:meth}, 
+Besides the static information discussed in Section~\ref{sec:meth}, 
 VirusTotal also hosts some behavior data for each malware sample. 
 Mining these data can help us understand which behaviors are more prominent in malwares, 
 and which vulnerabilities are more likely to be used by malwares, both of which can be used as indicator to detect new maliciousness. 
 
-Currently, we use malware family as prediction granularity. 
-In the future, we could try to predict malwares using a finer granularity. 
-For example, ssdeep values are also provided in VirusTotal metadata, 
-and these values can be used to cluster malwares. 
-We could cluster malwares in each family first, and then use cluster as prediction granularity. 
-
 {\bf Training machine learning models by using VirusTotal data}
 VirusTotal provides a huge set of labeled malwares. 
-It is interesting to consider leveraging VirusTotal data to train a machine learning model, and applying the trained model to conduct malware detection and classification. 
+It is interesting to consider leveraging VirusTotal data to train a machine learning model, 
+and applying the trained model to conduct malware detection and classification. 
 However, we need to figure out a feature set before training the model. 
-Which information provided by VirusTotal can be included into the feature set remains an open question. If we need features beyond information provided by VirusTotal, does the feature extraction scales with the size of VirusTotal data also remains an open issue. 
+Which information provided by VirusTotal can be included into the feature set remains an open question. 
+If we need features beyond information provided by VirusTotal, does the feature extraction scales with the size of VirusTotal data also remains an open issue. 
 Neural network takes binary as inputs, and can extract features automatically. 
-However, neural network requires all binary inputs with the same size. It is easier to resize images. If we want to apply neural network to malwares, how could we resize malware? 
+However, neural network requires all binary inputs with the same size. 
+It is easier to resize images. If we want to apply neural network to malwares, how could we resize malware? 
+
+{\bf Improving antivirus products.} 
+Finally, there are opportunities to improve existing antivirus products. 
+For example, many endpoint antivirus softwares, like ClamAV, are built based on a database of malwares' signatures. 
+When these antivirus softwares scan suspicious files, all signatures in the database will be checked. 
+It is possible to explore how to automatically extract malware signatures by leveraging VirusTotal data, instead of extracting them manually.
+And if we can precisely predict which malware will appear in the near future, 
+we could reduce the size of signatures sent to clients' side and also reduce time to check the signature database. 
+
+
