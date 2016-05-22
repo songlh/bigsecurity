@@ -1,30 +1,39 @@
 \section{Research Opportunities}
 \label{sec:oppo}
-Beyond the research described above, we illustrate a number of research opportunities as follows: 
+Beyond the research described above, we illustrate a number of research opportunities as follows.
 
 {\bf Utilizing other metadata fields.} 
 We currently only leverage timestamp and Microsoft detection reports. 
 There are many other metadata fields. 
 Conducting data mining on these fields could enable 
-Many other ``big security'' applications. 
-For example, there are existing techniques leverage submission\_id information to identify malware writers~\cite{neeles}. 
-For example, future research could leverage ssdeep information to cluster malwares, 
-and conduct malware prediction and hot malware mining in a finer granularity. 
+many other ``big security'' applications. 
+For example, there are existing techniques that leverage submission\_id information to identify malware writers~\cite{neeles}. 
+For example, future research could leverage ssdeep information to cluster malwares
+and conduct malware prediction and hot malware mining using a finer granularity. 
 
-{\bf Utilizing other antivirus vendors’ reports.}
-We currently only leverage reports from Microsoft, but these reports may not be always accurate.
-There are more than 40 antivirus vendors' reports also provided on VirusTotal.
-Some vendors’ reports may be better than others, or better than others under some special conditions. 
-We leave systematically evaluating all those reports and better combining reports from different vendors in the future. 
+
+{\bf Utilizing other antivirus vendors' reports.}
+We currently only leverage reports from Microsoft, but these reports may not always be accurate.
+There are more than 40 antivirus vendors' reports provided on VirusTotal.
+Some vendors’ reports may be better than others or better than others under some special conditions. 
+We leave efforts evaluat all those reports systematically and to better combine reports from different vendors for future work. 
 
 {\bf Improving antivirus products.} 
 There are also opportunities to improve existing antivirus products. 
 For example, many endpoint antivirus softwares, like ClamAV, are built based on a database of malwares' signatures. 
 When these antivirus softwares scan suspicious files, all signatures in the database will be checked. 
-If we can precisely predict which malware would appear in the near future, 
+It is possible to explore how to automatically extract malware signatures by leveraging VIrusTotal data, instead of extracting them manually.
+And if we can precisely predict which malware will appear in the near future, 
 we could reduce the size of signatures sent to clients' side and also reduce time to check the signature database. 
 
+
 {\bf Studying other types of malicious files. }
-Besides PE files, there are other types of malicious files on VirusTotal, like malicious apps, 
+Besides PE files, there are other types of malicious files on VirusTotal such as malicious apps, 
 malicious URL, and malicious binary files on other systems. 
-What are the characteristics of these files and whether they follow the same patterns as PE files remain an open issue.  
+What the characteristics of these files are and whether they follow the same patterns as PE files remain open issues.  
+
+{\bf Leveraging other information on VirusTotal.}
+Besides the static information we discussed in Section~\ref{sec:meth}, 
+VirusTotal also hosts some behavior data for each malware sample. 
+Mining these data can help us understand which behaviors are more prominent in malwares, 
+and which vulnerabilities are more likely to be used by malwares, both of which can be used as indicator to detect new maliciousness. 
