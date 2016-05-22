@@ -1,45 +1,19 @@
 \section{Distribution Analysis}
 \label{sec:dist}
 
-\begin{figure}[t!]
-\begin{center}
-\includegraphics[width=2.5in]{figure/cum}
-\caption{Skewness of malware families appearing in November 2015.}
-\label{fig:acum}
-\end{center}
-\end{figure}
+%\begin{figure}[t!]
+%\begin{center}
+%\includegraphics[width=2.5in]{figure/cum}
+%\caption{Skewness of malware families appearing in November 2015.}
+%\label{fig:acum}
+%\end{center}
+%\end{figure}
 
-\begin{figure*}[!htb]
-\minipage{0.22\textwidth}
-  \includegraphics[width=\linewidth]{figure/overlap.pdf}
-  \caption{Relation between $\phi$ and degree of overlap.}
-  \label{fig:overlap}
-\endminipage\hfill
-\minipage{0.22\textwidth}
-  \includegraphics[width=\linewidth]{figure/maxUncover.pdf}
-  \caption{Relation between $\phi$ and degree of maxUncover.}
-  \label{fig:maxUncover}
-\endminipage\hfill
-\minipage{0.22\textwidth}%
-  \includegraphics[width=\linewidth]{figure/aveUncover.pdf}
-  \caption{Relation between $\phi$ and degree of aveUncover.}
-  \label{fig:aveUncover}
-\endminipage\hfill
-\minipage{0.22\textwidth}%
-  \includegraphics[width=\linewidth]{figure/maxError.pdf}
-  \caption{Relation between $\phi$ and maxError.}
-  \label{fig:maxError}
+\input{section/skewness}
 
-\endminipage
-\end{figure*}
+\input{section/fim4tabs}
 
-\begin{figure}[t!]
-\begin{center}
-\includegraphics[width=2.0in]{figure/fp}
-\caption{False positives in $(\phi, \epsilon)\mbox{-}HMF$ as a function of $\epsilon$. The value of $\phi$ is fixed to $10^{-2}$.}
-\label{fig:fp}
-\end{center}
-\end{figure}
+\input{section/fimfptab}
 
 
 In this section, we study how malwares are distributed in each malware family. 

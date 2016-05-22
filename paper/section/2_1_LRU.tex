@@ -4,13 +4,7 @@
 
 In this section, we study the temporal property of VirusTotal malwares. 
 
-\begin{figure}[t!]
-\begin{center}
-\includegraphics[width=2.5in]{figure/new_family}
-\caption{The number of new malware families we observed each day in November 2015.}
-\label{fig:new}
-\end{center}
-\end{figure}
+\input{section/fignewfamily}
 
 
 We first study how many new malware families appear each day. 
@@ -24,22 +18,10 @@ In total, there are 11311 malware families.
 There are 100-400 new malware families appearing each day. 
 
 
-\begin{figure}[t!]
-\begin{center}
-\includegraphics[width=2.5in]{figure/LRU}
-\caption{Relation between cache hit rate and cache size.}
-\label{fig:cache}
-\end{center}
-\end{figure}
+\input{section/hitsize}
 
 
-\begin{figure}[t!]
-\begin{center}
-\includegraphics[width=2.5in]{figure/LRU_day}
-\caption{Cache hit rate when updating cache content once a day.}
-\label{fig:batchcache}
-\end{center}
-\end{figure}
+\input{section/hitday}
 
 We then investigate whether there is time locality for malwares.
 Specifically, we hypothesize that malwares in the same family would appear in bursts.  
