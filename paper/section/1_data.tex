@@ -6,41 +6,46 @@
 This section discusses how we collected and preprocessed data from VirusTotal.
 We will present the analysis of these data in the next two sections.
 
-We downloaded submission reports' metadata from the private API of VirusTotal. 
-Table~\ref{tab:fields} shows all metadata fields and their meaning. 
-In this paper, we only focus on Portable Executable (PE) files 
+We downloaded the metadata and malware reports of all submitted files in November 2015 using the APIs VirusTotal provides,
+resulting in a total of 43 million reports.
+Table~\ref{tab:fields} shows the metadata fields and their meaning. 
+
+In this paper, we only focus on {\em Portable Executable (PE)} files 
 and leave the analysis of other types of malicious files for future work. 
-We filter all records by the tag field. 
+We filter all downloaded metadata by the tag field. 
 If the tag field contains either ``peexe'' or ``pedll'' tags, we consider the record as a PE file. 
-Then we rely on Microsoft antivirus engine to judge whether the PE file is a malware and if so its malware family.
-
-It is possible that the VirusTotal private API returns redundant reports, 
-and we use the combination of md5 and timestamp
- to detect and merge redundant reports.
-
-We downloaded all reports in November 2015, collecting a total of 43 million reports of which 4.7 million are PE malwares. 
+We then use Microsoft antivirus engines to judge whether a PE file is a malware.
+Within the 43 million reports, 4.7 million are PE malwares. 
 The number of reports and PE malwares submitted each day are shown in Figure~\ref{fig:subnum}.
 
-After removing redundant submissions, we find that most malwares were submitted only once to VirusTotal. 
-4 million out of the total 4.7 million PE malware submissions are distinct. 
-On average, each PE malware was submitted 1.17 times to VirusTotal. We believe that most malwares are encountered by more than one VirusTotal user. 
-One possible reason for this observation is that VirusTotal users 
-tend to check whether their samples have already been submitted
-before making their own submissions.
+To decide what family a malware belongs to, we use %%% please fill.
+
+One caveat of VirusTotal is that it is possible that the VirusTotal APIs return redundant reports 
+for the same submitted file. 
+We use the combination of md5 hash value and timestamp to detect and remove redundant reports.
+
+After removing redundant reports, we find that most malwares were submitted only once to VirusTotal. 
+Out of the total 4.7 million PE malware submissions, 4 million are distinct. 
+On average, each PE malware was submitted 1.17 times to VirusTotal. 
+This observation is in contradictory to the common belief that most malwares are encountered by more than one user.
+We suspect that the reason behind this low degree of repeated submissions by different users
+is that VirusTotal users
+tend to check whether their suspicious files have already been submitted
+and avoid submitting redundant files.
 
 %\textit{\underline{Threats to Validity.}}
 Similar to all previous empirical studies, all our findings, experimental results, 
 and conclusions need to be considered with our methodology in mind. 
 
-The VirusTotal private API only tracks which submission reports are sent to each downloader approximately, 
+The VirusTotal APIs only track which submission reports are sent to each downloader approximately, 
 and there is no guarantee that all submission reports on VirusTotal can be downloaded successfully. 
-It could be possible that we missed some malwares submitted to VirusTotal. 
-Also, we simply leverage Microsoft antivirus engine to decide whether a submission is malicious or not, 
-and it is possible that Microsoft antivirus engine cannot make this decision precisely. 
-However, how to get a precise label for a PE file is out of the scope of this paper.  
-Although there is a huge amount of malwares on VirusTotal, we believe there are malwares never submitted to VirusTotal, 
+Thus, it is possible that we missed some malwares submitted to VirusTotal. 
+Also, we only leverage Microsoft antivirus engines to decide whether or not a submission is malicious, 
+and it is possible that Microsoft antivirus engines cannot make this decision precisely. 
+How to get a precise label for a PE file is out of the scope of this paper.  
+Although there is a huge amount of malwares on VirusTotal, we believe that there are malwares never submitted to VirusTotal, 
 and there are malwares submitted much later than when they appear in the real world.
-However, there are no conceivable ways to study these malwares. 
-We believe that the malwares in our study provide a representative malware sample of the real world. 
+Since there are no conceivable ways to study these malwares,
+we believe that the malwares in our study provide a representative malware sample of the real world. 
 
 
