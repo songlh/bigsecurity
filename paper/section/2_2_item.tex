@@ -68,11 +68,11 @@ we measure the following metrics by using the malware submission data we collect
 \item 
 Degree of \textit{overlap} is used to measure the percentage of malwares covered in $(\phi, \epsilon)\mbox{-}HMF$,
 and it is defined as follows:
-
+\vspace{-0.05in}
 \begingroup\makeatletter\def\f@size{8}\check@mathfonts
 $$overlap((\phi, \epsilon)\mbox{-}HMF) = \dfrac{1}{N}\sum_{f \in (\phi, \epsilon)\mbox{-}HMF}w(f)$$
 \endgroup
-
+%\vspace{-0.05in}
 where $w(f)$ represents the real frequency of malware family $f$.  
 
 \item 
@@ -80,6 +80,7 @@ where $w(f)$ represents the real frequency of malware family $f$.
 %is used 
 %to measure largest frequency of malware families not covered in $(\phi, \epsilon)\mbox{-}HMF$. 
 It is defined as follows:
+\vspace{-0.05in}
 \begingroup\makeatletter\def\f@size{8}\check@mathfonts
 $$maxUncover((\phi, \epsilon)\mbox{-}HMF) = \max_{f \notin (\phi, \epsilon)\mbox{-}HMF}w(f)/H(f)$$
 \endgroup
@@ -98,6 +99,7 @@ Space saving algorithm is designed to guarantee that there will be no false nega
 \textit{MaxError} is used to measure the relative error of counter values
 compared to their real frequencies.
 It is defined as follows:
+\vspace{-0.05in}
 \begingroup\makeatletter\def\f@size{8}\check@mathfonts
 $$maxError((\phi, \epsilon)\mbox{-}HMF) = \max_{f \in (\phi, \epsilon)\mbox{-}HMF} \dfrac{\left|c(f) - w(f)\right|}{w(f)}$$
 \endgroup
