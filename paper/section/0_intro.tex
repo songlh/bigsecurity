@@ -1,16 +1,28 @@
 \section{Introduction}
 
-As a free online service, VirusTotal~\cite{virustotal} analyzes files submitted by real-world users to 
-identify many different kinds of malwares such as viruses, worms, trojans, and so on. 
-VirusTotal applies different antivirus engines to each submitted file and generates an aggregated report. 
-All submitted files and generated reports are saved and can be accessed through VirusTotal's API. 
-Inspired by previous work on mining software repositories~\cite{GuoICSE2010,bigcode, big-lessons,big-translation,code-completion,big-predicting} 
-in the software engineering and programming languages community, 
-we believe that leveraging data on VirusTotal could also enable many ``big security'' applications.   
+Viruses are posing increasing threats in the 21st century. 
+Researchers and practitioners have proposed a host of tools to prevent?kill? viruses. 
+To assist the design of these tools, it is important to understand viruses.
 
+Analyzing the behavior and ** of files that have been compromised in the past
+can provide insights into how ***.
 
+%As a free online service, 
+VirusTotal~\cite{virustotal} is a popular online service that real-world users use to analyze suspicious files and URLs.
+%that analyzes files submitted by real-world users
+It applies more than 50 antivirus engines to each submitted file 
+to identify various kinds of malwares including viruses, worms, and trojans. 
+It then generates a summary report that includes the detection results of all these engines. 
+VirusTotal saves and provides an open access of all submitted files and generated reports. 
 
-The repository on VirusTotal provides a valuable resource for conducting data mining. 
+With the huge amount of real-world files, 
+the VirusTotal repository provides a valuable resource to gain insights into 
+the behavior of malware.
+%Inspired by previous work on mining software repositories~\cite{GuoICSE2010,bigcode, big-lessons,big-translation,code-completion,big-predicting} 
+%in the software engineering and programming languages community, 
+%we believe that leveraging data on VirusTotal could also enable many ``big security'' applications.   
+
+%The VirusTotal repository provides a valuable resource for conducting data mining. 
 First, there is a huge amount of data on VirusTotal.
 Figure~\ref{fig:subnum} shows that there were more than 40 million suspicious files 
 submitted in November 2015. 
