@@ -94,29 +94,40 @@ and conducted an early-stage empirical study on them.
 %An empirical study is the prerequisite to conduct data mining on VirusTotal. 
 %We first collect more than 40 million suspicious file submissions from VirusTotal.
 % this para needs total rewriting
-We focus our analysis on all Windows executable malwares detected by Microsoft
-antivirus engines. 
-Using antivirus engines and malwares under the same platform improves malware detection accuracy. 
+We focus our analysis on all Windows executable (PE) malwares detected by Microsoft
+antivirus engine, 
+\textcolor{red}{because our previous experience shows that Microsoft antivirus engine can generate precise results on PE files.}
+%Using antivirus engines and malwares under the same platform improves malware detection %accuracy. 
 
 We centered our analysis around the concept of {\em malware families}.
 A malware family is a set of malwares that have common behaviors.
-Specifically, we analyzed malware characteristics including
-the submission frequencies and generation rates of malware families, 
-the temporal properties of malwares, 
-and the distribution of malwares across malware families.
+%Specifically, we analyzed malware characteristics including
+%the submission frequencies and generation rates of malware families, 
+%the temporal properties of malwares, 
+%and the distribution of malwares across malware families.
+\textcolor{red}{Specifically, we began our analysis from general characteristics including the submission
+frequencies and generation rates of malware families. 
+We then study the burstiness of malwares---how closely malwares belonging to the same family appear in time. 
+Our LRU malware family cache can achieve a 90\% cache hit rate by only using 100 cache entries. This experimental result verifies the burstiness of malwares. 
+Our LRU cache can predict malware families appear in the near future, and allow antivirus vendors to focus their efforts. 
+We finally study how malwares distribute among different malware families. 
+We observe that distributions of malware families are highly skewed. 
+This observation motivates us to apply a frequent item mining algorithm~\cite{space-saving} to 
+Identify hot malware family. Our solution can answer historical hot malware families in nearly-real time using constant memory. }
+
 
 %%% the following para needs total rewrite
-We further study the burstiness of malwares---how closely malwares belonging to the same family appear in time. %%% is this def correct?
+%We further study the burstiness of malwares---how closely malwares belonging to the same family appear in time. %%% is this def correct?
 %%% I don't understand the following sentence
-We built a cache-based malware prediction tool that predicts malwares in which families would appear in the near future. 
+%We built a cache-based malware prediction tool that predicts malwares in which families would appear in the near future. 
 %Our malware family cache can achieve a 90\% cache hit rate by only using 100 cache entries.
-Our technique would allow antivirus vendors to focus their efforts. 
-We also observe that distributions of malware families are highly skewed. 
-This observation inspires us to apply a frequent item mining algorithm to 
-identify hot malware families. 
-We view malware submissions as a stream based on their submission timestamps and 
-feed this stream into space saving algorithm~\cite{space-saving}. 
-Our solution can precisely answer hot malware family queries in nearly-real time, by using a constant number of counters.  
+%Our technique would allow antivirus vendors to focus their efforts. 
+%We also observe that distributions of malware families are highly skewed. 
+%This observation inspires us to apply a frequent item mining algorithm to 
+%identify hot malware families. 
+%We view malware submissions as a stream based on their submission timestamps and 
+%feed this stream into space saving algorithm~\cite{space-saving}. 
+%Our solution can precisely answer hot malware family queries in nearly-real time, by using a constant number of counters.  
 
 \input{section/fig1}
 
