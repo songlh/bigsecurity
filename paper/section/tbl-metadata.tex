@@ -1,0 +1,35 @@
+\begin{table}[h!]
+\centering
+\footnotesize
+{
+%\begin{tabular}{@{\hspace{3pt}}l@{\hspace{3pt}}|@{\hspace{3pt}}c@{\hspace{3pt}}}
+\begin{tabular}{l|l}
+\hline
+Metadata Fields & Explanation \\
+\hline                            
+%\cline{1-1}
+{\bf name}      & file name of the submitted sample \\
+{\bf timestamp} & timestamp for when the submission was made \\
+{\bf source\_country} & the country from which the submission was made \\
+{\bf source\_id} & user id of whom made the submission\\
+{\bf tags} & VirusTotal tag \\
+{\bf link} & where to download the submitted sample \\
+{\bf size} & file size \\
+{\bf type} & file type \\
+{\bf first\_seen} & when the same sample was first submitted \\
+{\bf last\_seen} & when the same sample was last submitted \\
+{\bf hashes} & including sha1, sha256, vhash, md5, and ssdeep\\
+{\bf total} & how many engines analyze the sample\\
+{\bf positives} & how many engines identify the sample as malicious \\
+{\bf positives\_delta} & changes in {\bf positives} fields \\
+{\bf report} & detailed detection report from each AV engine \\
+%\multicolumn{2}{|l|}
+\hline
+
+\end{tabular}
+}
+\caption{Metadata fields for each submission retrieved from the VirusTotal private API.}
+\label{tab:fields}
+\end{table}
+
+
