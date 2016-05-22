@@ -3,15 +3,14 @@
 
 Beyond the research described above, we illustrate a number of research opportunities as follows.
 
-{\bf Utilizing other metadata fields.} 
+{\bf Studying correlations among metadata fields.} 
 We currently only leverage timestamp and Microsoft detection reports. 
 There are many other metadata fields. 
-Conducting data mining on these fields could enable 
-many other ``big security'' applications. 
-For example, there are existing techniques that leverage submission\_id information to identify malware writers~\cite{neeles}. 
-For example, future research could leverage ssdeep information to cluster malwares
-and conduct malware prediction and hot malware mining using a finer granularity. 
-
+Conducting data mining on these fields, especially their correlations, could enable 
+many other ``big malwares'' applications. 
+For example, there are existing techniques that leverage the correlations between submission\_id and similarity among submitted malwares to identify malware writers~\cite{neeles}, 
+who uses VirusTotal as a test platform. 
+Future research can explore correlations between malwares’ features and their detection rates to understand what features are ignored by existing antivirus engines. 
 
 {\bf Utilizing other antivirus vendors' reports.}
 We currently only leverage reports from Microsoft, but these reports may not always be accurate.
