@@ -5,18 +5,20 @@ from datetime import datetime, timedelta
 
 from matplotlib.backends.backend_pdf import PdfPages
 
-with open('./nov.data.txt') as f:
+with open('../data/nov.data.txt') as f:
 	lines = f.read().splitlines()
 
 dateList = []
 subList =[]
+peList = []
 malList = []
 
 for line in lines:
 	tmpList = line.split()
 	dateList.append(datetime.strptime(tmpList[0], "%m/%d/%Y").date())
 	subList.append(int(tmpList[1])/1000000.0)
-	malList.append(int(tmpList[2])/1000000.0)
+	peList.append(int(tmpList[2])/1000000.0)
+	malList.append(int(tmpList[3])/1000000.0)
 
 #for date in dateList:
 #	print date
@@ -24,6 +26,7 @@ days = mdates.DayLocator(interval=2)
 
 fig, ax = plt.subplots()
 ax.plot(dateList, subList, 'b--', label = 'Submissions', linewidth=2.0)
+ax.plot(dateList, peList, 'r-.', label = 'PE Submissions', linewidth=2.0)
 ax.plot(dateList, malList, 'g-',  label='PE Malwares', linewidth=2.0)
 legend = ax.legend(loc='upper left', fontsize='large')
 plt.ylabel('VirusTotal reports (in million)', fontsize=18)
