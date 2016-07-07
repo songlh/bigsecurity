@@ -3,7 +3,7 @@
 \label{sec:meth}
 
 This section discusses how we collected and preprocessed data from VirusTotal.
-We will present the analysis of these data in the next two sections.
+We will present the analysis of these data in the next three sections.
 
 \input{section/tbl-metadata}
 
@@ -41,11 +41,11 @@ One caveat of VirusTotal is that it is possible that the VirusTotal APIs return 
 for the same submitted file. 
 We use the combination of sha256 hash value and timestamp to detect and remove redundant reports.
 
-After removing redundant reports, we find that most malwares were submitted only once to VirusTotal. 
+After removing redundant reports, we find that most malwares were submitted only once to VirusTotal in November 2015. 
 Out of the total 4.7 million PE malware submissions, 4 million are distinct. 
 On average, each PE malware was submitted 1.17 times to VirusTotal in November 2015. 
 This observation is in contradictory to the common belief that most malwares are encountered by more than one user.
-We suspect that the reason behind this low degree of repeated submissions by different users
+We suspect that the reason behind this low degree of repeated submissions by different users in one month
 is that VirusTotal users
 tend to check whether their suspicious files have already been submitted recently
 and avoid submitting redundant files.

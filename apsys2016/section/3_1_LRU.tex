@@ -73,7 +73,7 @@ which contains 16 virtual CPUs and 30\,GB memory.
 We conducted two experiments. 
 The first experiment explores how the cache hit rate changes with the number of cache entries. 
 We change the cache size from 10 to 1000. 
-As shown in Figure~\ref{fig:cache}, the hit rate grows from 69.29\% to 98.14\%. 
+As shown in Figure~\ref{fig:cache}, the hit rate grows from 69.31\% to 98.14\%. 
 When using more than 80 cache entries, which is less than 1\% of the total number of malware families, the cache hit rate rises above 90\%, 
 and when using more than 230 cache entries, which is less than 3\% of the total number of malware families, 
 the cache hit rate rises above 95\%. 
@@ -86,11 +86,24 @@ To support online malware occurrence prediction, it is essential to lower the
 performance overhead of running our cache mechanism.
 To this end, we lower the cache content update frequency from once per malware report to once per day.
 That is, we keep cache content unchanged to count cache hits and cache misses each day and update the cache content at the end of each day.
-In this second experiment, we fix the cache size to 100. 
+In this second experiment, we fix the cache size to 200. 
 Figure~\ref{fig:batchcache} shows the cache hit rate for each day. 
-Most cache hit rate falls in a range between 70\% and 80\%,
-showing that even when lowering performance overhead, our cache mechanism still achieves an good estimation of malware occurrences.  
+Most cache hit rate is above 70\%,
+showing that even when lowering performance overhead, 
+our cache mechanism still achieves a good estimation of malware occurrences.   
 
+{\color{red}
+We also study which malware families cause more cache misses 
+and have bad prediction results. 
+We count cache misses for each malware family, 
+and consider a family with more than half malwares causing cache misses as family with bad prediction results. 
+We find that whether a family will have bad prediction results is related to the cache size and the number of malwares contained in the family. 
+When cache size is 100, there are 6990 families with bad prediction results, 
+and the largest number of malwares contained in one of these families is 2307. 
+When we change the cache size to 1000, 
+there are 5458 families with bad prediction results, 
+and the largest number of malwares contained in one of these families is 126. 
+}
 %\underline{Discussion.}
 %Resources to combat malwares are limited. 
 %Any techniques that could allow antivirus vendors to focus their efforts would be great. 
