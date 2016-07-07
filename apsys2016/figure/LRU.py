@@ -4,7 +4,7 @@ from matplotlib.ticker import MultipleLocator, FormatStrFormatter
 from matplotlib.ticker import FixedLocator
 import numpy as np
 
-with open('./LRU.result') as f:
+with open('../data/LRU.result') as f:
 	lines = f.read().splitlines()
 
 entryList = []

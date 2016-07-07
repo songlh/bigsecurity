@@ -10,34 +10,39 @@ with open('../data/lifeTime.stat') as f:
 labelList = []
 subList = []
 peList = []
+pemsList = []
 
 for line in lines:
 	tmp = line.split()
 	labelList.append(tmp[0])
 	subList.append(int(tmp[1]))
 	peList.append(int(tmp[2]))
+	pemsList.append(int(tmp[3]))
 
 subTotal = sum(subList)
 peTotal = sum(peList)
+psmsTotal = sum(pemsList)
 
 accumList = []
 peaccumList = []
+pemsaccumList = []
 rateList = []
 
 for i in range(1, len(subList) + 1):
 	accumList.append(sum(subList[0:i]) * 1.0/subTotal * 100)
 	peaccumList.append(sum(peList[0:i]) * 1.0/peTotal * 100)
+	pemsaccumList.append(sum(pemsList[0:i]) * 1.0/psmsTotal * 100)
 	rateList.append(i-1)
 	
 
-
+print pemsaccumList
 
 fig, ax = plt.subplots()
-ax.plot(rateList, accumList, 'b-x', linewidth=2.0, label = 'Submissions',  markersize=5, mew=2)
-ax.plot(rateList, peaccumList, 'r--x', linewidth=2.0, label = 'PE Submissions', markersize=5, mew=2)
+ax.plot(rateList, pemsaccumList, 'b-x', linewidth=2.0, label = 'Submissions',  markersize=5, mew=2)
+#ax.plot(rateList, peaccumList, 'r--x', linewidth=2.0, label = 'PE Submissions', markersize=5, mew=2)
 plt.xticks(rateList, labelList, rotation='vertical')
 
-legend = ax.legend(loc='lower right', fontsize='large')
+#legend = ax.legend(loc='lower right', fontsize='large')
 xmin = -0.1
 xmax = 7.1
 ax.set_xlim(xmin, xmax)

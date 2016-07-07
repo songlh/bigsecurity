@@ -43,16 +43,38 @@ for line in lines:
 pecountryList.reverse()
 petotal = sum(countryList)
 
+with open('../data/peMSCountry.stat') as f:
+	lines = f.read().splitlines()
+
+
+peMScountryList = []
+
+for line in lines:
+	tmpList = line.split()
+	if cmp(tmpList[0], 'on') == 0 :
+		continue
+
+	if cmp(tmpList[0], 'ZZ') == 0:
+		continue
+
+	peMScountryList.append(int(tmpList[1]))
+
+peMScountryList.reverse()
+peMStotal = sum(peMScountryList)
+
+
 accumList = []
 peaccumList = []
+peMSaccumList = []
 rateList = []
 for i in range(0, 101, 2):
 	accumList.append(sum(countryList[0:(int)(i*1.0/100*len(countryList))]) * 1.0/total * 100)
 	peaccumList.append(sum(pecountryList[0:(int)(i*1.0/100*len(pecountryList))]) * 1.0/petotal * 100)
+	peMSaccumList.append(sum(peMScountryList[0:(int)(i*1.0/100*len(peMScountryList))]) * 1.0/peMStotal * 100)
 	rateList.append(i)
 
 fig, ax = plt.subplots()
-ax.plot(rateList, accumList, 'b-x', linewidth=2.0, label = 'Submissions', markersize=5, mew=2)
+ax.plot(rateList, peMSaccumList, 'b-x', linewidth=2.0, label = 'Submissions', markersize=5, mew=2)
 
 major_ticks = np.arange(0, 101, 10) 
 
@@ -63,7 +85,7 @@ ax.set_xlim(xmin, xmax)
 #xticks = ax.xaxis.get_major_ticks()
 #xticks[0].label1.set_visible(False)
 ax.set_xticks(major_ticks)
-plt.ylabel('% of Submissions', fontsize=18)
+plt.ylabel('% of Malwares', fontsize=18)
 
 ymin = 0
 ymax = 101

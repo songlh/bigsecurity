@@ -6,17 +6,32 @@ This section discusses how we collected and preprocessed data from VirusTotal.
 We will present the analysis of these data in the next two sections.
 
 \input{section/tbl-metadata}
+
+
 We downloaded the metadata and malware reports of all submitted files in November 2015 using the APIs VirusTotal provides,
 resulting in a total of 43 million reports.
 Table~\ref{tab:fields} shows the metadata fields and their meaning. 
 
-In this paper, we only focus on {\em Portable Executable (PE)} files 
+\input{section/figtypepie}
+
+{\color{red} 
+Figure~\ref{fig:type} shows file type distributions for all submissions. 
+{\em Portable Executable (PE)}  files have the largest number of submissions. 
+For around 11.5\% submissions, VirusTotal cannot figure out their file types. 
+Malwares on Android have the third largest number of submissions.  
+}
+
+In this paper, we only focus on PE files 
 and leave the analysis of other types of malicious files for future work. 
-We filter all downloaded metadata by the tag field. 
-If the tag field contains either ``peexe'' or ``pedll'' tags, we consider the record as a PE file. 
-We then use Microsoft antivirus engines to judge whether a PE file is a malware.
+We filter all downloaded metadata by the type field. 
+{\color{red} 
+If the type field is either ``Win32EXE'' or ``Win32DLL'' tag, we consider the record as a PE file. 
+Antivirus engines usually disagree with each other, so
+we only rely on Microsoft antivirus engine to judge whether a PE file is a malware, because
+Microsoft has a very good reputation in detecting PE malwares. 
+}
 Within the 43 million reports, 4.7 million are PE malwares. 
-The number of reports and PE malwares submitted each day are shown in Figure~\ref{fig:subnum}.
+The number of reports, PE reports, and PE malwares submitted each day are shown in Figure~\ref{fig:subnum}.
 
 The Microsoft antivirus engine classifies malwares into different names~\cite{microsoft}. 
 We utilize this naming mechanism to decide what family a malware belong to.
@@ -24,15 +39,15 @@ Specifically, if two malwares have the same name under Microsoft engine, we cons
 
 One caveat of VirusTotal is that it is possible that the VirusTotal APIs return redundant reports 
 for the same submitted file. 
-We use the combination of md5 hash value and timestamp to detect and remove redundant reports.
+We use the combination of sha256 hash value and timestamp to detect and remove redundant reports.
 
 After removing redundant reports, we find that most malwares were submitted only once to VirusTotal. 
 Out of the total 4.7 million PE malware submissions, 4 million are distinct. 
-On average, each PE malware was submitted 1.17 times to VirusTotal. 
+On average, each PE malware was submitted 1.17 times to VirusTotal in November 2015. 
 This observation is in contradictory to the common belief that most malwares are encountered by more than one user.
 We suspect that the reason behind this low degree of repeated submissions by different users
 is that VirusTotal users
-tend to check whether their suspicious files have already been submitted
+tend to check whether their suspicious files have already been submitted recently
 and avoid submitting redundant files.
 
 %\textit{\underline{Threats to Validity.}}

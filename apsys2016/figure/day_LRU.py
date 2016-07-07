@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 
 from matplotlib.backends.backend_pdf import PdfPages
 
-with open('./day.LRU.result') as f:
+with open('../data/singleday.LRU.result') as f:
 	lines = f.read().splitlines()
 
 dateList = []

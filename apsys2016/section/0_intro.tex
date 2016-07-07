@@ -22,11 +22,19 @@ However, these works only studied a limited amount of malwares that are targeted
 Studying malwares in a large scale and with high diversity, what we call {\em big malwares}, 
 can expose new insights beyond these isolated studies.
 
+%VirusTotal~\cite{virustotal} is a popular online service that real-world users use to analyze suspicious files and URLs.
+%It applies more than 50 antivirus engines to each submitted file 
+%to detect various kinds of malwares including viruses, worms, and trojans. 
+%It then generates a summary report that includes the detection results of all these engines. 
+%VirusTotal saves and provides an open access to all user-submitted files and generated reports. 
+
+
 VirusTotal~\cite{virustotal} is a popular online service that real-world users use to analyze suspicious files and URLs.
-It applies more than 50 antivirus engines to each submitted file 
-to detect various kinds of malwares including viruses, worms, and trojans. 
-It then generates a summary report that includes the detection results of all these engines. 
+{\color{red} (Writing 2 and 5) VirusTotal does not judge whether a submission is malware by itself. Instead,
+it applies state-of-the-art antivirus engines from more than 50 vendors to each submitted file, 
+and generates a summary report that includes the detection results of all these engines.} 
 VirusTotal saves and provides an open access to all user-submitted files and generated reports. 
+
 
 The VirusTotal repository provides a valuable resource to gain insights into 
 the behavior of malwares.
@@ -93,6 +101,8 @@ and online analysis and prediction of malwares.
 
 As a first step, we collected one month of VirusTotal repository data with more than 40 million suspicious files
 and conducted an early-stage empirical study on them. 
+{\color{red} (Writing 10) There is a tradeoff between analyzing accuracy and effort. 
+Analyzing metadata is just a starting point, and we leave other information on VirusTotal in the future. }
 %An empirical study is the prerequisite to conduct data mining on VirusTotal. 
 %We first collect more than 40 million suspicious file submissions from VirusTotal.
 % this para needs total rewriting
