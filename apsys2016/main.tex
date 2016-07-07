@@ -42,10 +42,10 @@
 
 % custom packages for this paper
 %\usepackage{double-blind}
-\usepackage{shared-affiliation}
+%\usepackage{shared-affiliation}
 
 \usepackage[numbers,sort&compress,square]{natbib}
-%\newcommand{\wenfei}[1]{\textcolor{red}{$<<$Wenfei: #1$>>$}}
+
 
 \lstset{
   basicstyle=\tiny,
@@ -97,21 +97,32 @@
 \begin{document}
 
 
-\twocolumn[
-\begin{@twocolumnfalse}
-\begin{center}
-{\Large\bf Learning from Big Malwares}
-\end{center}
-\smallskip
-\centerline{
+\title{
+  Learning from Big Malwares
 }
-%\smallskip
-\centerline{}
 
-\smallskip
-\end{@twocolumnfalse}
-]
+\authorinfo{Linhai Song}
+           {University of Wisconsin--Madison}
+           {songlh@cs.wisc.edu}
 
+\authorinfo{Heqing Huang}
+           {IBM T.J. Watson Research Center}
+           {hhuang@us.ibm.com}  
+
+
+\authorinfo{Wu Zhou}
+           {UNorth Carolina State University}
+           {wzhou2@ncsu.edu}
+
+\authorinfo{Wenfei Wu}
+           {University of Wisconsin--Madison}
+           {wenfeiwu@cs.wisc.edu}           
+
+\authorinfo{Yiying Zhang}
+           {Purdue University}
+           {yiying@purdue.edu}  
+
+\maketitle
 
 
 \begin{abstract}
@@ -121,7 +132,7 @@
 
 \input{section/0_intro.tex}
 \input{section/1_data.tex}
-\input{section/2_meta.tex}
+%\input{section/2_meta.tex}
 \input{section/3_1_LRU.tex}
 \input{section/3_2_item.tex}
 \input{section/4_opp.tex}

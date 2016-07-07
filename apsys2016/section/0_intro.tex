@@ -80,6 +80,8 @@ to better design malware defense mechanisms.
 %For example, there are increasing interests in applying machine learning techniques in different areas. 
 %Could we leverage VirusTotal data to train a machine learning model and detect malwares we have not seen before? 
 
+\input{section/fig1-3}
+
 Unfortunately, there has been little work in looking at this valuable repository.
 In industry, many antivirus vendors use VirusTotal to identify false negatives 
 and false positives in their products. 
@@ -88,6 +90,8 @@ and do not consider correlations among different suspicious files.
 In academia, only until recent did researchers begin to pay attention to mining the VirusTotal repository. 
 Graziano \etal~\cite{neeles} leveraged VirusTotal user ID information to identify malware writers 
 who use VirusTotal as a test platform. 
+
+
 
 We propose to investigate in the VirusTotal repository along two directions:
 offline study of its rich data and metadata, 
@@ -151,7 +155,8 @@ This solution can answer historical hot malware families in nearly-real time usi
 %feed this stream into space saving algorithm~\cite{space-saving}. 
 %Our solution can precisely answer hot malware family queries in nearly-real time, by using a constant number of counters.  
 
-\input{section/fig1}
+%\input{section/fig1}
+
 
 In summary, this paper makes the following contributions:
 

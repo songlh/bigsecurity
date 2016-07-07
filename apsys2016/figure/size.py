@@ -48,7 +48,7 @@ fig, ax = plt.subplots()
 #ax.plot(pesizeLogList, pecountLogList, 'r-.', label = 'PE Submissions', linewidth=2.0)
 ax.plot(pemssizeLogList, pemscountLogList, 'b-', label = 'PE Malwares', linewidth=2.0)
 
-legend = ax.legend(loc='upper left', fontsize='large')
+#legend = ax.legend(loc='upper left', fontsize='large')
 plt.xlabel('File size (log2 based)', fontsize=18)
 plt.ylabel('# of malwares (in million)', fontsize=18)
 

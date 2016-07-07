@@ -3,36 +3,37 @@
 \label{sec:meth}
 
 This section discusses how we collected and preprocessed data from VirusTotal.
-We will present the analysis of these data in the next three sections.
+We will present the analysis of these data in the next two sections.
 
 \input{section/tbl-metadata}
-
 
 We downloaded the metadata and malware reports of all submitted files in November 2015 using the APIs VirusTotal provides,
 resulting in a total of 43 million reports.
 Table~\ref{tab:fields} shows the metadata fields and their meaning. 
 
-\input{section/figtypepie}
-
-{\color{red} 
+{\color{red} (Work 4)
 Figure~\ref{fig:type} shows file type distributions for all submissions. 
 {\em Portable Executable (PE)}  files have the largest number of submissions. 
 For around 11.5\% submissions, VirusTotal cannot figure out their file types. 
 Malwares on Android have the third largest number of submissions.  
+Other popular file types include web pages, compressed files, pdf, images, and so on. 
 }
 
 In this paper, we only focus on PE files 
 and leave the analysis of other types of malicious files for future work. 
 We filter all downloaded metadata by the type field. 
-{\color{red} 
+{\color{red} (Writing 5)
 If the type field is either ``Win32EXE'' or ``Win32DLL'' tag, we consider the record as a PE file. 
-Antivirus engines usually disagree with each other, so
+Antivirus engines may disagree with each other, so
 we only rely on Microsoft antivirus engine to judge whether a PE file is a malware, because
 Microsoft has a very good reputation in detecting PE malwares. 
 }
 Within the 43 million reports, 4.7 million are PE malwares. 
 The number of reports, PE reports, and PE malwares submitted each day are shown in Figure~\ref{fig:subnum}.
 
+{\color{red} (Writing 4)
+Malwares can be classified into related clusters, according to their dynamic behaviors and static features. 
+These clusters are referred as malware families in our paper. }
 The Microsoft antivirus engine classifies malwares into different names~\cite{microsoft}. 
 We utilize this naming mechanism to decide what family a malware belong to.
 Specifically, if two malwares have the same name under Microsoft engine, we consider them to be from the same family.
@@ -50,10 +51,24 @@ is that VirusTotal users
 tend to check whether their suspicious files have already been submitted recently
 and avoid submitting redundant files.
 
-%\textit{\underline{Threats to Validity.}}
+{\color{red} (Work 3 and Work 5)
+Figure~\ref{fig:size} shows the file size distribution for VirusTotal malwares. 
+The smallest malware is only 704 bytes, and the largest one is more than 502 MB. 
+95.3\% of malwares fall into the range from 16 KB to 2 MB. 
+VirusTotal does not provide tags to differ 64-bit malwares from 32-bit malwares directly. 
+We sample 10000 malwares and download their executable binaries from VirusTotal.
+We apply Linux command file to each sampled malware binary. 
+64-bit malwares are labeled with PE32+ by file command. 
+In total, there are only 127 64-bit malwares in our sample set. 
+}
+
 Similar to all previous empirical studies, all our findings, experimental results, 
 and conclusions need to be considered with our methodology in mind. 
 
+{\color{red} (Writing 6)
+We only use one month of data as our first step in studying VirusTotal. 
+We leave investigating longer period of time in the future. 
+}
 The VirusTotal APIs only track which submission reports are sent to each downloader approximately, 
 and there is no guarantee that all submission reports on VirusTotal can be downloaded successfully. 
 Thus, it is possible that we missed some malwares submitted to VirusTotal. 
@@ -64,5 +79,6 @@ Although there is a huge amount of malwares on VirusTotal, we believe that there
 and there are malwares submitted much later than when they appear in the real world.
 Since there are no conceivable ways to study these malwares,
 we believe that the malwares in our study provide a representative malware sample of the real world. 
+
 
 
