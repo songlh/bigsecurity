@@ -2,15 +2,17 @@
 \label{sec:temporal}
 
 This section presents our study of the temporal properties of VirusTotal malwares
-and answers two fundamental questions: 
-how many malware families appear everyday 
+and answers three fundamental questions: 
+how many malware families appear everyday, 
+{\color{red} (Work 2)
+what lifetime of malwares on VirusTotal distributes,  
+}
 and whether or not malwares occur in bursts.
-To answer the second question, we design a new caching mechanism 
+To answer the last question, we design a new caching mechanism 
 that can be used for both offline and online malware predictions.
-This cache-based malware prediction technique can predict which malware families will appear in the near 
-future with high precision. 
+This cache-based malware prediction technique can predict which malware families will appear in the near future with high precision.
 
-\input{section/fignewfamily}
+\input{section/figtemporal}
 
 We first study how many new malware families appear everyday. 
 Figure~\ref{fig:new} shows the number of new malware families appearing on each day in November 2015. 
@@ -23,10 +25,25 @@ In total, there are 11302 malware families in this time period.
 {\bf Observation 1:} 
 {\em 100-400 new malware families appear each day.}
 
-\input{section/hitsize}
-\input{section/hitday}
+%\input{section/hitsize}
+%\input{section/hitday}
 
-Next, we investigate whether malwares behave temporal locality.
+
+{\color{red} (Work 2)
+Next, we study how lifetime of malwares distributes. 
+We calculate the lifetime as time spent from when the malware firstly seen on VirusTotal to when the submission is conducted.   
+As shown in Figure~\ref{fig:life}, malwares submitted to VirusTotal are quite new. 
+More than 75\% malware submissions are firstly seen on VirusTotal.
+For more than 90\% malware submissions, 
+their submission time is less than one month since they were firstly seen on VirusTotal. 
+
+{\bf Observation 2:}
+{\em Malwares on VirusTotal are quite new. }
+
+}
+
+
+Finally, we investigate whether malwares behave temporal locality.
 Temporal locality is an important metric that can guide the 
 prediction of near-future malwares.
 
@@ -50,6 +67,7 @@ The cache block size, or cache line size, controls the granularity of cache mana
 \ie, how many entries are inserted into and evicted from cache together.
 Cache prefetching loads spatially close entries into caches in advance. 
 Cache replacement policy controls what entries to evict when cache is full.
+{\color{red} (Writing 9)
 We use a simple cache setting in our evaluation. 
 We fix the cache block size to be one, no prefetching, 
 and use the LRU (least recently used) replacement policy.
@@ -63,6 +81,7 @@ If the new malware family is not in the cache,
 we create a new cache entry and add it into the front of the cache entry list.
 If the cache is full, we evict the entry at the end of the list. 
 The cache hit rate is calculated as follows: 
+}
 
 $$ \mbox{hit rate} = \dfrac{\mbox{\# of hits}}{\mbox{\# of hits + \# of misses}}$$
 
@@ -77,34 +96,45 @@ As shown in Figure~\ref{fig:cache}, the hit rate grows from 69.31\% to 98.14\%.
 When using more than 80 cache entries, which is less than 1\% of the total number of malware families, the cache hit rate rises above 90\%, 
 and when using more than 230 cache entries, which is less than 3\% of the total number of malware families, 
 the cache hit rate rises above 95\%. 
-The high cache hit rate confirms that malwares occur in bursts.
+{\color{red} (Writing 8)
+The high cache hit rate and the small cache size confirm that malwares occur in bursts.
+}
 
-{\bf Observation 2:} 
+{\bf Observation 3:} 
 {\em The occurrence of malwares in each family has strong temporal locality.}  
 
+{\color{red} (Writing 7)
+In offline prediction, malwares encountered in each client site are merged together. 
+These data are used to predict which malware family would appear in the near future in a large scale.
+Malwares encountered in one client site can be viewed as a random sample of all malwares. 
+If we can predict malware occurrence online, we could apply personalized defense mechanism and malware detection mechanism on the client side. 
+}
 To support online malware occurrence prediction, it is essential to lower the 
 performance overhead of running our cache mechanism.
 To this end, we lower the cache content update frequency from once per malware report to once per day.
 That is, we keep cache content unchanged to count cache hits and cache misses each day and update the cache content at the end of each day.
 In this second experiment, we fix the cache size to 200. 
-Figure~\ref{fig:batchcache} shows the cache hit rate for each day. 
+{\color{red} (Writing 1)
+Figure~\ref{fig:batchcache} shows prediction rate by using next day’s data. 
 Most cache hit rate is above 70\%,
-showing that even when lowering performance overhead, 
-our cache mechanism still achieves a good estimation of malware occurrences.   
+showing that even when lowering performance overhead, \ie, updating cache content once a day, 
+our cache mechanism still achieves a good estimation of malware occurrences.
+}   
+{\color{red} (Writing 9)
+We do not need to combine malwares encountered in each client site and send out updated cache content frequently. Cache-based malware prediction can be used in on-line scenario. 
+}
 
-{\color{red}
+{\color{red} (Work 6)
 We also study which malware families cause more cache misses 
 and have bad prediction results. 
 We count cache misses for each malware family, 
 and consider a family with more than half malwares causing cache misses as family with bad prediction results. 
-We find that whether a family will have bad prediction results is related to the cache size and the number of malwares contained in the family. 
+We find that whether a family has bad prediction results is related to the cache size and the number of malwares contained in the family. 
 When cache size is 100, there are 6990 families with bad prediction results, 
 and the largest number of malwares contained in one of these families is 2307. 
-When we change the cache size to 1000, 
+When we increase the cache size to 1000, 
 there are 5458 families with bad prediction results, 
-and the largest number of malwares contained in one of these families is 126. 
+and the largest number of malwares contained in one of these families changes to 126. 
 }
-%\underline{Discussion.}
-%Resources to combat malwares are limited. 
-%Any techniques that could allow antivirus vendors to focus their efforts would be great. 
+
 
