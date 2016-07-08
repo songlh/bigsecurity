@@ -96,6 +96,9 @@ who use VirusTotal as a test platform.
 We propose to investigate in the VirusTotal repository along two directions:
 offline study of its rich data and metadata, 
 and online analysis and prediction of malwares.
+{\color{red}(Writing 3)
+Our study can provide better understanding of malwares’ distribution and appearance, 
+and can help malware researchers focus their effort, when designing anti-virus techniques.}
 %The offline study can be conducted along several lines: 
 %downloading malware samples and analyzing them to understand their static features and how malwares evolve; 
 %studying VirusTotal metadata %including submission information and reports from different vendors, 
@@ -108,7 +111,7 @@ and conducted an early-stage empirical study on them.
 {\color{red} (Writing 10) VirusTotal supports downloading both data files and metadata of them.
 In this study, we focus on studying metadata and found that just by analyzing metadata, 
 we can already find a fair amount of valuable conclusions.
-Studying data could potentially provide more insights and we leave it for future work.}
+Studying other data could potentially provide more insights and we leave it for future work.}
 %There is a tradeoff between analyzing accuracy and effort. 
 %Analyzing metadata is just a starting point, and we leave other information on VirusTotal in the future. }
 %An empirical study is the prerequisite to conduct data mining on VirusTotal. 
@@ -127,7 +130,7 @@ because our previous experience shows that Microsoft engines can generate precis
 %and the distribution of malwares across malware families.
 
 We focus our analysis on two dimensions: temporal properties of malwares and 
-malware family distribution.
+malware distributions.
 In each dimension, we investigate both offline and online analysis mechanisms.
 
 We began our temporal analysis with general malware characteristics including the submission
@@ -139,7 +142,8 @@ that can support both offline and online analysis.
 Moreover, our LRU cache can predict malware families occurrences in the near future, 
 allowing antivirus vendors to better focus their efforts. 
 
-We focus our malware family distribution study on detecting skewness of malware families and identifying hot families---families that have many malwares.
+We focus our malware distribution study on detecting skewness of malware 
+families and identifying hot families---families that have many malwares.
 We observe that the distribution of malware families is highly skewed. 
 To assist online analysis of malware family distribution, 
 we apply a frequent item mining algorithm~\cite{space-saving} to identify hot malware family. 

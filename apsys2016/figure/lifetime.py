@@ -51,7 +51,7 @@ ax.set_xlim(xmin, xmax)
 ymin = 0
 ymax = 101
 ax.set_ylim(ymin, ymax)
-plt.ylabel('% of (PE) Submissions', fontsize=18)
+plt.ylabel('CDF of (PE) Submissions', fontsize=18)
 
 yticks = ax.yaxis.get_major_ticks()
 yticks[0].label1.set_visible(False)
