@@ -30,15 +30,22 @@ In total, there are 11302 malware families in this time period.
 
 
 {\color{red} (Work 2)
-Next, we study how lifetime of malwares distributes. 
-We calculate the lifetime as time spent from when the malware firstly seen on VirusTotal to when the submission is conducted.   
-As shown in Figure~\ref{fig:life}, malwares submitted to VirusTotal are quite new. 
-More than 75\% malware submissions are firstly seen on VirusTotal.
-For more than 90\% malware submissions, 
-their submission time is less than one month since they were firstly seen on VirusTotal. 
+An interesting property worth studying is how long a malware lives. 
+Finding the exact answer to this question is extremely difficult, since there 
+is no log of when a malware comes into existence and when it extincts.
+Here, we use the VirusTotal data to have a peek into this question.
+Specifically, we use the tiem span from when the first submission of a malware to VirusTotal happens
+to the time of its last submission
+to provide a rough estimation of the life time of this malwares.
+Figure~\ref{fig:life} plots the cummulative distribution of the calculated submission time span of malwares.
+For the malwares that are only submitted once, we calculate the time span as zero.
+These malwares count for ***\% of the total amount.
+Other than these malwares, **\% malwares have submission span within an hour, 
+**\% span from one hour to one day, and **\% span more than one week.
+
 
 {\bf Observation 2:}
-{\em Malwares on VirusTotal are quite new. }
+{\em Malwares on VirusTotal ****. } % need to conclude this based on the above numbers
 
 }
 
@@ -70,7 +77,7 @@ Cache replacement policy controls what entries to evict when cache is full.
 {\color{red} (Writing 9)
 We use a simple cache setting in our evaluation. 
 We fix the cache block size to be one, no prefetching, 
-and use the LRU (least recently used) replacement policy.
+and use the LRU replacement policy.
 We leave the exploration of the effect of other cache configurations for future work. 
 
 Our malware family cache works as follows.
@@ -78,12 +85,12 @@ We start with an empty cache.
 For a new file submission, if the malware family is already in the cache, 
 we move the hit cache entry to the front of our cache entry list. 
 If the new malware family is not in the cache, 
-we create a new cache entry and add it into the front of the cache entry list.
+we create a new cache entry and add it to the front of the cache entry list.
 If the cache is full, we evict the entry at the end of the list. 
-The cache hit rate is calculated as follows: 
+%The cache hit rate is calculated as follows: 
 }
 
-$$ \mbox{hit rate} = \dfrac{\mbox{\# of hits}}{\mbox{\# of hits + \# of misses}}$$
+%$$ \mbox{hit rate} = \dfrac{\mbox{\# of hits}}{\mbox{\# of hits + \# of misses}}$$
 
 We implemented this malware family cache using Python
 and conducted experiments on an AWS c4.4xlarge virtual machine, 
@@ -121,7 +128,7 @@ showing that even when lowering performance overhead, \ie, updating cache conten
 our cache mechanism still achieves a good estimation of malware occurrences.
 }   
 {\color{red} (Writing 9)
-We do not need to combine malwares encountered in each client site and send out updated cache content frequently. Cache-based malware prediction can be used in on-line scenario. 
+We do not need to combine malwares encountered in each client site and send out updated cache content frequently. Cache-based malware prediction can be used in an online scenario. 
 }
 
 {\color{red} (Work 6)
