@@ -40,12 +40,13 @@ The distributions of malware families are highly skewed too.
 The highly skewed distribution of malware families makes it easy to precisely identify hot malware families. 
 
 While the simple bin-counting mechanism works well on our one-month testing data, 
-a total of 11302 distinct malware families, 
+a total of 11302 distinct malware families, {\color{red} (Writing 7)
 applying the same mechanism over a large dataset can cause significant memory space and performance overhead.
 
 To reduce these overheads and better support online analysis of huge datasets, 
 we need to seek alternative mechanisms.
 The skewness of malware families indicates we can apply a frequent item mining algorithm to identify hot malware families. 
+}
 
 Frequent item mining algorithms take two configuration parameters, $\phi$ and $\epsilon$, where $\phi > \epsilon$. 
 The goal of frequent item mining algorithms is to provide a nearly-real time analysis on massive data streams by using constant memory. 
