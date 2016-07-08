@@ -1,4 +1,4 @@
-\section{Malware Family Distribution}
+\section{Malware Distribution}
 \label{sec:dist}
 
 %\begin{figure}[t!]
@@ -9,26 +9,36 @@
 %\end{center}
 %\end{figure}
 
-\input{section/skewness}
-
 \input{section/fim4figs}
 
-\input{section/fimfp}
 
 
-This section presents our study on how malwares distribute in malware families. 
+This section presents our study on how malwares distribute in VirusTotal users, countries, and malware families.
 
-We first count how many malwares fall into different malware families.
+For around 0.6 million malwares, VirusTotal fails to provide their submission IDs. 
+The left 4 million malwares are submitted by 20739 distinct users.
+As shown in Figure~\ref{fig:id}, 
+The distribution of malwares among different users are highly skewed. 
+15748 users only submit one malware. 
+The user, with largest submission number, submit more than 3 million malwares.
+
+There are also around 0.6 million malwares, 
+whose submission countries VirusTotal fails to provide. 
+All other malwares are submitted from 164 distinct countries. 
+The top 5 countries are Canada, USA, China, France, and Germany. 
+As shown in Figure~\ref{fig:country}, 
+malware submissions are also highly skewed among different countries. 
+
+We count how many malwares fall into different malware families.
 As shown in Figure~\ref{fig:acum}, only a small number of malware families are hot, \ie, containing a large amount of malwares.
-The distributions of malware families follow the well-known Pareto principle:  
-more than 90\% of malware families take place in only 10\% of malwares. 
-The distributions of malware families are highly skewed,
-making it easy to precisely identify hot malware families. 
+The distributions of malware families are highly skewed too.
 
-{\bf Observation 3:} {\em Distributions of malware families are highly skewed.} 
+{\bf Observation 4:} {\em Distributions of malware families are highly skewed in users, countries, and malware families.}
+
+The highly skewed distribution of malware families makes it easy to precisely identify hot malware families. 
 
 While the simple bin-counting mechanism works well on our one-month testing data, 
-a total of 11311 distinct malware families, 
+a total of 11302 distinct malware families, 
 applying the same mechanism over a large dataset can cause significant memory space and performance overhead.
 
 To reduce these overheads and better support online analysis of huge datasets, 
@@ -57,11 +67,11 @@ and increase its counter value by 1.
 When querying HMF, 
 all malware families whose counter values are larger than $\lfloor \phi N \rfloor$ will be returned. 
 
-
 We implement the space saving algorithm using Python
 and conduct experiments in the same system as we did in Section~\ref{sec:temporal}.
 Following previous works on frequent item mining~\cite{hot-calling-context}, 
 we measure the following metrics by using the malware submission data we collect:
+
 
 \begin{enumerate}
 
@@ -115,8 +125,8 @@ unless we explicitly state otherwise.
 
 We first evaluate how the degree of \textit{overlap} would change with the change of $\phi$. 
 The degree of \textit{overlap} is used to describe how many malwares are monitored in $(\phi, \epsilon)\mbox{-}HMF$, and the larger it is, the better. 
-As shown by Figure~\ref{fig:overlap}, after we change $\phi$ from 10 to 100, the degree of \textit{overlap} increases from 79.93\% to 95.48\%. 
-The degree of \textit{overlap} further increases to 99.70\% after we change $\phi$ to 1000. 
+As shown by Figure~\ref{fig:overlap}, after we change $\phi$ from $1/10$ to $1/100$, the degree of \textit{overlap} increases from 79.37\% to 95.51\%. 
+The degree of \textit{overlap} further increases to 99.70\% after we change $\phi$ to $1/1000$. 
 
 We then study how maxUncover and aveUncover would change with the change of $\phi$.
 Both maxUncover and aveUncover are used to describe malwares not monitored in $(\phi, \epsilon)\mbox{-}HMF$, 
@@ -126,9 +136,9 @@ both maxUncover and aveUncover decrease by an order as we increase the $\phi$ va
 
 Figure~\ref{fig:maxError} shows how \textit{maxError} changes after we change $\phi$. 
 \textit{maxError} describes how precise the counters in $(\phi, \epsilon)\mbox{-}HMF$ are, 
-and the lower it is, the better. \textit{maxError} drops from 2178 to 999 
-after we change the value of $\phi$ from 10 to 100. 
-\textit{maxError} value becomes 10 after we change the value $\phi$ to 1000. 
+and the lower it is, the better. \textit{maxError} drops from 2177 to 998 
+after we change the value of $\phi$ from $1/10$ to $1/100$. 
+\textit{maxError} value becomes 10 after we change the value $\phi$ to $1/1000$. 
 The large \textit{maxError} value is due to the fact that space saving algorithm 
 will conservatively assume that the frequency of a new malware family is one larger than the smallest counter value of all monitored malware families. 
 

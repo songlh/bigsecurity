@@ -5,7 +5,7 @@ from matplotlib.ticker import FixedLocator
 import numpy as np
 
 phiList = [10, 100, 1000]
-overlapList = [3.87E-03, 8.83E-04, 9.84E-05]
+overlapList = [3.87E-03, 8.77E-04, 9.86E-05]
 
 
 
@@ -27,7 +27,7 @@ ax.set_xlim(xmin, xmax)
 for tick in ax.xaxis.get_major_ticks():
 	tick.label.set_fontsize(18) 
 ax.set_xscale("log", nonposx='clip')
-plt.xlabel('$\phi$', fontsize=24)
+plt.xlabel('$1/\phi$', fontsize=24)
 
 #ymin = 0
 #ymax = 101

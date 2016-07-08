@@ -56,6 +56,7 @@ plt.ylabel('% of (PE) Submissions', fontsize=18)
 yticks = ax.yaxis.get_major_ticks()
 yticks[0].label1.set_visible(False)
 
+ax.grid(True)
 ax.xaxis.set_tick_params(labelsize=16)
 ax.yaxis.set_tick_params(labelsize=16)
 plt.xlabel('Life Time',  fontsize=18)
