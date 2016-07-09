@@ -2,11 +2,10 @@
 \label{sec:temporal}
 
 This section presents our study of the temporal properties of VirusTotal malwares
-and answers three fundamental questions: 
+and answers two fundamental questions: 
 how many malware families appear everyday, 
-{\color{red} (Work 2)
-what lifetime of malwares on VirusTotal distributes,  
-}
+%{\color{red} (Work 2)
+%what lifetime of malwares on VirusTotal distribution, }
 and whether or not malwares occur in bursts.
 To answer the last question, we design a new caching mechanism 
 that can be used for both offline and online malware predictions.
@@ -29,27 +28,27 @@ In total, there are 11302 malware families in this time period.
 %\input{section/hitday}
 
 
-{\color{red} (Work 2)
-An interesting property worth studying is how long a malware lives. 
-Finding the exact answer to this question is extremely difficult, since there 
-is no log of when a malware comes into existence and when it extincts.
-Here, we use the VirusTotal data to have a peek into this question.
-Specifically, we use the tiem span from when the first submission of a malware to VirusTotal happens
-to the time of its last submission
-to provide a rough estimation of the life time of this malwares.
-Figure~\ref{fig:life} plots the cummulative distribution of the calculated submission time span of malwares with more than one submission.
-89.68\% malwares are only submitted once.
-Other than these malwares, 0.004\% malwares have submission span within an hour, 
-0.17\% span from one hour to one day, and 8.39\% span more than one week.
+%{\color{red} (Work 2)
+%An interesting property worth studying is how long a malware lives. 
+%Finding the exact answer to this question is extremely difficult, since there 
+%is no log of when a malware comes into existence and when it extincts.
+%Here, we use the VirusTotal data to have a peek into this question.
+%Specifically, we use the tiem span from when the first submission of a malware to VirusTotal happens
+%to the time of its last submission
+%to provide a rough estimation of the life time of this malwares.
+%Figure~\ref{fig:life} plots the cummulative distribution of the calculated submission time span of malwares with more than one submission.
+%89.68\% malwares are only submitted once.
+%Other than these malwares, 0.004\% malwares have submission span within an hour, 
+%0.17\% span from one hour to one day, and 8.39\% span more than one week.
 
 
-{\bf Observation 2:}
-{\em A fair amount of malwares live longer than one week.} % need to conclude this based on the above numbers
+%{\bf Observation 2:}
+%{\em A fair amount of malwares live longer than one week.} % need to conclude this based on the above numbers
 
-}
+%}
 
 
-Finally, we investigate whether malwares behave temporal locality.
+Next, we investigate whether malwares behave temporal locality.
 Temporal locality is an important metric that can guide the 
 prediction of near-future malwares.
 
@@ -73,7 +72,7 @@ The cache block size, or cache line size, controls the granularity of cache mana
 \ie, how many entries are inserted into and evicted from cache together.
 Cache prefetching loads spatially close entries into caches in advance. 
 Cache replacement policy controls what entries to evict when cache is full.
-{\color{red} (Writing 9)
+%{\color{red} (Writing 9)
 We use a simple cache setting in our evaluation. 
 We fix the cache block size to be one, no prefetching, 
 and use the LRU replacement policy.
@@ -87,7 +86,7 @@ If the new malware family is not in the cache,
 we create a new cache entry and add it to the front of the cache entry list.
 If the cache is full, we evict the entry at the end of the list. 
 %The cache hit rate is calculated as follows: 
-}
+%}
 
 %$$ \mbox{hit rate} = \dfrac{\mbox{\# of hits}}{\mbox{\# of hits + \# of misses}}$$
 
@@ -102,42 +101,42 @@ As shown in Figure~\ref{fig:cache}, the hit rate grows from 69.31\% to 98.14\%.
 When using more than 80 cache entries, which is less than 1\% of the total number of malware families, the cache hit rate rises above 90\%, 
 and when using more than 230 cache entries, which is less than 3\% of the total number of malware families, 
 the cache hit rate rises above 95\%. 
-{\color{red} (Writing 8)
+%{\color{red} (Writing 8)
 The high cache hit rate and the small cache size confirm that malwares occur in bursts.
-}
+%}
 
-{\bf Observation 3:} 
+{\bf Observation 2:} 
 {\em The occurrence of malwares in each family has strong temporal locality.}  
 
-{\color{red} (Writing 7)
-In offline prediction, malwares encountered in each client site are merged together. 
-These data are used to predict which malware family would appear in the near future in a large scale.
-Malwares encountered in one client site can be viewed as a random sample of all malwares. 
-If we can predict malware occurrence online, we could apply personalized defense mechanism and malware detection mechanism on the client side. 
-}
+%{\color{red} (Writing 7)
+%In offline prediction, malwares encountered in each client site are merged together. 
+%These data are used to predict which malware family would appear in the near future in a large scale.
+%Malwares encountered in one client site can be viewed as a random sample of all malwares. 
+%If we can predict malware occurrence online, we could apply personalized defense mechanism and malware detection mechanism on the client side. 
+%}
 To support online malware occurrence prediction, it is essential to lower the 
 performance overhead of running our cache mechanism.
 To this end, we lower the cache content update frequency from once per malware report to once per day.
 That is, we keep cache content unchanged to count cache hits and cache misses each day and update the cache content at the end of each day.
 In this second experiment, we fix the cache size to 200. 
-{\color{red} (Writing 1)
+%{\color{red} (Writing 1)
 Figure~\ref{fig:batchcache} shows prediction rate by using next day’s data. 
 Most cache hit rate is above 70\%,
 showing that even when lowering performance overhead, \ie, updating cache content once a day, 
 our cache mechanism still achieves a good estimation of malware occurrences.
-}   
-{\color{red} (Writing 9)
+%}   
+%{\color{red} (Writing 9)
 We do not need to combine malwares encountered in each client site and send out updated cache content frequently. Cache-based malware prediction can be used in an online scenario. 
-}
+%}
 
-{\color{red} (Work 6)
+%{\color{red} (Work 6)
 We also study which malware families cause more cache misses 
 and have bad prediction results. 
 We count cache misses for each malware family, 
 and consider a family with more than half malwares causing cache misses as family with bad prediction results. 
 We find that whether a family has bad prediction results is related to the number of malwares it contains. 
 When cache size is 100, the largest number of malwares contained in one family with bad prediction results is 2307. 
-When cache size is 1000, the largest number of malwares contained in one family with bad prediction results is 126. 
-}
+When cache size is 1000, the largest number of malwares contained in one family with bad prediction results changes to 126. 
+%}
 
 

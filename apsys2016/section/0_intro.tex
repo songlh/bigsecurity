@@ -1,7 +1,7 @@
 %Title: 
 %1. Learning from VirusTotal
 %2. A Glimpse of VirusTotal
-\vspace{-0.1in}
+%\vspace{-0.1in}
 \section{Introduction}
 
 Malwares grow exponentially~\cite{avtest}. 
@@ -30,9 +30,11 @@ can expose new insights beyond these isolated studies.
 
 
 VirusTotal~\cite{virustotal} is a popular online service that real-world users use to analyze suspicious files and URLs.
-{\color{red} (Writing 2 and 5) VirusTotal does not judge whether a submission is malware by itself. Instead,
+%{\color{red} (Writing 2 and 5) 
+VirusTotal does not judge whether a submission is malware by itself. Instead,
 it applies state-of-the-art antivirus engines from more than 50 vendors to each submitted file, 
-and generates a summary report that includes the detection results of all these engines.} 
+and generates a summary report that includes the detection results of all these engines.
+%} 
 VirusTotal saves and provides an open access to all user-submitted files and generated reports. 
 
 
@@ -96,9 +98,10 @@ who use VirusTotal as a test platform.
 We propose to investigate in the VirusTotal repository along two directions:
 offline study of its rich data and metadata, 
 and online analysis and prediction of malwares.
-{\color{red}(Writing 3)
+%{\color{red}(Writing 3)
 Our study can provide better understanding of malwares’ distribution and appearance, 
-and can help malware researchers focus their effort, when designing anti-virus techniques.}
+and can help malware researchers focus their effort, when designing anti-virus techniques.
+%}
 %The offline study can be conducted along several lines: 
 %downloading malware samples and analyzing them to understand their static features and how malwares evolve; 
 %studying VirusTotal metadata %including submission information and reports from different vendors, 
@@ -108,10 +111,12 @@ and can help malware researchers focus their effort, when designing anti-virus t
 
 As a first step, we collected one month of VirusTotal repository data with more than 40 million suspicious files
 and conducted an early-stage empirical study on them. 
-{\color{red} (Writing 10) VirusTotal supports downloading both data files and metadata of them.
+%{\color{red} (Writing 10) 
+VirusTotal supports downloading both data files and metadata of them.
 In this study, we focus on studying metadata and found that just by analyzing metadata, 
 we can already find a fair amount of valuable conclusions.
-Studying other data could potentially provide more insights and we leave it for future work.}
+Studying other data could potentially provide more insights and we leave it for future work.
+%}
 %There is a tradeoff between analyzing accuracy and effort. 
 %Analyzing metadata is just a starting point, and we leave other information on VirusTotal in the future. }
 %An empirical study is the prerequisite to conduct data mining on VirusTotal. 

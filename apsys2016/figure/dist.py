@@ -38,12 +38,12 @@ ax.set_xlim(xmin, xmax)
 #xticks = ax.xaxis.get_major_ticks()
 #xticks[0].label1.set_visible(False)
 ax.set_xticks(major_ticks)
-plt.xlabel('CDF of hottest malware families', fontsize=18)
+plt.xlabel('% of hottest malware families', fontsize=18)
 
 ymin = 0
 ymax = 101
 ax.set_ylim(ymin, ymax)
-plt.ylabel('% of all PE malware submissions',  fontsize=18)
+plt.ylabel('CDF of malwares',  fontsize=18)
 ax.xaxis.set_tick_params(labelsize=16)
 ax.yaxis.set_tick_params(labelsize=16)
 
