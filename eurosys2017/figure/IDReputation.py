@@ -71,5 +71,7 @@ if __name__ == '__main__':
 	ax.set_xticklabels(labels)
 
 	#plt.show()
-	fig.savefig('IDReputation.pdf')
+	#fig.savefig('IDReputation.pdf')
+	#plt.close(fig)
+	fig.savefig('IDReputation.png')
 	plt.close(fig)

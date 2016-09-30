@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from matplotlib.ticker import MultipleLocator, FormatStrFormatter
 
 if __name__ == '__main__':
-	sDataFile = '../data/subTotalHisNum.stat'
+	sDataFile = '../data/subCountryTotalHisNum.stat'
 	fData = open(sDataFile, 'r')
 
 	XList = []
@@ -41,7 +41,7 @@ if __name__ == '__main__':
 	for tick in ax.xaxis.get_major_ticks():
 		tick.label.set_fontsize(18)
 
-	plt.xlabel('Historical Submission Number', fontsize=24)
+	plt.xlabel('Historical Submission Country', fontsize=24)
 
 	for tick in ax.yaxis.get_major_ticks():
 		tick.label.set_fontsize(18)  
@@ -68,5 +68,5 @@ if __name__ == '__main__':
 	#ax.set_xticklabels(labels)
 
 	#plt.show()
-	fig.savefig('SubNum.png')
+	fig.savefig('SubCountry.png')
 	plt.close(fig)

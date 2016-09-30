@@ -14,31 +14,34 @@ with open('../data/subByDay.stat') as f:
 
 for line in lines:
 	tmpList = line.split()
-	dateList.append(datetime.strptime(tmpList[0], "%m/%d/%Y").date())
+	dateList.append(datetime.strptime(tmpList[0], "%Y-%m-%d").date())
 	subList.append(int(tmpList[1])/1000000.0)
 
 with open('../data/peSubByDay.stat') as f:
 	lines = f.read().splitlines()
 
 
-
+for line in lines:
+	tmpList = line.split()
+	peList.append(int(tmpList[1])/1000000.0)
 
 
 #for date in dateList:
 #	print date
-days = mdates.DayLocator(interval=2)
+days = mdates.DayLocator(interval=7)
 
 fig, ax = plt.subplots()
 ax.plot(dateList, subList, 'b--', label = 'Submissions', linewidth=2.0)
-ax.plot(dateList, peList, 'r-.', label = 'PE Submissions', linewidth=2.0)
-ax.plot(dateList, malList, 'g-',  label='PE Malwares', linewidth=2.0)
+#ax.plot(dateList, peList, 'r-.', label = 'PE Submissions', linewidth=2.0)
+ax.plot(dateList, peList, 'g-',  label='PE Submissions', linewidth=2.0)
+
 legend = ax.legend(loc='upper left', fontsize='large')
 plt.ylabel('VirusTotal reports (in million)', fontsize=18)
 
 ax.xaxis.set_major_locator(days)
 ax.xaxis.set_major_formatter(mdates.DateFormatter('%m-%d-%y'))
-datemin = dateList[0]  - timedelta(days=1)
-datemax = dateList[-1] + timedelta(days=1)
+datemin = dateList[0]  - timedelta(days=3)
+datemax = dateList[-1] + timedelta(days=3)
 
 ax.set_xlim(datemin, datemax)
 xticks = ax.xaxis.get_major_ticks()
@@ -47,7 +50,7 @@ ax.xaxis.set_tick_params(labelsize=16)
 ax.yaxis.set_tick_params(labelsize=16)
 
 #plt.gcf().subplots_adjust(bottom=0.15)
-plt.gcf().subplots_adjust(left=0.20)
+plt.gcf().subplots_adjust(left=0.12)
 
 ax.grid(True)
 fig.autofmt_xdate(rotation=90)
@@ -55,5 +58,6 @@ fig.autofmt_xdate(rotation=90)
 
 #pdf = PdfPages('nov.pdf')
 #pdf.savefig(plt.gcf())
-fig.savefig('nov.pdf')
+#fig.savefig('Submissions.pdf')
+fig.savefig('Submissions.png')
 plt.close(fig)
