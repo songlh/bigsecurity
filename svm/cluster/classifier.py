@@ -7,6 +7,7 @@ from os import listdir
 from os.path import isfile, join
 import sys
 import distance
+import time
 
 class Distance:
 	def __init__(self, dist, index):
@@ -227,10 +228,10 @@ class classifier:
 					class_num += 1
 					print 
 					print 'Cluster', class_num, 'has', len(self.A[i])
-					self.A[i].sort()
+					#self.A[i].sort()
 
-					for j in range(len(self.A[i])):
-						print self.A[i][j],
+					#for j in range(len(self.A[i])):
+					#	print self.A[i][j],
 
 					print
 
@@ -238,10 +239,14 @@ if __name__ == '__main__':
 	sFileName = sys.argv[1]
 	threshold = 0.9
 	ssdeepList, md5List = loader.loadssdeepFile(sFileName)
-	ssdeepList = ssdeepList[0:100]
-	md5List = md5List[0:100]
+	ssdeepList = ssdeepList[0:10000]
+	md5List = md5List[0:10000]
+
+	start_time = time.time()
 
 	Dist = distance.all_pair_distance(ssdeepList, len(ssdeepList))
+
+	print("--- %s seconds ---" % (time.time() - start_time))
 
 	classf = classifier(Dist, md5List)
 	classf.setThreshold(threshold)
