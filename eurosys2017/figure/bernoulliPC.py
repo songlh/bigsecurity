@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from matplotlib.ticker import MultipleLocator, FormatStrFormatter
 
 if __name__ == '__main__':
-	sDataFile = '../data/bernoulli.result'
+	sDataFile = '../data/PC.result'
 	fData = open(sDataFile, 'r')
 
 	XList = []
@@ -27,7 +27,7 @@ if __name__ == '__main__':
 	fData.close()
 
 	fig, ax = plt.subplots()
-	ax.plot(XList, YList, 'b--', label = 'bernoulli', linewidth=2.0)
+	ax.plot(XList, YList, 'b--', label = 'bernoulli with PC', linewidth=2.0)
 
 	#majorLocator = MultipleLocator(10)
 	#ax.xaxis.set_major_locator(majorLocator)
@@ -62,5 +62,5 @@ if __name__ == '__main__':
 	#ax.set_xticklabels(labels)
 
 	#plt.show()
-	fig.savefig('bernoulli.png')
+	fig.savefig('bernoulliPC.png')
 	plt.close(fig)

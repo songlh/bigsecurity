@@ -1,0 +1,38 @@
+\begin{table}%[h!]
+\centering
+\footnotesize
+{
+%\begin{tabular}{@{\hspace{3pt}}l@{\hspace{3pt}}|@{\hspace{3pt}}c@{\hspace{3pt}}}
+\begin{tabular}{l|l}
+\hline
+Metadata Field & Explanation \\
+\hline                            
+%\cline{1-1}
+{\bf name}      & submitted file name \\
+{\bf timestamp} & timestamp when the submission was made \\
+{\bf source\_country} & the country where the submission was made \\
+{\bf source\_id} & user ID that made the submission\\
+{\bf size} & file size \\
+{\bf type} & file type \\
+{\bf tags} & labels with more specific information for each {\bf type}\\
+{\bf first\_seen} & when the same type of file was first submitted \\
+{\bf last\_seen} & when the same type of file was last submitted \\
+{\bf hashes} & hash value of the submitted file\\
+{\bf total} & number of engines that analyzed the file \\
+{\bf positives} & number of engines that flagged the file as malicious \\
+{\bf positives\_delta} & changes in {\bf positives} across different engine scans\\
+{\bf report} & detailed detection report from each AV engine \\
+%\multicolumn{2}{|l|}
+\hline
+
+\end{tabular}
+}
+\mycaption{tab:fields}{VirusTotal Metadata.}
+{ 
+Fields for each submission retrieved from the VirusTotal private API and their relation explanation.
+The same file can be submitted multiple times by different users.
+}
+%\vspace{-0.1in}
+\end{table}
+
+

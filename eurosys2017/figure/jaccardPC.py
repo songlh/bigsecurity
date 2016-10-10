@@ -61,6 +61,6 @@ if __name__ == '__main__':
 
 	#ax.set_xticklabels(labels)
 
-	plt.show()
-	#fig.savefig('SubNum.png')
-	#plt.close(fig)
+	#plt.show()
+	fig.savefig('jaccardPC.png')
+	plt.close(fig)
