@@ -1,4 +1,6 @@
-\begin{table}%[h!]
+Hello world, and I am testing
+
+\begin{table}[h!]
 \centering
 \footnotesize
 {
@@ -9,18 +11,20 @@ Metadata Field & Explanation \\
 \hline                            
 %\cline{1-1}
 {\bf name}      & submitted file name \\
+{\bf link}      & where to download the file \\
 {\bf timestamp} & timestamp when the submission was made \\
 {\bf source\_country} & the country where the submission was made \\
-{\bf source\_id} & user ID that made the submission\\
+{\bf source\_id} & user ID making the submission\\
 {\bf size} & file size \\
 {\bf type} & file type \\
 {\bf tags} & labels with more specific information for each {\bf type}\\
-{\bf first\_seen} & when the same type of file was first submitted \\
-{\bf last\_seen} & when the same type of file was last submitted \\
-{\bf hashes} & hash value of the submitted file\\
-{\bf total} & number of engines that analyzed the file \\
+{\bf first\_seen} & when the same file was first submitted \\
+{\bf last\_seen} & when the same file was last submitted \\
+{\bf hashes} & sha1, sha256, md5, and vhash\\
+{\bf ssdeep} & ssdeep information digest string \\
+{\bf total} & number of engines analyzing the file \\
 {\bf positives} & number of engines that flagged the file as malicious \\
-{\bf positives\_delta} & changes in {\bf positives} across different engine scans\\
+{\bf positives\_delta} & changes in {\bf positives} across different submissions\\
 {\bf report} & detailed detection report from each AV engine \\
 %\multicolumn{2}{|l|}
 \hline
@@ -29,7 +33,7 @@ Metadata Field & Explanation \\
 }
 \mycaption{tab:fields}{VirusTotal Metadata.}
 { 
-Fields for each submission retrieved from the VirusTotal private API and their relation explanation.
+Fields for each submission retrieved from the VirusTotal distribution API and their relation explanation.
 The same file can be submitted multiple times by different users.
 }
 %\vspace{-0.1in}

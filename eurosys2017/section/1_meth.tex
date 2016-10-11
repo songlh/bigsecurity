@@ -1,18 +1,61 @@
 \section{Data Collection}
 \label{sec:label}
 
+
+In this section, we discuss how we collect and preprocess data from VirusTotal. 
+
 \input{section/fig_type}
-\input{section/tbl_metadata}
 
-We collect metadata for each submission through distribution API. 
-Distribution API roughly tracks which data has been sent to which IP. 
-If there is no new data, distribution API will return some recent data not sent to the IP before. 
-After running distribution API for one day, most collected data is submissions conducted on the same day. 
-We began our collection on 2016/05/07, and ended our collection on 2016/09/06. 
+We collect metadata for each submission through VirusTotal’s distribution API. 
+Distribution API keeps returning metadata for latest files submitted to VirusTotal.
+Table~\ref{tab:fields} shows the metadata fields and their meaning.  
+We began our data collection on May 7th 2016, 
+and ended our data collection on September 6th 2016. 
+We insert all submissions into a cassandra table by using the combination of sha256, source\_id, and timestamp as key.
+In total, we collect metadata for 151 million submissions. 
 
+Figure~\ref{fig:type} shows the file type distribution for all submissions we collect. 
+Among all file types, \textit{Portable Executable} (PE) files have the largest number, which is the same as results from a previous study~\cite{SongAPsys2016}.
+PE files occupy 51\% of all submissions. 
+Web pages and malwares on Android have the second and third largest number of malwares, 
+occupying 12\% and 8\% of all submissions respectively. 
+Other popular file types include PDF, Text, compressed files, and Java files, which are slightly different from the previous study~\cite{SongAPsys2016}. 
 
+Similar to the previous study~\cite{SongAPsys2016}, we focus our study in this paper on PE files, 
+and leave studies on other types of malwares in the future. 
+If the type field for a submission is either ``Win32EXE'' or ``Win32DLL'', 
+we consider the submission is a PE file. 
+In total, we collect 76 million PE submissions. 
+The number of submissions and the number of PE submissions we collected each day is shown in Figure~\ref{fig:subnum}. 
 
-Table~\ref{tab:fields} shows the metadata fields and their meaning.
+\input{section/fig_vendornum}
 
+\input{section/fig_detectionrate}
 
+For each PE submission, VirusTotal will use a bunch of anti-virus engines to analyze it.
+As shown in Table~\ref{tab:fields}, 
+total field is to represent the number of used anti-virus engines. 
+Figure~\ref{fig:vendornum} shows the distribution for the number of used anti-virus engines. 
+More than 99\% of PE submissions are analyzed by at least 50 anti-virus engines. 
+Some anti-virus engines will identify a submitted PE file as malware, while others will not. 
+Positives field in Table~\ref{tab:fields} represents the number of anti-virus engines identifying the submission as malwares. 
+We calculate detection rate for a submission by using total number to divide positives number. 
+Figure~\ref{fig:detectiorate} shows how detection rate distributes among all PE submissions. 
 
+One PE file may be submitted more than once to VirusTotal. 
+There are 6.72\% PE files submitted more than once to VirusTotal. 
+On average, each PE file is submitted 1.19 times. 
+Some anti-virus engines may change their results when analyzing the same file during different submissions.
+We will discuss how vendors influence each other and how to predict possible detection result change in Section~\ref{sec:influ}.
+
+Like all other empirical study works, 
+our findings and conclusions need to be considered with our methodology in mind. 
+We use distribution API to download submissions' metadata from VirusTotal. 
+There is no guarantee that all data can be successfully downloaded. 
+It could be possible that some files are submitted to VirusTotal, 
+but we fail to get their information from VirusTotal.
+Although we have collected huge amount of malware information from VirusTotal,
+we do believe that there are malwares never submitted to VirusTotal, 
+or submitted to VirusTotal much later than they appear in the real world. 
+However, there are no conceivable ways to study them.
+We believe 4-month malware information we collect can serve as a representative sample for malwares in the real world. 

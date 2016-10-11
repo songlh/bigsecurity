@@ -17,6 +17,9 @@ for line in lines:
 	dateList.append(datetime.strptime(tmpList[0], "%Y-%m-%d").date())
 	subList.append(int(tmpList[1])/1000000.0)
 
+#print sum(subList)
+
+
 with open('../data/peSubByDay.stat') as f:
 	lines = f.read().splitlines()
 
@@ -24,6 +27,8 @@ with open('../data/peSubByDay.stat') as f:
 for line in lines:
 	tmpList = line.split()
 	peList.append(int(tmpList[1])/1000000.0)
+
+print sum(peList)
 
 
 #for date in dateList:
