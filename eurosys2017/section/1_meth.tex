@@ -40,8 +40,20 @@ Figure~\ref{fig:vendornum} shows the distribution for the number of used anti-vi
 More than 99\% of PE submissions are analyzed by at least 50 anti-virus engines. 
 Some anti-virus engines will identify a submitted PE file as malware, while others will not. 
 Positives field in Table~\ref{tab:fields} represents the number of anti-virus engines identifying the submission as malwares. 
-We calculate detection rate for a submission by using total number to divide positives number. 
+%We calculate detection rate for a submission by using total number to divide positives number. 
+%Figure~\ref{fig:detectiorate} shows how detection rate distributes among all PE submissions. 
+
+$$ \textrm{\textit{Detection Rate}} = \dfrac{positives}{total + 1}$$
+
+Detection rate represents the percentage of engines identifying the submission as malware. 
+Adding one to total is to avoid dividing 0 exception, and more importantly, 
+to give submissions identified by more engines higher detection rate. 
+For example, after adding one, submissions analyzed by 50 engines and detected by 50 engines will have a higher detection rate 
+than submissions analyzed by 1 engine and detected by 1 engine. 
+This formula shares the same intuition from previous work~\cite{GuoICSE2010}, when computing reputations for bug reporters. 
+A larger detection rate means more malicious of the malware. 
 Figure~\ref{fig:detectiorate} shows how detection rate distributes among all PE submissions. 
+
 
 One PE file could be submitted more than once to VirusTotal. 
 There are 6.72\% PE files submitted more than once to VirusTotal. 

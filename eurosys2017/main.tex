@@ -87,6 +87,8 @@
 \newcommand*{\Scale}[2][4]{\scalebox{#1}{$#2$}}%
 \newcommand{\comment}[1]{{}}
 
+
+
 %% taken from unknown.sty
 %\DeclareCaptionType{copyrightbox}
 
@@ -95,6 +97,7 @@
 \input macros.tex
 
 \begin{document}
+
 
 
 \title{
@@ -108,6 +111,9 @@
 \maketitle
 
 
+%\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+
 
 \begin{abstract}
 \input section/abstract.tex
@@ -116,6 +122,7 @@
 
 \input{section/0_intro}
 \input{section/1_meth}
+\input{section/2_corr}
 \input{section/3_influ}
 
 
