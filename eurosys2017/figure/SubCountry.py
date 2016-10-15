@@ -39,7 +39,7 @@ if __name__ == '__main__':
 	ax.xaxis.set_major_locator(majorLocator)
 
 	for tick in ax.xaxis.get_major_ticks():
-		tick.label.set_fontsize(18)
+		tick.label.set_fontsize(14)
 
 	plt.xlabel('Historical Submission Country', fontsize=24)
 
@@ -69,4 +69,5 @@ if __name__ == '__main__':
 
 	#plt.show()
 	fig.savefig('SubCountry.png')
+	fig.savefig('SubCountry.pdf')
 	plt.close(fig)

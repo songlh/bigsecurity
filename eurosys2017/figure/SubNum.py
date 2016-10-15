@@ -12,6 +12,11 @@ if __name__ == '__main__':
 	YList = []
 	errList = []
 
+
+	tmpSqrt = 0
+	tmpSum = 0
+	tmpNum = 0
+
 	while True:
 		line = fData.readline()
 		if not line:
@@ -19,18 +24,41 @@ if __name__ == '__main__':
 
 		tmpList = line.split()
 
-		XList.append(int(tmpList[0]))
-
+		x = int(tmpList[0])
 		strTmp = ' '.join(tmpList[1:])
 		tupleStat = ast.literal_eval(strTmp)
-		numSqrt = tupleStat[0]
-		numSum = tupleStat[1]
-		numNum = tupleStat[2]
 
-		YList.append(float(numSum * 1.0/numNum))
-		errList.append(compCI.compCI(numSqrt, numSum, numNum))
+		tmpSqrt += tupleStat[0]
+		tmpSum += tupleStat[1]
+		tmpNum += tupleStat[2]
+
+		if x % 5 == 0:
+			XList.append(x)
+			YList.append(float(tmpSum * 1.0/tmpNum))
+			errList.append(compCI.compCI(tmpSqrt, tmpSum, tmpNum))
+
+			tmpSqrt = 0
+			tmpSum = 0
+			tmpNum = 0
+
+		#XList.append(int(tmpList[0]))
+
+		#strTmp = ' '.join(tmpList[1:])
+		#tupleStat = ast.literal_eval(strTmp)
+		#numSqrt = tupleStat[0]
+		#numSum = tupleStat[1]
+		#numNum = tupleStat[2]
+
+		#YList.append(float(numSum * 1.0/numNum))
+		#errList.append(compCI.compCI(numSqrt, numSum, numNum))
 
 	fData.close()
+
+	if tmpNum > 1:
+		XList.append(XList[-1] + 5)
+		YList.append(float(tmpSum * 1.0/tmpNum))
+		errList.append(compCI.compCI(tmpSqrt, tmpSum, tmpNum))
+
 
 	fig, ax = plt.subplots()
 	ax.errorbar(XList, YList, yerr=errList, fmt='-o')
@@ -39,7 +67,7 @@ if __name__ == '__main__':
 	ax.xaxis.set_major_locator(majorLocator)
 
 	for tick in ax.xaxis.get_major_ticks():
-		tick.label.set_fontsize(18)
+		tick.label.set_fontsize(14)
 
 	plt.xlabel('Historical Submission Number', fontsize=24)
 
@@ -69,4 +97,5 @@ if __name__ == '__main__':
 
 	#plt.show()
 	fig.savefig('SubNum.png')
+	fig.savefig('SubNum.pdf')
 	plt.close(fig)
