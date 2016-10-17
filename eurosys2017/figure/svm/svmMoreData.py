@@ -14,11 +14,11 @@ DataFiles = [f for f in listdir(sDirectory) if isfile(join(sDirectory, f))]
 DataFiles.sort()
 
 for datafile in DataFiles:
-	print datafile
+	#print datafile
 	XLabels = []
 	precisionList = []
 
-	with open(join(sDirectory, DataFiles[0])) as f:
+	with open(join(sDirectory, datafile)) as f:
 		lines = f.read().splitlines()
 
 	for line in lines:
@@ -40,15 +40,15 @@ for datafile in DataFiles:
 	#ax.set_xticks(range(len(precisionList)))
 	ax.set_xticklabels([10, 50, 100, 500, 1000, 5000, 10000])
 
-	ax.xaxis.set_tick_params(labelsize=16)
-	ax.yaxis.set_tick_params(labelsize=16)
+	ax.xaxis.set_tick_params(labelsize=22)
+	ax.yaxis.set_tick_params(labelsize=22)
 
-	plt.xlabel('# of Samples in Training Set', fontsize=24)
-	plt.ylabel('Precision', fontsize=24)
-	plt.gcf().subplots_adjust(bottom=0.15)
-	plt.gcf().subplots_adjust(left=0.15)
-	plt.show()
+	plt.xlabel('# of Samples in Training Set', fontsize=28)
+	plt.ylabel('Precision', fontsize=28)
+	plt.gcf().subplots_adjust(bottom=0.20)
+	plt.gcf().subplots_adjust(left=0.20)
+	#plt.show()
 
-	fig.savefig(datafile + '.pdf')
-	fig.savefig(datafile + '.png')
+	fig.savefig(datafile.split('.')[0] + '.pdf')
+	fig.savefig(datafile.split('.')[0] + '.png')
 	plt.close(fig)

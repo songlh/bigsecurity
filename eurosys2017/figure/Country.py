@@ -10,6 +10,8 @@ if __name__ == '__main__':
 
 	countryList = []
 
+	numNone = 0
+
 	while True:
 		line = fData.readline()
 		if not line:
@@ -21,6 +23,7 @@ if __name__ == '__main__':
 		tupleStat = ast.literal_eval(strTmp)
 
 		if cmp(tmpList[0], 'None') == 0:
+			numNone = int(tupleStat[2])
 			continue
 
 		countryList.append([tmpList[0], tupleStat])
@@ -29,6 +32,8 @@ if __name__ == '__main__':
 
 	#for country in countryList:
 	#	print country
+
+	print len(countryList), numNone * 1.0 / sum([num[1][2] for num in countryList])
 
 	XList = []
 	YList = []
@@ -52,9 +57,9 @@ if __name__ == '__main__':
 	ind = np.arange(len(YList))
 	width = 0.5 
 	fig, ax = plt.subplots()
-	rects = ax.bar(ind, YList, width, color='r', yerr=errList)
+	rects = ax.bar(ind, YList, width, color='b', yerr=errList)
 
-	plt.xlabel('Country', fontsize=24)
+	plt.xlabel('Source Country', fontsize=24)
 	plt.ylabel('Detection Ratio', fontsize=24)
 	plt.gcf().subplots_adjust(bottom=0.15)
 	plt.gcf().subplots_adjust(left=0.15)
@@ -65,7 +70,7 @@ if __name__ == '__main__':
 	plt.xticks(ind+width/2, XList)
 
 	#plt.show()
-
+	fig.savefig('Country.pdf')
 	fig.savefig('Country.png')
 	plt.close(fig)
 

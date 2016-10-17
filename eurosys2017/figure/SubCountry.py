@@ -41,7 +41,7 @@ if __name__ == '__main__':
 	for tick in ax.xaxis.get_major_ticks():
 		tick.label.set_fontsize(14)
 
-	plt.xlabel('Historical Submission Country', fontsize=24)
+	plt.xlabel('Historical Source Country', fontsize=24)
 
 	for tick in ax.yaxis.get_major_ticks():
 		tick.label.set_fontsize(18)  

@@ -35,7 +35,7 @@ if __name__ == '__main__':
 	print sum(YList[49:])
 
 	fig, ax = plt.subplots()
-	ax.plot(XList, YList, 'b-x', mew=2, markersize = 8, linewidth=2.0)
+	ax.plot(XList, YList, 'b-o') #,mew=2, markersize = 8, linewidth=2.0)
 
 	majorLocator = MultipleLocator(10)
 	ax.xaxis.set_major_locator(majorLocator)
