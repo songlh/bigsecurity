@@ -52,9 +52,11 @@ The probability that $v$ will follow its neighbor to take the same action is
 
 $$p_v(S) = 1 - \prod\limits_{u \in S}(1 - p_{u,v})$$
 
-During training stage, we try to learn $p_(u,v)$ for each edge. 
-During prediction stage, we provide a tunable threshold $\theta$. For node $v$ without taking an action, 
-if $P(S) > \theta$, we will predict $v$ will follow its neighbors to take the action. 
+During training stage, we try to learn $p_{u,v}$ for each edge. 
+%During prediction stage, we provide a tunable threshold $\theta$. 
+%For node $v$ without taking an action, 
+%if $P(S) > \theta$, 
+%we will predict whether $v$ will follow its neighbors to take the action. 
 
 
 
