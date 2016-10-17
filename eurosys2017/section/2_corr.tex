@@ -4,9 +4,10 @@ In this section, we study factors influencing detection rate of PE submissions.
 Our study is conducted from 4 aspects: reputation of source id, submission history, 
 file size, and source country.
 
+\input{section/fig_2corr}
+
 \subsection{Reputation of Source ID}
 
-\input{section/fig_IDReputation}
 \label{sec:reputation}
 
 Previous work~\cite{GuoICSE2010} reported correlation between bug reporter’s reputation and the likelihood for the bug being fixed. 
@@ -45,7 +46,6 @@ and it is difficult for source ids with highest reputation to keep highest reput
 \subsection{Submission History}
 \label{sec:history}
 
-\input{section/fig_SubHistory}
 One file could be submitted more than once to VirusTotal. 
 Given a submission, we also study whether information for historical submissions of the same file influences detection rate for the current submission. 
 
@@ -67,10 +67,26 @@ The the two stages of detection rate increasing,
 more engines can identify submitted malwares, 
 and the increase of percentage of engines identifying submitted malwares dominates. 
 
+{\textit{\underline{Historical Source ID.}}}
+One file could be submitted by one source id multiple times, and could also submitted by different source id. 
+We also study correlation between the number of historical source ids and detection rate. 
+Each number of historical source ids is rounded up to near 5. 
+Average detection rate and confidence interval for each number of historical source ids are shown in Figure~\ref{fig:hisid}. 
+Confidence intervals are invisible before 80. 
+Detection rate is higher, when the number of historical source ids is smaller than 15. 
+Detection rate reflects how malicious of the submitted file, and the number of historical source ids reflect the popularity of a submitted file.
+Figure~\ref{fig:hisid} shows that more popular files tend to be less malicious.   
+
+
+{\textit{\underline{Historical Source Country.}}}
+One file could also be submitted from different countries. 
+The number of historical source countries also reflect the popularity of a submitted file. 
+The correlation between detection rate and the number of historical source countries in 
+Figure~\ref{fig:hiscountry} shows similar trend as the correlation between detection rate and the number of historical source ids in Figure~\ref{fig:hiscountry}. 
 
 \subsection{File Size}
 \label{sec:size}
-\input{section/fig_size}
+
 
 File size information is also provided by VirusTotal. 
 For each submission, we round up binary logarithm for its file size to nearest 0.5,
@@ -81,7 +97,7 @@ Files with size from 90KB to 4MB have average detection rate more than 0.2.
 
 \subsection{Source Country}
 \label{sec:country}
-\input{section/fig_country}
+
 
 All PE submissions in our collection are conducted from 222 countries, 
 and for roughly 17\% PE submissions, 
@@ -106,3 +122,11 @@ By using the regression model or our studying results alone,
 security experts prioritize malwares, and focus their efforts on malwares which are more malicious. 
 Anti-virus vendors could inspect results which are variant from our study results 
 to identify possible false positives or false negatives in their products. 
+
+{\textit{\underline{Limitations:}}}
+As we discussed in Section~\ref{sec:meth}, our study is binded with our methodology.
+We do not have any data before 05/07/2016, 
+which may cause some reputation and historical numbers different from their real values. 
+However, we think we can tolerate this problem, since we conduct our study in a relatively long time range and in a large scale. 
+In the future, we could design our reputation and historical metrics based on a tunable time windows, 
+and investigate whether correlations still exist.  
