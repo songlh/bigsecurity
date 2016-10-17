@@ -30,7 +30,7 @@ if __name__ == '__main__':
 	YList = [num * 1.0/total for num in YList]
 
 	fig, ax = plt.subplots()
-	ax.plot(XList, YList, 'b-x', mew=2, markersize = 8, linewidth=2.0)
+	ax.plot(XList, YList, 'b-o') #, mew=2, markersize = 8, linewidth=2.0)
 
 
 	majorLocator = MultipleLocator(0.1)

@@ -28,6 +28,7 @@ if __name__ == '__main__':
 		numNum = tupleStat[2]
 
 		YList.append(float(numSum * 1.0/numNum))
+		print tmpList[0], YList[-1]
 		errList.append(compCI.compCI(numSqrt, numSum, numNum))
 
 	fData.close()
@@ -69,4 +70,5 @@ if __name__ == '__main__':
 
 	#plt.show()
 	fig.savefig('size.png')
+	fig.savefig('size.pdf')
 	plt.close(fig)

@@ -7,7 +7,7 @@ file size, and source country.
 \subsection{Reputation of Source ID}
 
 \input{section/fig_IDReputation}
-\input{section/fig_SubHistory}
+\label{sec:reputation}
 
 Previous work~\cite{GuoICSE2010} reported correlation between bug reporter’s reputation and the likelihood for the bug being fixed. 
 We also observe correlation between the reputation of source id and submission’s detection rate. 
@@ -43,4 +43,66 @@ and it is difficult for source ids with highest reputation to keep highest reput
 {\color{red} TODO: ADDING A SMALL DISCUSSION PARAGRAPH}
 
 \subsection{Submission History}
+\label{sec:history}
 
+\input{section/fig_SubHistory}
+One file could be submitted more than once to VirusTotal. 
+Given a submission, we also study whether information for historical submissions of the same file influences detection rate for the current submission. 
+
+{\textit{\underline{Historical submission number.}}}
+We sort submissions for each file chronologically, and then calculate the correlation between detection rate and historical submission number for each submission. 
+All historical submission numbers are rounded up to the nearest 5. 
+How detection rate changes with historical submission number is shown in Figure~\ref{fig:hisnum}. 
+The curve decreases from 0 to 10, increases from 10 to 65, decreases from 65 to 75, and increases after 75. 
+
+We think there are two factors influencing whether detection rate would increase or decrease.
+One is the percentage of benign files submitted to VirusTotal, 
+and with more benign files submitted, detection rate will decrease.   
+The other one is the percentage of engines identifying the submitted malwares, 
+and with more engines identifying the malware, detection rate will increase. 
+In the two stages of detection rate decreasing, 
+VirusTotal users stop submitting identified malwares, 
+and the increase of percentage of malwares submitted to VirusTotal dominates. 
+The the two stages of detection rate increasing, 
+more engines can identify submitted malwares, 
+and the increase of percentage of engines identifying submitted malwares dominates. 
+
+
+\subsection{File Size}
+\label{sec:size}
+\input{section/fig_size}
+
+File size information is also provided by VirusTotal. 
+For each submission, we round up binary logarithm for its file size to nearest 0.5,
+and calculate average detection rate for submissions with the same preprocessed file size.
+Average detection rate and 95\% confidence interval for each preprocessed file size are shown in Figure~\ref{fig:size}.
+Except for the last two points, all other confidence intervals are invisible.   
+Files with size from 90KB to 4MB have average detection rate more than 0.2. 
+
+\subsection{Source Country}
+\label{sec:country}
+\input{section/fig_country}
+
+All PE submissions in our collection are conducted from 222 countries, 
+and for roughly 17\% PE submissions, 
+VirusTotal fails to provide their source country information. 
+We rank source countries, based on their submission number. 
+Average detection rate for top 20 source countries are calculated and shown in 
+Figure~\ref{fig:Country}. 
+Confidence intervals are also drawn for each source country, 
+and all confidence intervals are almost invisible. 
+From Figure~\ref{fig:Country}, 
+we can see that submissions from different countries have significantly different detection rate.   
+
+\subsection{Discussion}
+
+{\textit{\underline{How to use?}}}
+As we discussed from Section~\ref{sec:reputation} to Section~\ref{sec:country}, 
+source ID reputation, historical submission number, file size, 
+and source country are highly correlated with detection rate. 
+Future work could train a regression model to combine all these factors together and 
+predict how many engines could detect a malware or how malicious a malware is. 
+By using the regression model or our studying results alone, 
+security experts prioritize malwares, and focus their efforts on malwares which are more malicious. 
+Anti-virus vendors could inspect results which are variant from our study results 
+to identify possible false positives or false negatives in their products. 
