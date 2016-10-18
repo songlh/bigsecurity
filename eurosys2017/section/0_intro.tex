@@ -5,7 +5,7 @@
 
 {\color{red} TODO: Some Security Background}
 
-\input{section/fig_subnum}
+
 
 VirusTotal provides a valuable resource to study and 
 understand real-world malwares and anti-virus engines. 
@@ -31,39 +31,52 @@ ssdeep digest string, by using which we can calculate code similarity without ac
 
 {\color{red} TODO: Existing works on VirusTotal}
 
-In this paper, we collect 4-month (05/07/2016 - 09/06/2016) metadata from VirusTotal,
+\input{section/fig_subnum}
+
+In this paper, we collect 4-month metadata from VirusTotal,
 and conduct a thorough study on these data. 
-Following previous works~\cite{SongAPsys2016} on study VirusTotal,
-we focus our study on PE files, 
+Following previous works~\cite{SongAPsys2016} on studying VirusTotal,
+we focus our effort on PE files, 
 which occupy more than half of VirusTotal’s submissions.
 Our study can improve the understanding of malwares and anti-virus engines in the real world, 
-and provide implications for future works to apply machine learning to malware detection. 
+and provide implications for future works to 
+apply machine learning to malware detection in a large scale. 
 Our study is mainly conducted in three aspects: 
 
 
 First, we study the correlation between submissions’ metadata and their detection rates. 
 Given a submission, 
-we calculate its detection rate as the percentage of engines labeling the submission as malware. 
+we calculate its detection rate as the percentage of engines 
+labeling the submission as malware. 
 Higher detection rate indicates a more malicious submission viewed by engines.  
-We study correlation between detection rate and source ids’ reputation, submission history, file size and source country. 
-Our studying results can help understand which types of malwares are more malicious, 
+We study correlation between detection rate 
+and source ids’ reputation, submission history, file size and source country. 
+Our studying results can help categorize which types of malwares are more malicious, 
 help security experts invest their limited manual efforts, 
-and help anti-virus vendors identify possible false positives and false negatives in their products.  
+and help anti-virus vendors identify possible false positives and false negatives in their products.   
 
 
-Second, we study influence among different antivirus vendors. 
-One malware could be submitted to VirusTotal more than once. 
-For each submission, VirusTotal will apply a bunch of anti-virus engines to analyze it.
-We have observed that for some malwares, some anti-virus engines fail to detect them at the first time, while they catch up in later analysis. 
-We assume that there is influence among different anti-virus vendors, 
-and some anti-virus vendors will follow detection results from other vendors. 
-We apply models from web social network area to characterize 
-which vendors are more likely to be influenced by others, 
-and predict whether detection results from some vendors may change in the future.  
+Second, we study how influence propagate among different anti-virus vendors. 
+Anti-virus vendors frequently leverage VirusTotal to identify false negatives in their products, 
+which are malwares detected by others’ products, 
+but not detected by their own products. 
+We assume there is influence among each pair of vendors. 
+By using detection history from VirusTotal, 
+we train 4 static models from web mining area to quantize this influence. 
+Our trained models can be used to evaluate which vendors are more influential in security community. 
+We also use our trained models to predict whether a vendor will label a submitted file as malware, 
+after it previously labeled the file as benign. 
+Anti-virus vendors can rely on this technique to identify false negatives in their products. 
 
-Third, we build a malware detector and classifier based on ssdeep similarity. 
-SSDeep is a fuzzy hash algorithm, which takes a file as input and generates a fuzzy hash string as information digest. 
-The similarity between fuzzy hashes is an estimation of similarity between the two original files. 
-Fuzzy hash for each submission is also calculated and provided by VirusTotal. 
-We explore how to use similarity between SSDeep fuzzy hash as 
-kernel function to conduct malware classification and malware detection. 
+Third, we explore the feasibility to build malware classifiers or detectors based on ssdeep similarity. 
+For each submission, ssdeep hash string is also provided by VirusTotal. 
+The similarity between two ssdeep hash strings 
+is a good estimation of similarity between the two original binary files.
+Hash strings can be automatically calculated by ssdeep programs. 
+If we can build malware detectors by using ssdeep hash strings, 
+we can avoid manually extract signatures from malware samples.   
+We design several experiments to evaluate our ssdeep-based malware classifiers. 
+Our evaluation results show that precision of malware classifiers are 
+bounded by percentage of tailing examples and more training data tends to bring better results.
+
+{\color{red} TODO: Contributions:}
