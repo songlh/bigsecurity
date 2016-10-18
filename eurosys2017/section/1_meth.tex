@@ -1,14 +1,12 @@
-\section{Data Collection}
+
+\section{Data Collection and Basic Properties}
 \label{sec:meth}
 
-
-In this section, we discuss how we collect and preprocess data from VirusTotal. 
-
-
-
-\input{section/fig_1meth}
+In this section, we will discuss how we collect and preprocess data from VirusTotal. 
+Some basic properties of our collected data are also presented in this section. 
 
 \input{section/tbl_metadata}
+
 
 We collect metadata for each submission through VirusTotal’s distribution API. 
 Distribution API keeps returning metadata for latest files submitted to VirusTotal.
@@ -18,12 +16,16 @@ and ended our data collection on September 6th 2016.
 We insert all collected metadata into a cassandra table by using the combination of sha256, source\_id, and timestamp as key.
 In total, we collect metadata for 151 million submissions. 
 
+\input{section/fig_type}
+
 Figure~\ref{fig:type} shows the file type distribution for all submissions. 
-Among all file types, \textit{Portable Executable} (PE) files have the largest number, which is the same as results from a previous study~\cite{SongAPsys2016}.
+Among all file types, \textit{Portable Executable} (PE) files have the largest number, 
+which is the same as results from a previous study~\cite{SongAPsys2016}.
 PE files occupy 51\% of all submissions. 
 Web pages and malwares on Android have the second and third largest number of malwares, 
 occupying 12\% and 8\% of all submissions respectively. 
-Other popular file types include PDF, Text, compressed files, and Java files, which is slightly different from the previous study~\cite{SongAPsys2016}. 
+Other popular file types include PDF, Text, compressed files, and Java files. 
+This result is slightly different from the previous study~\cite{SongAPsys2016}. 
 
 Similar to the previous study~\cite{SongAPsys2016}, 
 we focus our study in this paper on PE files, 
@@ -31,39 +33,46 @@ and leave studies on other types of malwares in the future.
 If the type field for a submission is either ``Win32EXE'' or ``Win32DLL'', 
 we consider the submission is a PE file. 
 In total, we collect 76 million PE submissions. 
-The number of submissions and the number of PE submissions we collected each day are shown in Figure~\ref{fig:subnum}. 
+The number of submissions and the number of PE submissions 
+we collected each day are shown in Figure~\ref{fig:subnum}. 
 
-%\input{section/fig_vendornum}
+\input{section/fig_vendornum}
 
-%\input{section/fig_detectionrate}
+\input{section/fig_detectionrate}
 
 For each PE submission, VirusTotal will use a bunch of anti-virus engines to analyze it.
 As shown in Table~\ref{tab:fields}, 
 total field is to represent the number of used anti-virus engines. 
 Figure~\ref{fig:vendornum} shows the distribution for the number of used anti-virus engines. 
 More than 99\% of PE submissions are analyzed by at least 50 anti-virus engines. 
-Some anti-virus engines will identify a submitted PE file as malware, while others will not. 
-Positives field in Table~\ref{tab:fields} represents the number of anti-virus engines identifying the submission as malwares. 
-%We calculate detection rate for a submission by using total number to divide positives number. 
-%Figure~\ref{fig:detectiorate} shows how detection rate distributes among all PE submissions. 
+Some anti-virus engines will label a submitted PE file as malware, while others will not. 
+Positives field in Table~\ref{tab:fields} represents the number of anti-virus engines labeling the submission as malwares. 
 
 $$ \textrm{\textit{Detection Rate}} = \dfrac{positives}{total + 1}$$
 
-Detection rate represents the percentage of engines identifying the submission as malware. 
+Detection rate represents the percentage of engines labeling the submission as malware. 
 Adding one to total is to avoid dividing 0 exception, and more importantly, 
-to give submissions identified by more engines higher detection rate. 
+to give submissions labeled as malwares by more engines higher detection rate. 
 For example, after adding one, submissions analyzed by 50 engines and detected by 50 engines will have a higher detection rate 
 than submissions analyzed by 1 engine and detected by 1 engine. 
 This formula shares the same intuition from previous work~\cite{GuoICSE2010}, when computing reputations for bug reporters. 
-A larger detection rate means more malicious of the malware. 
+A larger detection rate usually indicates a more malicious malware suggested by analyzed anti-virus engines. 
 Figure~\ref{fig:detectiorate} shows how detection rate distributes among all PE submissions. 
 
 
 One PE file could be submitted more than once to VirusTotal. 
 There are 6.72\% PE files submitted more than once to VirusTotal. 
 On average, each PE file is submitted 1.19 times. 
-Some anti-virus engines may change their results when analyzing the same file during different submissions.
-We will discuss how vendors influence each other and how to predict possible detection result change in Section~\ref{sec:influ}.
+Some anti-virus engines may produce different detection results when analyzing the same file for different submissions.
+We assume there is influence among different anti-virus vendors, 
+and this influence is a very important reason causing engines to change their results.
+We will discuss how we model this influence and how to predict possible detection result change by using our model in Section~\ref{sec:influ}.
+
+\input{section/fig_pesize}
+
+Figure~\ref{fig:pesize} shows the file size distribution for PE submissions. 
+The smallest PE file is only xxx bytes, and the largest one is more than xxx\,MB. 
+xxx\% of PE file fall into the range from xx\,KB to xx\,MB. 
 
 Like all other empirical study works, 
 our findings and conclusions need to be considered with our methodology in mind. 
