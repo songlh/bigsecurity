@@ -1,20 +1,55 @@
 \section{Introduction}
 \label{sec:intro}
 
-In this paper, we study data on VirusTotal submitted from 2016/05/07 to 2016/09/06 (Figure~\ref{fig:subnum}). 
-Our study is conducted from three aspects:
+
+
+{\color{red} TODO: Some Security Background}
 
 \input{section/fig_subnum}
 
+VirusTotal provides a valuable resource to study and 
+understand real-world malwares and anti-virus engines. 
+
+First, there are huge amount of suspicious files submitted to VirusTotal. 
+As shown in Figure~\ref{fig:subnum}, 
+there are around 40 million submissions on VirusTotal each month. 
+These submissions cover a large variety of file types, and 
+are conducted by a large variety of VirusTotal users from all over the world. 
+This amount of diverse data on VirusTotal serves as a good representation of malwares in the real world.  
+
+Second, for around all submissions, 
+VirusTotal applies no less than 50 state-of-the-art anti-virus engines to analyze them. 
+VirusTotal keeps detailed detection results, and provide access to these results. 
+Analyzing historical detection results can help capture how anti-virus engines evolve over time. 
+
+Third, VirusTotal provides rich metadata for each submission. 
+Besides detection results from different engines, 
+VirusTotal also provides file type information, which can help categorize malwares, 
+source ID (country), which can help understand popularity of malwares, 
+ssdeep digest string, by using which we can calculate code similarity without accessing binary executable, and so on. 
 
 
+{\color{red} TODO: Existing works on VirusTotal}
 
-First, we study the correlation between submissions' metadata and their detection rates. 
-For each submission, VirusTotal will apply more than one anti-virus engines to analyze it. 
-Some engines will identify the submission as malware, while others will not. 
-We use the percentage of engines identifying the malware to describe the likelihood of the malware getting detected. 
-To study the correlation between submissions' metadata and their detection rates, 
-we can understand and characterize which malwares are more likely to be detected.   
+In this paper, we collect 4-month (05/07/2016 - 09/06/2016) metadata from VirusTotal,
+and conduct a thorough study on these data. 
+Following previous works~\cite{SongAPsys2016} on study VirusTotal,
+we focus our study on PE files, 
+which occupy more than half of VirusTotal’s submissions.
+Our study can improve the understanding of malwares and anti-virus engines in the real world, 
+and provide implications for future works to apply machine learning to malware detection. 
+Our study is mainly conducted in three aspects: 
+
+
+First, we study the correlation between submissions’ metadata and their detection rates. 
+Given a submission, 
+we calculate its detection rate as the percentage of engines labeling the submission as malware. 
+Higher detection rate indicates a more malicious submission viewed by engines.  
+We study correlation between detection rate and source ids’ reputation, submission history, file size and source country. 
+Our studying results can help understand which types of malwares are more malicious, 
+help security experts invest their limited manual efforts, 
+and help anti-virus vendors identify possible false positives and false negatives in their products.  
+
 
 Second, we study influence among different antivirus vendors. 
 One malware could be submitted to VirusTotal more than once. 
