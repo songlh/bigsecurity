@@ -30,10 +30,15 @@ source ID (country), which can help understand popularity of malwares,
 ssdeep digest string, by using which we can calculate code similarity without accessing binary executable, and so on. 
 
 \yiying{move existing works on VT to Section 2.1 and just say one sentence here, something like VT hasn't been looked much in the past}
-{\color{red} TODO: Existing works on VirusTotal}
+{\color{red} \vt has not been looked much in the past. 
+Anti-virus vendors only leverage \vt to detect possible false positives and false negatives in their products. 
+Researchers focus their efforts on identifying malware development cases, 
+where \vt is used as testing platform. 
+All of them fail to analyze and leverage knowledge based provided by \vt in a large scale. }
 
 
 We collected 4-month metadata from VirusTotal \yiying{and sampled original submission files?}.
+{\color{red} We do not sample submitted files from VirusTotal. ssdeep is calculated by VT, and we download it together with other metadata.}
 %Following previous works~\cite{SongAPsys2016} on studying VirusTotal,
 We focus our effort on Windows \textit{Portable Executable} ({\em \pe}) files, 
 which account for more than half of \vt{}’s submissions.
