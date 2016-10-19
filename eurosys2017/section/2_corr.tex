@@ -11,7 +11,6 @@ file size, and source country.
 \input{section/fig_2corr1}
 
 \subsection{Reputation of Source ID}
-
 \label{sec:reputation}
 
 Previous work~\cite{GuoICSE2010} reported correlation between bug reporter’s reputation and the likelihood for the bug being fixed. 
@@ -110,6 +109,9 @@ file size are shown in Figure~\ref{fig:size}.
 Except for the last two points, all other confidence intervals are invisible.   
 Files with size from 90KB to 4MB have average higher detection rate, which is more than 0.2. 
 
+\yiying{how is this result relates to the size distribution of files? 
+what does it this result imply? any suspected reason behind this? My suspition is just that these sizes have more submissions and thus? has higher detection rate.}
+
 \subsection{Source Country}
 \label{sec:country}
 
@@ -123,6 +125,7 @@ Confidence intervals are also drawn for each source country,
 and all confidence intervals are almost invisible. 
 From Figure~\ref{fig:Country}, 
 we can see that submissions source countries are correlated with detection rate.
+\yiying{What's the order of the x axis in this figure? we should either sort it alphabetically or by detection rate.}
 
 \subsection{Discussion}
 
