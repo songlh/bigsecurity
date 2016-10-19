@@ -11,15 +11,16 @@ VirusTotal provides a valuable resource to study and
 understand real-world malwares and anti-virus engines. 
 
 First, there are huge amount of suspicious files submitted to VirusTotal. 
-As shown in Figure~\ref{fig:subnum}, 
-there are around 40 million submissions on VirusTotal each month. 
+%As shown in Figure~\ref{fig:subnum}, 
+For example, within our data collection window, 
+there were around 40 million submissions to \vt\ each month. 
 These submissions cover a large variety of file types, and 
-are conducted by a large variety of VirusTotal users from all over the world. 
+are conducted by a large variety of \vt\ users from all over the world. 
 This amount of diverse data on VirusTotal serves as a good representation of malwares in the real world.  
 
-Second, for around all submissions, 
+Second, for almost all submissions, 
 VirusTotal applies no less than 50 state-of-the-art anti-virus engines to analyze them. 
-VirusTotal keeps detailed detection results, and provide access to these results. 
+VirusTotal keeps detailed detection results and provides open access to these results. 
 Analyzing historical detection results can help capture how anti-virus engines evolve over time. 
 
 Third, VirusTotal provides rich metadata for each submission. 
@@ -28,21 +29,17 @@ VirusTotal also provides file type information, which can help categorize malwar
 source ID (country), which can help understand popularity of malwares, 
 ssdeep digest string, by using which we can calculate code similarity without accessing binary executable, and so on. 
 
-
+\yiying{move existing works on VT to Section 2.1 and just say one sentence here, something like VT hasn't been looked much in the past}
 {\color{red} TODO: Existing works on VirusTotal}
 
-\input{section/fig_subnum}
 
-In this paper, we collect 4-month metadata from VirusTotal,
-and conduct a thorough study on these data. 
-Following previous works~\cite{SongAPsys2016} on studying VirusTotal,
-we focus our effort on PE files, 
-which occupy more than half of VirusTotal’s submissions.
-Our study can improve the understanding of malwares and anti-virus engines in the real world, 
-and provide implications for future works to 
-apply machine learning to malware detection in a large scale. 
+We collected 4-month metadata from VirusTotal \yiying{and sampled original submission files?}.
+%Following previous works~\cite{SongAPsys2016} on studying VirusTotal,
+We focus our effort on Windows \textit{Portable Executable} ({\em \pe}) files, 
+which account for more than half of \vt{}’s submissions.
+
+With this rich dataset, we conducted an extensive study.
 Our study is mainly conducted in three aspects: 
-
 
 First, we study the correlation between submissions’ metadata and their detection rates. 
 Given a submission, 
@@ -78,5 +75,9 @@ we can avoid manually extract signatures from malware samples.
 We design several experiments to evaluate our ssdeep-based malware classifiers. 
 Our evaluation results show that precision of malware classifiers are 
 bounded by percentage of tailing examples and more training data tends to bring better results.
+
+Our study advances the understanding of malwares and anti-virus engines in the real world, 
+and provides implications for future works to 
+apply machine learning to malware detection in a large scale. 
 
 {\color{red} TODO: Contributions:}
