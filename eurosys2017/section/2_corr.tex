@@ -14,23 +14,24 @@ file size, and source country.
 \label{sec:reputation}
 
 Previous work~\cite{GuoICSE2010} reported correlation between bug reporter’s reputation and the likelihood for the bug being fixed. 
-We also observe correlation between the reputation of source id and submission’s detection rate. 
+We also observe correlation between the reputation of source ID and submission’s detection rate. 
 
 %\theoremstyle{definition}
 \begin{definition}{Reputation:}
-Given a submission $S$ with source id $N$, 
+Given a submission $S$ with source ID $N$, 
 we define the reputation of $N$ when conducting the submission $S$ as the average detection rate for all submissions conducted by $N$ before $S$. 
 If $N$ did not make any submission before, we define the reputation to be $-1$. 
 \end{definition}
 
-For around 14\% PE submissions, VirusTotal fails to provide source id information. 
+For around 14\% PE submissions, VirusTotal fails to provide source ID information. 
 We filter out these submissions, when computing reputation.
-All other PE submissions are conducted by 613 thousand source ids. 
-More than half source ids (66\%) only conduct submission once. 
-We filter source ids conducting more than 1 million PE submissions in our data set, 
+All other PE submissions are conducted by 613 thousand source IDs. 
+66\% source IDs only conduct submission once. 
+XXX
+We filter source IDs conducting more than 1 million PE submissions in our data set, 
 because we think these are anti-virus vendors routinely test their products. 
 
-When calculating reputation, we sort all submissions from the same source id chronologically, 
+When calculating reputation, we sort all submissions from the same source ID chronologically, 
 and calculate reputation for each source id when conducting each submission. 
 We round up each calculated reputation to nearest 0.05. 
 We group submissions based on source ids' reputation when conducting submissions, 
@@ -38,66 +39,13 @@ and we plot average detection rate and 95\% confidence interval for each group i
 Except the point with reputation 1, all other confidence intervals are invisible.  
 
 As shown in Figure~\ref{fig:idreputation}, 
-there is a rough increase for detection rate as the increase of source id's reputation, 
+there is a rough increase for detection rate as the increase of source ID's reputation, 
 with the exception for the point with reputation -1 and the point with reputation 1. 
-It is interesting to observe that first submissions conducted by different source ids have higher 
-detection rate than submissions conducted by ids with reputation 0, 
-and it is difficult for source ids with highest reputation to always submit files detected by all engines. 
-Correlation between source id's reputation and detection rate indicates 
-that it is feasible to use source ids' submission history to predict their future submissions.
-
-
-
-\subsection{Submission History}
-\label{sec:history}
-
-\input{section/fig_2corr2}
-
-One file could be submitted more than once to VirusTotal. 
-Given a submission, we also study whether information for historical 
-submissions of the same file influences detection rate for the current submission. 
-
-\noindent{\textit{\underline{Historical submission number.}}}
-We sort submissions for each file chronologically, 
-and then calculate the correlation between detection rate and historical submission number for each submission. 
-All historical submission numbers are rounded up to the nearest 5. 
-How detection rate changes with historical submission number is shown in Figure~\ref{fig:hisnum}. 
-The curve decreases from 0 to 10, increases from 10 to 65, decreases from 65 to 75, and increases after 75. 
-
-We think there are two factors influencing whether detection rate would increase or decrease.
-One is the percentage of benign files submitted to VirusTotal, 
-and with more benign files submitted, detection rate will decrease.   
-The other one is the percentage of engines identifying the submitted malwares, 
-and with more engines identifying the malware, detection rate will increase. 
-In the two stages of detection rate decreasing, 
-VirusTotal users stop submitting identified malwares, 
-and the increase of percentage of benign files submitted to VirusTotal dominates. 
-In the the two stages of detection rate increasing, 
-more engines can identify submitted malwares, 
-and the increase of percentage of engines identifying submitted malwares dominates. 
-
-\noindent{\textit{\underline{Historical source id.}}}
-One file could be submitted by one source id multiple times, 
-and could also submitted by different source ids. 
-We study correlation between the number of historical source ids and detection rate. 
-Each number of historical source ids is rounded up to nearest 5. 
-Average detection rate and confidence interval for each number of historical source ids are shown in Figure~\ref{fig:hisid}. 
-Confidence intervals are invisible before 80. 
-Detection rate is higher for historical source ids less than 15, compared with historical source ids more than 15.
-The number of historical source ids reflects the popularity of a submitted file.
-Figure~\ref{fig:hisid} shows that when popularity of a file larger than a certain threshold, like 15 source ids, 
-it is unrelated to detection rate and how malicious of the file viewed by anti-virus engines. 
-
-
-\noindent{\textit{\underline{Historical source country.}}}
-One file could also be submitted from different countries. 
-The number of historical source countries also reflect the popularity of a submitted file. 
-The correlation between detection rate and the number of historical source countries in 
-Figure~\ref{fig:hiscountry} shows similar trend as the correlation between detection rate 
-and the number of historical source ids in Figure~\ref{fig:hiscountry}. 
-
-Figure~\ref{fig:hisnum}, Figure~\ref{fig:hisid}, and Figure~\ref{fig:hiscountry} show that 
-when historical numbers fall into certain range, they are correlated with detection rate. 
+It is interesting to observe that first submissions conducted by different source IDs have higher 
+detection rate than submissions conducted by IDs with reputation 0, 
+and it is difficult for source IDs with highest reputation to always submit files detected by all engines. 
+Correlation between source ID's reputation and detection rate indicates 
+that it is feasible to use source IDs' submission history to predict their future submissions.
 
 \subsection{File Size}
 \label{sec:size}
@@ -126,6 +74,61 @@ and all confidence intervals are almost invisible.
 From Figure~\ref{fig:Country}, 
 we can see that submissions source countries are correlated with detection rate.
 \yiying{What's the order of the x axis in this figure? we should either sort it alphabetically or by detection rate.}
+
+
+
+\subsection{Submission History}
+\label{sec:history}
+
+\input{section/fig_2corr2}
+
+One file could be submitted more than once to VirusTotal. 
+Given a submission, we also study whether information for historical 
+submissions of the same file influences detection rate for the current submission. 
+
+\noindent{\textit{\underline{Historical submission number.}}}
+We sort submissions for each file chronologically, 
+and then calculate the correlation between detection rate and historical submission number for each submission. 
+All historical submission numbers are rounded up to the nearest 5. 
+How detection rate changes with historical submission number is shown in Figure~\ref{fig:hisnum}. 
+The curve decreases from 0 to 10, increases from 10 to 65, decreases from 65 to 75, and increases after 75. 
+
+\yiying{I'm completely confused about your explanation here.}
+We think there are two factors influencing whether detection rate would increase or decrease.
+One is the percentage of benign files submitted to VirusTotal, 
+and with more benign files submitted, detection rate will decrease.   
+The other one is the percentage of engines identifying the submitted malwares, 
+and with more engines identifying the malware, detection rate will increase. 
+In the two stages of detection rate decreasing, 
+VirusTotal users stop submitting identified malwares, 
+and the increase of percentage of benign files submitted to VirusTotal dominates. 
+In the the two stages of detection rate increasing, 
+more engines can identify submitted malwares, 
+and the increase of percentage of engines identifying submitted malwares dominates. 
+
+\noindent{\textit{\underline{Historical source ID.}}}
+One file could be submitted by one source ID multiple times, 
+and could also submitted by different source IDs. 
+We study correlation between the number of historical source IDs and detection rate. 
+Each number of historical source IDs is rounded up to nearest 5. 
+\yiying{Can you not round to 5? the point at 15 is strange and you don't have a good explanation. maybe if we split into original interval (i.e., 1 instead of rounding), we can find some possible explanation?}
+Average detection rate and confidence interval for each number of historical source IDs are shown in Figure~\ref{fig:hisid}. 
+Confidence intervals are invisible before 80. 
+Detection rate is higher for historical source IDs less than 15, compared with historical source IDs more than 15.
+The number of historical source IDs reflects the popularity of a submitted file.
+Figure~\ref{fig:hisid} shows that when popularity of a file larger than a certain threshold, like 15 source IDs, 
+it is unrelated to detection rate and how malicious of the file viewed by anti-virus engines. 
+
+
+\noindent{\textit{\underline{Historical source country.}}}
+One file could also be submitted from different countries. 
+The number of historical source countries also reflect the popularity of a submitted file. 
+The correlation between detection rate and the number of historical source countries in 
+Figure~\ref{fig:hiscountry} shows similar trend as the correlation between detection rate 
+and the number of historical source IDs in Figure~\ref{fig:hiscountry}. 
+
+Figure~\ref{fig:hisnum}, Figure~\ref{fig:hisid}, and Figure~\ref{fig:hiscountry} show that 
+when historical numbers fall into certain range, they are correlated with detection rate. 
 
 \subsection{Discussion}
 
