@@ -4,7 +4,7 @@ import ast
 from matplotlib.backends.backend_pdf import PdfPages
 from matplotlib.ticker import MultipleLocator, FormatStrFormatter
 
-with open('../data/peSize.stat') as f:
+with open('../data/peSizeCorrelation.stat') as f:
 	lines = f.read().splitlines()
 
 

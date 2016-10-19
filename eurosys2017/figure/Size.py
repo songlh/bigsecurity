@@ -5,13 +5,14 @@ import matplotlib.pyplot as plt
 from matplotlib.ticker import MultipleLocator, FormatStrFormatter
 
 if __name__ == '__main__':
-	sDataFile = '../data/peSize.stat'
+	sDataFile = '../data/peSizeCorrelation.stat'
 	fData = open(sDataFile, 'r')
 
 	XList = []
 	YList = []
 	errList = []
 
+	numList = []
 	while True:
 		line = fData.readline()
 		if not line:
@@ -26,12 +27,16 @@ if __name__ == '__main__':
 		numSqrt = tupleStat[0]
 		numSum = tupleStat[1]
 		numNum = tupleStat[2]
+		numList.append(numNum)
 
 		YList.append(float(numSum * 1.0/numNum))
-		print tmpList[0], YList[-1]
+		#print tmpList[0], YList[-1]
 		errList.append(compCI.compCI(numSqrt, numSum, numNum))
 
 	fData.close()
+
+	print numList[9:36]
+	print sum(numList[9:36]) * 1.0 / sum(numList)
 
 	fig, ax = plt.subplots()
 	ax.errorbar(XList, YList, yerr=errList, fmt='-o')
