@@ -13,26 +13,27 @@ In this section, we try to model this influence,
 and try to predict whether an engine will identify a file as malware in the future, 
 after the engine has already labeled the file as benign.
 
-Influence propagation on social graph is a well-studied topic in web mining area. 
-The static models we apply are proposed by~\citet{Influence} to analyze Flickr data.
-We will first overview the static models~\cite{Influence} in our usage scenario in Section~\ref{sec:model}, 
-and then we will discuss how to train models and use trained models to make prediction in Section~\ref{sec:predict}.  
+Influence propagation on social graph is a well-studied topic in the web mining area. 
+We built our influence model based on a static model originally proposed to analyze Flickr data~\cite{Influence}.
+This section first presents our influence model
+and then discusses model training and the usage of the trained models for prediction.
 
 \subsection{Influence Model}
 \label{sec:model}
 
 
-We assume that all vendors form a complete directed social graph $G = (V, E)$, 
+We assume that all vendors form a complete directed graph $G = (V, E)$, 
 where the nodes $V$ are vendors. 
-The social graph is complete, 
+The graph is complete, 
 since we assume there is possible influence from any vendor to all other vendors.
 We assume there are action logs generated, 
 when VirusTotal applies a set of anti-virus engines to analyze a submission. 
-For each engine, there will be an action log $(u, a, t)$ or an action log $(u, \bar{a}, t)$, 
+For each engine, there is an action log $(u, a, t)$ or an action log $(u, \bar{a}, t)$, 
 representing whether or not $u$ takes action to identify the submission as a malware at time $t$. 
 To make things easy, after a vendor $u$ labels a file as malware, 
 we assume $u$ will insist its decision, 
 and ignore cases where a vendor labels a file as malware, but labels the file as benign later. 
+\yiying{why can we ignore this case?}
 
 We use $A_u$ to represent the number of actions taking by u, 
 or the number of malwares identified by $u$. 
