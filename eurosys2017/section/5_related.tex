@@ -1,14 +1,49 @@
 \section{Related Works}
+\label{sec:related}
+
+\subsection{Leveraging Source Code Repositories}
+
 Recently, there are many works on exploring how to leverage ``big code'' repositories, 
 such as GitHub, BitBucket, and CodePlex. 
-SLANG~\cite{code-completion} trains statistical models from extracted sequences of API calls from large code bases, 
+SLANG~\cite{code-completion} trains statistical models by using extracted sequences of API calls from large code bases, 
 and applies trained models to fill uncompleted programs with call innovations. 
 JSNICE~\cite{big-predicting} aims to predict identifier types and obfuscated identifier names for JavaScript programs. 
 A score function based on learned CRF model is optimized to make all predictions. 
 Phrase-based statistical translation approaches are used by \citet{big-translation} to translate C\# programs to Java programs. 
-As a summary, all these techniques are trying to utilize source code repositories, which is different from our work. 
 
-2. Existing works about leveraging VirusTotal
+As a summary, all these techniques are utilizing source code repositories, 
+and their techniques are built based on analyzing source codes. 
+However, what we are leveraging is a malware repository, 
+and we rely on malwares’ metadata information and ssdeep hash strings calculated from binary executables.
+
+
+\subsection{Analyzing and Leveraging VirusTotal}
+
+Research community starts to pay more attention to VirusTotal repository. 
+
+~\citet{SongAPsys2016} download one-month data from VirusTotal, 
+and study PE malwares’ basic properties, 
+temporal properties, and distribution properties by using their collected data.   
+Similar to our work, they also focus on PE files, and study some general properties. 
+Different from our work, they simply rely on detection results from Microsoft anti-virus engines.
+We study correlations between metadata and detection results from all engines, 
+and we also evaluate different detection engines by modeling influence among different engines.  
+
+Researchers~\cite{huangvt2016bigdata, neeles} notice that some malware writers use VirusTotal as testing platform.
+They explore this phenomenon, and build techniques to identify malware writers. 
+~\citet{huangvt2016bigdata} download 4 month VirusTotal metadata to identify Android malware development cases. 
+Their technique would alert suspicious source ids firstly, 
+and they conduct program analysis to further validate whether 
+these source ids are really testing their Android malware prototypes on VirusTotal. 
+~\citet{neeles} try to identify windows malware development cases on Anubis. 
+They also use data on VirusTotal to validate their findings. 
+Different from our study, their works focus on submission history of each source id.  
+
+~\citet{betterGT} applies various supervised and unsupervised 
+technique to aggregate various labels from different anti-virus engines into one ground truth label 
+on a dataset collected from VirusTotal. 
+Their goal is to find better ground truth label for distinct samples, 
+while our work tries to model influence among different anti-virus vendors.  
 
 3. Code classification and clustering
 
