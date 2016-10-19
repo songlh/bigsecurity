@@ -13,6 +13,10 @@ before delving into more advanced analysis in later sections.
 It's used widely etc.
 It's been around for ** years etc.
 It's the only open access to real malwares?
+Are users of VT mostly AV companies, software companies, OS companies, normal user, attackers? Do we have any way to tell or guess this?
+
+\yiying{how do people use VT, how does VT use AV engines and generat its report}
+For each \pe\ submission, \vt\ uses a set of anti-virus engines to analyze it.
 
 \vt\ provides open APIs to access and download both the metadata of all submissions and detection results.
 These APIs work like a pipe or a callback registering method.
@@ -50,22 +54,34 @@ and leave studies on other types of malwares for future.
 %we consider the submission is a PE file. 
 In total, we collected 76 million \pe\ submissions.
 
-\input{section/fig_subnum}
 \subsection{Basic Analysis}
-We further  
-The number of submissions and the number of \pe\ submissions 
-we collected each day are shown in Figure~\ref{fig:subnum}. 
+After collecting data, we first conducted a set of basic analysis 
+to learn the 
+
+\input{section/fig_subnum}
+\input{section/fig_pesize}
+\noindent{\bf Submission temporal, geo-location, and size distribution.} 
+Figure~\ref{fig:subnum} plots the number of submissions of all types and the number of \pe\ submissions per day 
+over the whole collection period.
+There are a large amount of submissions every day
+and the amount of submissions is fairly stable over the whole collection period.
+The same conclusion can be made to \pe\ submissions.
+
+\yiying{we still need the country distribution}
+
+Figure~\ref{fig:pesize} shows the file size distribution for PE submissions. 
+The smallest PE file is only xxx bytes, and the largest one is more than xxx\,MB. 
+xxx\% of PE file fall into the range from xx\,KB to xx\,MB. 
 
 \input{section/fig_vendornum}
-
 \input{section/fig_detectionrate}
-
-For each \pe\ submission, \vt\ uses a set of anti-virus engines to analyze it.
-As shown in Table~\ref{tab:fields}, 
-total field is to represent the number of used anti-virus engines. 
+\noindent{\textit{\underline{Anti-virus engines and detection basic analysis.}}}
+%As shown in Table~\ref{tab:fields}, 
+%total field is to represent the number of used anti-virus engines. 
 Figure~\ref{fig:vendornum} shows the distribution for the number of used anti-virus engines. 
 More than 99\% of PE submissions are analyzed by at least 50 anti-virus engines. 
-Some anti-virus engines will label a submitted PE file as malware, while others will not. 
+Some anti-virus engines will label a submitted PE file as malware, 
+while others will not. 
 Positives field in Table~\ref{tab:fields} represents the number of anti-virus engines labeling the submission as malwares. 
 
 $$ \textrm{\textit{Detection Rate}} = \dfrac{positives}{total + 1}$$
@@ -79,7 +95,6 @@ This formula shares the same intuition from previous work~\cite{GuoICSE2010}, wh
 A larger detection rate usually indicates a more malicious malware suggested by analyzed anti-virus engines. 
 Figure~\ref{fig:detectiorate} shows how detection rate distributes among all PE submissions. 
 
-
 One PE file could be submitted more than once to VirusTotal. 
 There are 6.72\% PE files submitted more than once to VirusTotal. 
 On average, each PE file is submitted 1.19 times. 
@@ -87,12 +102,6 @@ Some anti-virus engines may produce different detection results when analyzing t
 We assume there is influence among different anti-virus vendors, 
 and this influence is a very important reason causing engines to change their results.
 We will discuss how we model this influence and how to predict possible detection result change by using our model in Section~\ref{sec:influ}.
-
-\input{section/fig_pesize}
-
-Figure~\ref{fig:pesize} shows the file size distribution for PE submissions. 
-The smallest PE file is only 129 bytes, and the largest one is more than 1 GB. 
-99.58\% of PE file fall into the range from 4 KB to 32 MB. 
 
 \subsection{}
 \yiying{I don't know what to call this paragraph. But it should go into a subsection}

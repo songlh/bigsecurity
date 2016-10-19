@@ -1,9 +1,12 @@
 \section{Correlations between Metadata and Detection Rate}
 \label{sec:corr}
-In this section, we study factors influencing detection rate of PE submissions.
-A higher detection indicates a more malicious of a submitted file viewed by anti-virus engines.  
-Our study is conducted from 4 aspects: reputation of source id, submission history, 
+This section presents our study of what influence the detection rate of \pe\ submissions.
+Detection rate is a good indication of the likelihood of malware.
+A higher detection rate means that more anti-virus engines identify a submitted file as malicious.
+\yiying{Can we say that higher detection rate indicates that the file is likely to be a malware?}
+Our study is conducted from four aspects: reputation of source id, submission history, 
 file size, and source country.
+\yiying{Why these four things?}
 
 \input{section/fig_2corr1}
 
@@ -16,9 +19,9 @@ We also observe correlation between the reputation of source id and submissionâ€
 
 %\theoremstyle{definition}
 \begin{definition}{Reputation:}
-Given a submission $S$ with source id $I$, 
-we define the reputation of $I$ when conducting the submission $S$ as the average detection rate for all submissions conducted by $I$ before $S$. 
-If $I$ did not make any submission before, we define the reputation to be $-1$. 
+Given a submission $S$ with source id $N$, 
+we define the reputation of $N$ when conducting the submission $S$ as the average detection rate for all submissions conducted by $N$ before $S$. 
+If $N$ did not make any submission before, we define the reputation to be $-1$. 
 \end{definition}
 
 For around 14\% PE submissions, VirusTotal fails to provide source id information. 
@@ -55,7 +58,7 @@ One file could be submitted more than once to VirusTotal.
 Given a submission, we also study whether information for historical 
 submissions of the same file influences detection rate for the current submission. 
 
-{\textit{\underline{Historical submission number.}}}
+\noindent{\textit{\underline{Historical submission number.}}}
 We sort submissions for each file chronologically, 
 and then calculate the correlation between detection rate and historical submission number for each submission. 
 All historical submission numbers are rounded up to the nearest 5. 
@@ -74,7 +77,7 @@ In the the two stages of detection rate increasing,
 more engines can identify submitted malwares, 
 and the increase of percentage of engines identifying submitted malwares dominates. 
 
-{\textit{\underline{Historical source id.}}}
+\noindent{\textit{\underline{Historical source id.}}}
 One file could be submitted by one source id multiple times, 
 and could also submitted by different source ids. 
 We study correlation between the number of historical source ids and detection rate. 
@@ -87,7 +90,7 @@ Figure~\ref{fig:hisid} shows that when popularity of a file larger than a certai
 it is unrelated to detection rate and how malicious of the file viewed by anti-virus engines. 
 
 
-{\textit{\underline{Historical source country.}}}
+\noindent{\textit{\underline{Historical source country.}}}
 One file could also be submitted from different countries. 
 The number of historical source countries also reflect the popularity of a submitted file. 
 The correlation between detection rate and the number of historical source countries in 
@@ -123,7 +126,7 @@ we can see that submissions source countries are correlated with detection rate.
 
 \subsection{Discussion}
 
-{\textit{\underline{How to use our data?}}}
+\noindent{\textit{\underline{How to use our data?}}}
 As we discussed from Section~\ref{sec:reputation} to Section~\ref{sec:country}, 
 source ID reputation, historical number in certain range, file size, 
 and source country are highly correlated with detection rate. 
@@ -134,7 +137,7 @@ security experts prioritize malwares, and focus their efforts on malwares which 
 Anti-virus vendors could inspect results which are variant from our studying results 
 to identify possible false positives or false negatives in their products. 
 
-{\textit{\underline{Limitations of our study.}}}
+\noindent{\textit{\underline{Limitations of our study.}}}
 As we discussed in Section~\ref{sec:meth}, our study is binded with our methodology.
 We do not have any data before 05/07/2016, 
 which may cause some reputation and historical numbers 
