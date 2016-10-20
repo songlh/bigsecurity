@@ -1,51 +1,21 @@
-\section{Correlations between Metadata and Detection Rate}
+\section{Correlation between Submission Properties and Detection Rate}
 \label{sec:corr}
-This section presents our study of what influence the detection rate of \pe\ submissions.
-Detection rate is a good indication of the likelihood of malware.
-A higher detection rate means that more anti-virus engines identify a submitted file as malicious.
-\yiying{Can we say that higher detection rate indicates that the file is likely to be a malware?}
-Our study is conducted from four aspects: reputation of source id, submission history, 
-file size, and source country.
-\yiying{Why these four things?}
+This section presents our study of the correlation between various properties of \pe\ submissions and the detection rate of \pe\ submissions.
+Detection rate is what most \vt\ users use to decide if their submissions are malware 
+and the first thing that a user of \vt\ uses.
+Therefore, it is important to study what correlates to detection rate.
+In this section, we study the correlation between detection rate and submission file size,
+two types of historical submission properties, and the reputation and type of source IDs.
+
+In the next section, we will present our further analysis of what 
+and if detection rate
+%Detection rate is a good indication of the likelihood of malware.
+%A higher detection rate means that more anti-virus engines identify a submitted file as malicious.
+%\yiying{Can we say that higher detection rate indicates that the file is likely to be a malware?}
+%Our study is conducted from four aspects: reputation of source id, submission history, 
+%file size, and source country.
 
 \input{section/fig_2corr1}
-
-\subsection{Reputation of Source ID}
-\label{sec:reputation}
-
-Previous work~\cite{GuoICSE2010} reported correlation between bug reporter’s reputation and the likelihood for the bug being fixed. 
-We also observe correlation between the reputation of source ID and submission’s detection rate. 
-
-%\theoremstyle{definition}
-\begin{definition}{Reputation:}
-Given a submission $S$ with source ID $N$, 
-we define the reputation of $N$ when conducting the submission $S$ as the average detection rate for all submissions conducted by $N$ before $S$. 
-If $N$ did not make any submission before, we define the reputation to be $-1$. 
-\end{definition}
-
-For around 14\% PE submissions, VirusTotal fails to provide source ID information. 
-We filter out these submissions, when computing reputation.
-All other PE submissions are conducted by 613 thousand source IDs. 
-66\% source IDs only conduct submission once. 
-XXX
-We filter source IDs conducting more than 1 million PE submissions in our data set, 
-because we think these are anti-virus vendors routinely test their products. 
-
-When calculating reputation, we sort all submissions from the same source ID chronologically, 
-and calculate reputation for each source id when conducting each submission. 
-We round up each calculated reputation to nearest 0.05. 
-We group submissions based on source ids' reputation when conducting submissions, 
-and we plot average detection rate and 95\% confidence interval for each group in Figure~\ref{fig:idreputation}. 
-Except the point with reputation 1, all other confidence intervals are invisible.  
-
-As shown in Figure~\ref{fig:idreputation}, 
-there is a rough increase for detection rate as the increase of source ID's reputation, 
-with the exception for the point with reputation -1 and the point with reputation 1. 
-It is interesting to observe that first submissions conducted by different source IDs have higher 
-detection rate than submissions conducted by IDs with reputation 0, 
-and it is difficult for source IDs with highest reputation to always submit files detected by all engines. 
-Correlation between source ID's reputation and detection rate indicates 
-that it is feasible to use source IDs' submission history to predict their future submissions.
 
 \subsection{File Size}
 \label{sec:size}
@@ -56,10 +26,11 @@ Average detection rate and 95\% confidence interval for each preprocessed
 file size are shown in Figure~\ref{fig:size}.
 Except for the last two points, all other confidence intervals are invisible.   
 Files with size from 90KB to 4MB have average higher detection rate, which is more than 0.2. 
-
+One likely reason of this correlation is that 
 \yiying{how is this result relates to the size distribution of files? 
 what does it this result imply? any suspected reason behind this? My suspition is just that these sizes have more submissions and thus? has higher detection rate.}
 
+\if 0
 \subsection{Source Country}
 \label{sec:country}
 
@@ -75,6 +46,7 @@ From Figure~\ref{fig:Country},
 we can see that submissions source countries are correlated with detection rate.
 \yiying{What's the order of the x axis in this figure? we should either sort it alphabetically or by detection rate.}
 
+\fi
 
 
 \subsection{Submission History}
@@ -120,6 +92,7 @@ Figure~\ref{fig:hisid} shows that when popularity of a file larger than a certai
 it is unrelated to detection rate and how malicious of the file viewed by anti-virus engines. 
 
 
+\if 0
 \noindent{\textit{\underline{Historical source country.}}}
 One file could also be submitted from different countries. 
 The number of historical source countries also reflect the popularity of a submitted file. 
@@ -129,6 +102,45 @@ and the number of historical source IDs in Figure~\ref{fig:hiscountry}.
 
 Figure~\ref{fig:hisnum}, Figure~\ref{fig:hisid}, and Figure~\ref{fig:hiscountry} show that 
 when historical numbers fall into certain range, they are correlated with detection rate. 
+\fi
+
+\subsection{Reputation of Source ID}
+\label{sec:reputation}
+
+Previous work~\cite{GuoICSE2010} reported correlation between bug reporter’s reputation and the likelihood for the bug being fixed. 
+We also observe correlation between the reputation of source ID and submission’s detection rate. 
+
+%\theoremstyle{definition}
+\begin{definition}{Reputation:}
+Given a submission $S$ with source ID $N$, 
+we define the reputation of $N$ when conducting the submission $S$ as the average detection rate for all submissions conducted by $N$ before $S$. 
+If $N$ did not make any submission before, we define the reputation to be $-1$. 
+\end{definition}
+
+For around 14\% PE submissions, VirusTotal fails to provide source ID information. 
+We filter out these submissions, when computing reputation.
+All other PE submissions are conducted by 613 thousand source IDs. 
+66\% source IDs only conduct submission once. 
+XXX
+We filter source IDs conducting more than 1 million PE submissions in our data set, 
+because we think these are anti-virus vendors routinely test their products. 
+
+When calculating reputation, we sort all submissions from the same source ID chronologically, 
+and calculate reputation for each source id when conducting each submission. 
+We round up each calculated reputation to nearest 0.05. 
+We group submissions based on source ids' reputation when conducting submissions, 
+and we plot average detection rate and 95\% confidence interval for each group in Figure~\ref{fig:idreputation}. 
+Except the point with reputation 1, all other confidence intervals are invisible.  
+
+As shown in Figure~\ref{fig:idreputation}, 
+there is a rough increase for detection rate as the increase of source ID's reputation, 
+with the exception for the point with reputation -1 and the point with reputation 1. 
+It is interesting to observe that first submissions conducted by different source IDs have higher 
+detection rate than submissions conducted by IDs with reputation 0, 
+and it is difficult for source IDs with highest reputation to always submit files detected by all engines. 
+Correlation between source ID's reputation and detection rate indicates 
+that it is feasible to use source IDs' submission history to predict their future submissions.
+
 
 \subsection{Discussion}
 

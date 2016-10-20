@@ -1,49 +1,29 @@
 \section{Data Collection and Basic Analysis}
 \label{sec:meth}
 
-This section discusses how we collect data and metadata from VirusTotal
-and how we preprocess them.
+This section introduces \vt\ and 
+discusses how we collect data from \vt\ and preprocess them.
 We also present the analysis results of their basic properties, 
 before delving into more advanced analysis in later sections.
 
 \input{section/tbl_metadata}
 \subsection{VirusTotal}
-\yiying{we need to first introduce VT. what does it do, what does it provide, etc.}
-\vt\ is a free online malware detection tool? etc.
-It's used widely etc.
-It's been around for ** years etc.
-It's the only open access to real malwares?
-Are users of VT mostly AV companies, software companies, OS companies, normal user, attackers? Do we have any way to tell or guess this?
-
-{\color{red}
-\vt is a free online malware scan service, 
-which was founded in 2004 and was acquired by google in 2012. 
-\vt is very popular in security community. 
+\vt\ is a free online malware scan service.
+It was founded in 2004 and was acquired by google in 2012. 
+\vt\ is widely used by both normal users and anti-virus vendors.
+Normal users submit suspicious files to \vt\ \yiying{when they do not have any anti-virus software, true?}, 
+or when they want to check for viruses possibly missed by their own anti-virus software or false alarms from their anti-virus software.  
 Anti-virus vendors use \vt to verify false positives and false negatives in their products.
-Users submit suspicious files to \vt to check for viruses possibly missed by their own anti-virus software or false alarms from their anti-virus software.  
-}
 
-\yiying{how do people use VT, how does VT use AV engines and generat its report}
-For each \pe\ submission, \vt\ uses a set of anti-virus engines to analyze it.
-
-{\color{red}
-For each submission, \vt applies a set of anti-virus engines to analyze it. 
-\vt keeps information about whether the submission is labeled as malware by each engine, 
+For each submission, \vt\ applies a set of anti-virus engines to analyze it. 
+\vt\ keeps information about whether the submission is labeled as malware by each engine, 
 and detailed tags for identified malware from each engine. 
-}
 
 \vt\ provides open APIs to access and download both the metadata of all submissions and detection results.
-These APIs work like a pipe or a callback registering method.
-After a user opens the API and establish ** to \vt, \vt\ will keep returning metadata for latest files submitted to the user.
-blabla
-
-{\color{red}
-\vt provides open APIs to access and download both the metadata of all submissions and detection results.
 One API, named distribution API, works like a pipe.
 After a user opens the distribution API and starts to download data from \vt, 
-\vt will keep returning metadata for latest submission to the user. 
-Roughly 20 GB data can be downloaded from \vt through distribution API.  
-}
+\vt\ will keep returning metadata for latest submission to the user. 
+Roughly 20 GB data can be downloaded from \vt\ through distribution API.  
 
 \vt\ provides rich metadata.
 Table~\ref{tab:fields} shows the metadata fields and their meaning.  
@@ -52,17 +32,15 @@ The original submitted files from \vt\ can be downloaded using the {\bf link} fi
 \subsection{Data Collection and Preprocessing}
 We collected all metadata for all submissions to \vt\ from May 7th, 2016 to September 6th, 2016,
 with a total of 151 million submissions. 
-\yiying{We need some explanation here about why only four months of data is collected. maybe something like we found four months' data is already enough to make meaningful conclusions?}
-
-{\color{red}
-According to Lastline Labs~\cite{Lastline}, a common lag time for an anti-virus engine to detect a new malware is two weeks,
-so we think our four months' data is enough for us to draw  meaningful conclusions. 
 Our collected data is larger than or comparable to previous works on studying \vt~\cite{SongAPsys2016,huangvt2016bigdata}.
-}
+According to Lastline Labs~\cite{Lastline}, common lag time for an anti-virus engine to detect a new malware is two weeks.
+Thus, four months' data is more than enough to analyze most malware and anti-virus engine behavior. 
+In deed, we drew several meaningful conclusions with this dataset, as will be presented in the rest of the paper.
 
 We performed our data collection using \vt{}’s distribution API.
 We insert all collected metadata into a table in Cassandra~\cite{cassandra} 
 using the combination of sha256, source\_id, and timestamp as the key.
+\yiying{say something about the spark environment here}
 
 \input{section/fig_type}
 
@@ -83,12 +61,15 @@ and leave studies on other types of malwares for future.
 In total, we collected 76 million \pe\ submissions.
 
 \subsection{Basic Analysis}
-After collecting data, we first conducted a set of basic analysis 
-to learn the 
+After collecting data, we first conducted a set of analysis 
+to learn various basic properties of submission files, 
+submission sources, and anti-virus engines.
+These properties give an overview of how real-world submissions and anti-virus enginesare like
+and serve as the foundation for our more advanced analysis in the next two sections. 
 
 \input{section/fig_subnum}
 \input{section/fig_pesize}
-\noindent{\bf Submission temporal, geo-location, and size distribution.} 
+\noindent{\textit{\underline{Submission temporal, geo-location, and size distribution.}}}
 Figure~\ref{fig:subnum} plots the number of submissions of all types and the number of \pe\ submissions per day 
 over the whole collection period.
 There are a large amount of submissions every day
@@ -101,16 +82,23 @@ Figure~\ref{fig:pesize} shows the file size distribution for PE submissions.
 The smallest PE file is only xxx bytes, and the largest one is more than xxx\,MB. 
 xxx\% of PE file fall into the range from xx\,KB to xx\,MB. 
 
+\noindent{\textit{\underline{Submission sources.}}}
+\yiying{TODO: normal vs. vendors}
+
 \input{section/fig_vendornum}
 \input{section/fig_detectionrate}
 \noindent{\textit{\underline{Anti-virus engines and detection basic analysis.}}}
+
 %As shown in Table~\ref{tab:fields}, 
 %total field is to represent the number of used anti-virus engines. 
 Figure~\ref{fig:vendornum} shows the distribution for the number of used anti-virus engines. 
 More than 99\% of PE submissions are analyzed by at least 50 anti-virus engines. 
-Some anti-virus engines will label a submitted PE file as malware, 
-while others will not. 
-Positives field in Table~\ref{tab:fields} represents the number of anti-virus engines labeling the submission as malwares. 
+%Some anti-virus engines will label a submitted PE file as malware, 
+%while others will not. 
+%Positives field in Table~\ref{tab:fields} represents the number of anti-virus engines labeling the submission as malwares. 
+
+One PE file could be submitted more than once to VirusTotal. 
+On average, each PE file was submitted 1.19 times and 6.72\% PE files were submitted more than once. 
 
 $$ \textrm{\textit{Detection Rate}} = \dfrac{positives}{total + 1}$$
 
@@ -123,19 +111,14 @@ This formula shares the same intuition from previous work~\cite{GuoICSE2010}, wh
 A larger detection rate usually indicates a more malicious malware suggested by analyzed anti-virus engines. 
 Figure~\ref{fig:detectiorate} shows how detection rate distributes among all PE submissions. 
 
-One PE file could be submitted more than once to VirusTotal. 
-There are 6.72\% PE files submitted more than once to VirusTotal. 
-On average, each PE file is submitted 1.19 times. 
-Some anti-virus engines may produce different detection results when analyzing the same file for different submissions.
+\if 0
+Some anti-virus engines can produce different detection results when analyzing the same file under different submissions.
 We assume there is influence among different anti-virus vendors, 
 and this influence is a very important reason causing engines to change their results.
 We will discuss how we model this influence and how to predict possible detection result change by using our model in Section~\ref{sec:influ}.
+\fi
 
-\subsection{Threats to validity}
-\yiying{I don't know what to call this paragraph. But it should go into a subsection}
-
-{\color{red} Another possible section name is Caveats}
-
+\subsection{Caveats}
 Like all other empirical study works, 
 our findings and conclusions need to be considered with our methodology in mind. 
 We use distribution API to download submissions' metadata from VirusTotal. 
