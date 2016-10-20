@@ -49,9 +49,13 @@ Among all file types, Windows \textit{Portable Executable} ({\em \pe}) files, or
 are the most frequently submitted type,
 accounting for 51\% of all submissions.
 %which conforms with a previous study~\cite{SongAPsys2016}.
-Web pages and malwares on Android account for the second and third largest submissions, 
+Web pages and Android apps account for the second and third largest submissions, 
 with 12\% and 8\% of all submissions respectively. 
 Other popular file types include PDF, Text, compressed files, and Java files. 
+This result shows that even though new types of malware such as Android apps have
+increased significantly in recent years, 
+traditional types of malwares such as \pe\ files and web pages are still the 
+most commonly targeted by attackers.
 
 Since PE files are the most common type,
 we focus our study in this paper on \pe\ files 
@@ -76,6 +80,9 @@ There are a large amount of submissions every day
 and the amount of submissions is fairly stable over the whole collection period.
 The same conclusion can be made to \pe\ submissions.
 
+One PE file could be submitted more than once to VirusTotal. 
+On average, each PE file was submitted 1.19 times and 6.72\% PE files were submitted more than once. 
+
 \yiying{we still need the country distribution}
 
 Figure~\ref{fig:pesize} shows the file size distribution for PE submissions. 
@@ -88,28 +95,37 @@ xxx\% of PE file fall into the range from xx\,KB to xx\,MB.
 \input{section/fig_vendornum}
 \input{section/fig_detectionrate}
 \noindent{\textit{\underline{Anti-virus engines and detection basic analysis.}}}
-
+After learning the basic properties of submissions and submission sources, 
+we now move to the basic analysis of anti-virus engines and their detection of malware.
 %As shown in Table~\ref{tab:fields}, 
 %total field is to represent the number of used anti-virus engines. 
-Figure~\ref{fig:vendornum} shows the distribution for the number of used anti-virus engines. 
+Figure~\ref{fig:vendornum} shows the distribution of the number of anti-virus engines used by \vt\ on submissions. 
 More than 99\% of PE submissions are analyzed by at least 50 anti-virus engines. 
+We suspect that \vt\ sets some threshold when running anti-virus engines and 
+will abort an engine when it takes too long to run on a submission,
+causing few submissions having fewer than 50 engines.
 %Some anti-virus engines will label a submitted PE file as malware, 
 %while others will not. 
 %Positives field in Table~\ref{tab:fields} represents the number of anti-virus engines labeling the submission as malwares. 
 
-One PE file could be submitted more than once to VirusTotal. 
-On average, each PE file was submitted 1.19 times and 6.72\% PE files were submitted more than once. 
+For the same submission, different anti-virus engines can make different detection results, \ie, some mark the submission as malware while others don't.
+To quantify the detection results of a submission,
+we use a value we call {\em Detection Rate}.
+Detection rate represents the percentage of engines labeling the submission as malware. 
 
 $$ \textrm{\textit{Detection Rate}} = \dfrac{positives}{total + 1}$$
 
-Detection rate represents the percentage of engines labeling the submission as malware. 
-Adding one to total is to avoid dividing 0 exception, and more importantly, 
-to give submissions labeled as malwares by more engines higher detection rate. 
+We add one to {\bf total} to avoid divide-by-zero exception, and more importantly, 
+to give submissions labeled as malwares by more engines a higher detection rate. 
 For example, after adding one, submissions analyzed by 50 engines and detected by 50 engines will have a higher detection rate 
-than submissions analyzed by 1 engine and detected by 1 engine. 
-This formula shares the same intuition from previous work~\cite{GuoICSE2010}, when computing reputations for bug reporters. 
-A larger detection rate usually indicates a more malicious malware suggested by analyzed anti-virus engines. 
-Figure~\ref{fig:detectiorate} shows how detection rate distributes among all PE submissions. 
+than submissions analyzed by one engine and detected by one engine. 
+%This formula shares the same intuition from previous work~\cite{GuoICSE2010}, when computing reputations for bug reporters. 
+%A larger detection rate usually indicates a more malicious malware suggested by analyzed anti-virus engines. 
+
+Figure~\ref{fig:detectiorate} shows the distribution of detection rates over all \pe\ submissions.
+Interestingly, most submissions to \vt\ are likely to be benign files, \ie, has low detection rate.
+Around half of the submissions were labeled as benign by all engines (a detection rate of zero),
+and only XX\% \yiying{fill number here} submissions were labeled as malware by at least half of the engines.
 
 \if 0
 Some anti-virus engines can produce different detection results when analyzing the same file under different submissions.
@@ -121,12 +137,14 @@ We will discuss how we model this influence and how to predict possible detectio
 \subsection{Caveats}
 Like all other empirical study works, 
 our findings and conclusions need to be considered with our methodology in mind. 
-We use distribution API to download submissions' metadata from VirusTotal. 
-There is no guarantee that all data can be successfully downloaded. 
+We use the distribution API provided by \vt\ to download submissions' metadata 
+from VirusTotal. 
+There is no guarantee that this API returns all submissions to \vt.
+%all data can be successfully downloaded. 
 It could be possible that some files are submitted to VirusTotal, 
-but we fail to get their information from VirusTotal.
+but are not downloaded. %we fail to get their information from VirusTotal.
 Although we have collected huge amount of malware information from VirusTotal,
 we do believe that there are malwares never submitted to VirusTotal, 
 or submitted to VirusTotal much later than they appear in the real world. 
 However, there are no conceivable ways to study them.
-We believe the 4-month malware information we collect can serve as a representative sample for malwares in the real world. 
+We believe that the 4-month malware information we collect can serve as a representative sample for malwares in the real world. 
