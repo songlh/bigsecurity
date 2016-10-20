@@ -12,6 +12,8 @@ if __name__ == '__main__':
 	YList = []
 	errList = []
 
+	
+
 	while True:
 		line = fData.readline()
 		if not line:
@@ -23,11 +25,16 @@ if __name__ == '__main__':
 		XList.append(float(tmpList[0]))
 		YList.append(int(tmpList[1]))
 
+		#total += int(tmpList[1])
+
 
 	fData.close()
 
 	total = sum(YList)
 	YList = [num * 1.0/total for num in YList]
+
+	print YList[5:]
+	print sum(YList[5:])
 
 	fig, ax = plt.subplots()
 	ax.plot(XList, YList, 'b-o') #, mew=2, markersize = 8, linewidth=2.0)

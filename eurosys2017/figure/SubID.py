@@ -16,6 +16,9 @@ if __name__ == '__main__':
 	tmpSum = 0
 	tmpNum = 0
 
+	total = 0
+	numList = []
+
 	while True:
 		line = fData.readline()
 		if not line:
@@ -32,25 +35,41 @@ if __name__ == '__main__':
 		numSum = tupleStat[1]
 		numNum = tupleStat[2]
 
-		tmpSqrt += numSqrt
-		tmpSum += numSum	
-		tmpNum += numNum
+		XList.append(int(tmpList[0]))
+		YList.append(float(numSum * 1.0/numNum))
+		errList.append(compCI.compCI(numSqrt, numSum, numNum))
 
-		if x % 5 == 0:
-			XList.append(x)
-			YList.append(float(tmpSum * 1.0/tmpNum))
-			errList.append(compCI.compCI(tmpSqrt, tmpSum, tmpNum))
+		total += numNum
+		numList.append(numNum)
+		#tmpSqrt += numSqrt
+		#tmpSum += numSum	
+		#tmpNum += numNum
 
-			tmpSqrt = 0
-			tmpSum = 0
-			tmpNum = 0
+		#if x % 5 == 0:
+		#	XList.append(x)
+		#	YList.append(float(tmpSum * 1.0/tmpNum))
+		#	errList.append(compCI.compCI(tmpSqrt, tmpSum, tmpNum))
+
+		#	tmpSqrt = 0
+		#	tmpSum = 0
+		#	tmpNum = 0
+
+
 
 	fData.close()
 
-	if tmpNum > 1:
-		XList.append(XList[-1] + 5)
-		YList.append(float(tmpSum * 1.0/tmpNum))
-		errList.append(compCI.compCI(tmpSqrt, tmpSum, tmpNum))
+	for i, num, in enumerate(numList):
+		print i, num, num * 1.0/total
+
+	XList = XList[0:16]
+	YList = YList[0:16]
+	errList = errList[0:16]
+
+	print YList
+	#if tmpNum > 1:
+	#	XList.append(XList[-1] + 5)
+	#	YList.append(float(tmpSum * 1.0/tmpNum))
+	#	errList.append(compCI.compCI(tmpSqrt, tmpSum, tmpNum))
 
 	fig, ax = plt.subplots()
 	ax.errorbar(XList, YList, yerr=errList, fmt='-o')
@@ -87,7 +106,7 @@ if __name__ == '__main__':
 
 	#ax.set_xticklabels(labels)
 
-	#plt.show()
-	fig.savefig('SubID.png')
-	fig.savefig('SubID.pdf')
+	plt.show()
+	#fig.savefig('SubID.png')
+	#fig.savefig('SubID.pdf')
 	plt.close(fig)

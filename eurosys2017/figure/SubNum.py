@@ -17,6 +17,10 @@ if __name__ == '__main__':
 	tmpSum = 0
 	tmpNum = 0
 
+	total = 0
+
+	numList = []
+
 	while True:
 		line = fData.readline()
 		if not line:
@@ -28,40 +32,47 @@ if __name__ == '__main__':
 		strTmp = ' '.join(tmpList[1:])
 		tupleStat = ast.literal_eval(strTmp)
 
-		tmpSqrt += tupleStat[0]
-		tmpSum += tupleStat[1]
-		tmpNum += tupleStat[2]
+		#tmpSqrt += tupleStat[0]
+		#tmpSum += tupleStat[1]
+		#tmpNum += tupleStat[2]
 
-		if x % 5 == 0:
-			XList.append(x)
-			YList.append(float(tmpSum * 1.0/tmpNum))
-			errList.append(compCI.compCI(tmpSqrt, tmpSum, tmpNum))
+		#if x % 5 == 0:
+		#	XList.append(x)
+		#	YList.append(float(tmpSum * 1.0/tmpNum))
+		#	errList.append(compCI.compCI(tmpSqrt, tmpSum, tmpNum))
 
-			tmpSqrt = 0
-			tmpSum = 0
-			tmpNum = 0
+		#	tmpSqrt = 0
+		#	tmpSum = 0
+		#	tmpNum = 0
 
-		#XList.append(int(tmpList[0]))
+		XList.append(int(tmpList[0]))
 
-		#strTmp = ' '.join(tmpList[1:])
-		#tupleStat = ast.literal_eval(strTmp)
-		#numSqrt = tupleStat[0]
-		#numSum = tupleStat[1]
-		#numNum = tupleStat[2]
+		strTmp = ' '.join(tmpList[1:])
+		tupleStat = ast.literal_eval(strTmp)
+		numSqrt = tupleStat[0]
+		numSum = tupleStat[1]
+		numNum = tupleStat[2]
 
-		#YList.append(float(numSum * 1.0/numNum))
-		#errList.append(compCI.compCI(numSqrt, numSum, numNum))
+		YList.append(float(numSum * 1.0/numNum))
+		errList.append(compCI.compCI(numSqrt, numSum, numNum))
 
+		total += numNum
+		numList.append(numNum)
 	fData.close()
 
-	if tmpNum > 1:
-		XList.append(XList[-1] + 5)
-		YList.append(float(tmpSum * 1.0/tmpNum))
-		errList.append(compCI.compCI(tmpSqrt, tmpSum, tmpNum))
+	for i, num, in enumerate(numList):
+		print i, num, num * 1.0/total
+
+
+	
+	#if tmpNum > 1:
+	#	XList.append(XList[-1] + 5)
+	#	YList.append(float(tmpSum * 1.0/tmpNum))
+	#	errList.append(compCI.compCI(tmpSqrt, tmpSum, tmpNum))
 
 
 	fig, ax = plt.subplots()
-	ax.errorbar(XList, YList, yerr=errList, fmt='-o')
+	ax.errorbar(XList, YList, yerr=errList , markersize = 8, linewidth=0.5 ) #, fmt='-o')
 
 	majorLocator = MultipleLocator(10)
 	ax.xaxis.set_major_locator(majorLocator)
@@ -95,7 +106,7 @@ if __name__ == '__main__':
 
 	#ax.set_xticklabels(labels)
 
-	#plt.show()
-	fig.savefig('SubNum.png')
-	fig.savefig('SubNum.pdf')
+	plt.show()
+	#fig.savefig('SubNum.png')
+	#fig.savefig('SubNum.pdf')
 	plt.close(fig)

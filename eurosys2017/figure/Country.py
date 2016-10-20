@@ -30,8 +30,12 @@ if __name__ == '__main__':
 
 	countryList.sort(key=lambda country: country[1][2], reverse = True)
 
+	total = sum([num[1][2] for num in countryList])
+
 	#for country in countryList:
-	#	print country
+	#	print country[0], country[1][2] * 1.0 / total
+
+	#exit(0)
 
 	print len(countryList), numNone * 1.0 / sum([num[1][2] for num in countryList])
 

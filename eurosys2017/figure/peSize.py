@@ -11,6 +11,8 @@ with open('../data/peSizeCorrelation.stat') as f:
 sizeLogList = []
 countLogList = []
 
+total = 0
+numList = []
 
 for line in lines:
 	tmpList = line.split()
@@ -20,11 +22,14 @@ for line in lines:
 	numSqrt = tupleStat[0]
 	numSum = tupleStat[1]
 	numNum = tupleStat[2]
+	total += numNum
+	numList.append(numNum)
 
 	sizeLogList.append(float(tmpList[0]))
 	countLogList.append(int(numNum)/1000000.0)
 
 
+print sum(numList[9:36]) * 1.0 / total 
 
 
 fig, ax = plt.subplots()
@@ -43,6 +48,7 @@ for tick in ax.xaxis.get_major_ticks():
 for tick in ax.yaxis.get_major_ticks():
 	tick.label.set_fontsize(18)  
 
+ax.set_xticklabels(['', 'KB', 'MB', 'GB'])
 
 plt.gcf().subplots_adjust(bottom=0.15)
 plt.gcf().subplots_adjust(left=0.15)
@@ -53,7 +59,7 @@ xmax = sizeLogList[-1] + 1
 ax.set_xlim(xmin, xmax)
 
 #legend = ax.legend(loc='upper left', fontsize='large')
-plt.xlabel('File Size (log2-based)', fontsize=24)
+plt.xlabel('File Size', fontsize=24)
 plt.ylabel('# of PE submissions (in million)', fontsize=24)
 
 plt.gcf().subplots_adjust(left=0.20)

@@ -43,7 +43,7 @@ if __name__ == '__main__':
 	for tick in ax.xaxis.get_major_ticks():
 		tick.label.set_fontsize(18)
 
-	plt.xlabel('Number of Used AV Engines', fontsize=24)
+	plt.xlabel('Number of AV Engines Used', fontsize=24)
 
 	for tick in ax.yaxis.get_major_ticks():
 		tick.label.set_fontsize(18)  

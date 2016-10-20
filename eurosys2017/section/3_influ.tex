@@ -14,9 +14,10 @@ and try to predict whether an engine will identify a file as malware in the futu
 after the engine has already labeled the file as benign.
 
 Influence propagation on social graph is a well-studied topic in the web mining area. 
-We built our influence model based on a static model originally proposed to analyze Flickr data~\cite{Influence}.
-This section first presents our influence model
-and then discusses model training and the usage of the trained models for prediction.
+We model influence among different vendors based on static models 
+originally proposed to analyze Flickr data~\cite{Influence}.
+In this section, we first overview static models in our usage scenario,
+and then we discuss how we evaluate static models on data we collect. 
 
 \subsection{Influence Model}
 \label{sec:model}
@@ -31,8 +32,9 @@ when VirusTotal applies a set of anti-virus engines to analyze a submission.
 For each engine, there is an action log $(u, a, t)$ or an action log $(u, \bar{a}, t)$, 
 representing whether or not $u$ takes action to identify the submission as a malware at time $t$. 
 To make things easy, after a vendor $u$ labels a file as malware, 
-we assume $u$ will insist its decision, 
-and ignore cases where a vendor labels a file as malware, but labels the file as benign later. 
+we assume $u$ will insist its decision.
+{\color{red} Flipping related setting in our model can handle cases where a vendor $u$ labels a file as malware, 
+but changes its mind to label the file as benign later.}
 \yiying{why can we ignore this case?}
 
 We use $A_u$ to represent the number of actions taking by u, 
@@ -40,7 +42,7 @@ or the number of malwares identified by $u$.
 We use $\bar{A}_u$ to represent the number of malwares ever analyzed and labeled as benign by $u$.
 We use $A_{u\&v}$ to represent the number of actions taken by both $u$ and $v$, 
 and $A_{u|v}$ to represent the number of actions taken by either $u$ or $v$.
-Clearly, $A_{u|v} =   A_u + A_v - A_{u\&v}$
+Clearly, $A_{u|v} =   A_u + A_v - A_{u\&v}$.
 We use $A_{u2v}$ to represent the number of actions propagated from $u$ to $v$. 
 We define action propagation as follows: 
 
@@ -57,7 +59,10 @@ all other nodes are all $v$'s neighbors.
 For an action $a$, we use $S_v(a)$ to represent the set of $v$'s neighbors taking action $a$ before v. 
 The probability that $v$ will follow its neighbors to take the same action is calculated as:
 
-$$p_v(S_v(a)) = 1 - \prod\limits_{u \in S_v(a)}(1 - p_{u,v})$$
+\begin{equation} \label{eq:setp}
+%$$p_v(S_v(a)) = 1 - \prod\limits_{u \in S_v(a)}(1 - p_{u,v})$$
+p_v(S_v(a)) = 1 - \prod\limits_{u \in S_v(a)}(1 - p_{u,v})
+\end{equation}
 
 During training stage, we try to learn $p_{u,v}$ for each edge. 
 During prediction stage, we provide a tunable threshold $\theta$. 
@@ -65,7 +70,8 @@ For node $v$ without taking an action $a$,
 if $P_v(S_v(a))>\theta$, 
 we predict $v$ will follow its neighbors to take the action $a$ in the future. 
 
-There are four static models, and they differ in how to estimate $p_{u,v}$. 
+There are four static models, and they differ in how to estimate $p_{u,v}$ by using data in training set. 
+
 
 {\bf Bernoulli distribution.} $p_{u,v}$ is estimated as the ratio of the number of actions 
 propagated from $u$ to $v$ over the total number of actions taken by $u$.
@@ -88,13 +94,13 @@ $$credit_{u,v}(a) = \frac{1}{|S_v(a)|}$$
 $p_{u,v}$ is estimated by the sum of all partial credits taking by $u$ for actions propagated from $u$ to $v$, 
 dividing by the number of actions taken by $u$. 
 
-$$p_{u,v} = \frac{\sum\limits_{a \in A_{u2v}}{credit_{u,v}(a)}}{A_v}$$
+$$p_{u,v} = \frac{\sum\limits_{a \in A_{u2v}}{credit_{u,v}(a)}}{A_u}$$
 
 {\bf Jaccard index with partial credit.} 
 $p_{u,v}$ is estimated by the sum of all partial credits taking by $u$ for actions propagated from $u$ to $v$, 
 dividing by the number of actions taken either by $u$ or by $v$. 
 
-$$p_{u,v} = \frac{\sum\limits_{a \in A_{u2v}}{credit_{u,v}(a)}}{A_v}$$
+$$p_{u,v} = \frac{\sum\limits_{a \in A_{u2v}}{credit_{u,v}(a)}}{A_{u|v}}$$
 
 
 
@@ -102,32 +108,36 @@ $$p_{u,v} = \frac{\sum\limits_{a \in A_{u2v}}{credit_{u,v}(a)}}{A_v}$$
 \subsection{Model Evaluation}
 \label{sec:predict}
 
-We split all PE submissions we collect into training set and testing set, based on submitted files’ sha256. 
+We split all PE submissions we collect into training set and testing set, based on submitted files' sha256. 
 If a sha256 starts with a numeric character, 
-from ‘0’ to ‘9’, we will put its related submissions to training set, 
-otherwise, we will put its related submissions to testing set.  
+from ‘0’ to ‘9’, we put all its related submissions to training set, 
+otherwise, we put all its related submissions to testing set.  
 For a submitted file, all its submissions are put together either in training set or in testing set. 
 
 The training process is implemented by several stages of map, filter, and reduce. 
 We first reduce submission records according to submitted files. 
 We sort submission records for each file chronologically, 
-and filter out files without action propagation. 
-For each file, we compute 4 maps based on its submission records. 
-One map is one dimension, and it contains the number of actions taken by each vendor $u$. 
-The other three maps are two dimension, and they contain an entry for each pair of vendors $(u,v)$, 
+and filter out files without action propagation and all their submissions. 
+For each file, we compute four maps based on its submissions.
+There is one one-dimension map, 
+containing the number of actions taken by each vendor, 
+or the number of malwares identified by each vendor. 
+There are three two-dimension maps, 
+containing an entry for each pair of vendors $(u,v)$, 
 representing actions taken by both $u$ and $v$, actions propagated from $u$ to $v$, 
 and partial credits taken by $u$ for actions propagated from $u$ to $v$. 
-In the final reduce stage, 
-we combine content of these 4 maps from different files, and calculate $p_{u,v}$ for the four models. 
+Finally, we reduce these 4 maps from different files, 
+and calculate $p_{u,v}$ for the four static models. 
 
-After training 4 static models, we filter out engines taking less than 10000 actions,
-because we think for engines taking too few actions, results may not be reliable. 
-As a result, we have 59 engines left. 
+After training the four static models, 
+we filter out engines taking less than 10000 actions,
+since for engines taking too few actions, results may not be reliable. 
+There are 59 engines left.
 For confidential reasons, we omit vendors’ name in the following discussion, 
-and use number 0 - 58 to represent each engine. 
+and use number from 0 to 58 to represent each engine. 
 
 For each static model, 
-we put all learned $p_{u,v}$ in a table, 
+we put all learned $p_{u,v}$ in a influence table, 
 by using $u$ as row number and $v$ as column number.
 For any $p_{u,v}$, bernoulli distribution has the largest value, 
 jaccard index has the second largest value, 
@@ -136,37 +146,47 @@ and jaccard index with partial credit has the least value.
 
 \input{section/fig_heatmap}
 
-We draw heat maps for all tables in Figure~\ref{fig:heat}. 
-Given a cell(u, v), red color means more influence from u to v. 
+We draw heat maps for all learned influence tables in Figure~\ref{fig:heat}. 
+Given a $cell(u, v)$ with $u$ as row number and $v$ as column number, 
+red color means more influence from $u$ to $v$. 
 The four heat maps share a similar pattern.
-From Figure~\ref{fig:heat}, 
-we can see that there are no vendors which can influence all other vendors, 
-but there are vendors which seem be influenced by all other vendors.  
+There are columns with almost all cells in red color, 
+which means there are vendors influence by all other vendors. 
+There are no rows with all cells in red color, 
+and this means that there are no vendors which can influence all other vendors. 
 
-We sum all numbers in a row together for each influence table. 
-The results show how engine' influence rank in malware detection community. 
-Same as heat maps, influence rankings also share a similar pattern. 
+For each row in all influence tables, we sum all its number together. 
+The results can serve as a quantitative measurement for engines' influence in malware detection community. 
+Influence rankings from all the four static models also share a similar pattern. 
 
-The test process is also implemented by several stages of map, filter, and reduce. 
+The testing process is also implemented by several stages of map, filter, and reduce.
 Same as what we did during training, 
-we filter out submitted files without action propagations, 
-and sort submissions for left files chronologically. 
-Given a submission, we calculate $p_v(S_v(a))$ for each engine $v$, 
-which labeled the submitted file as benign before, but have not labeled the file as malware. 
-$S$ is the set of engines which have already labeled the file as malwares.
-We compare $p_v(S_v(a))$ with a given threshold to decide whether we will predict 
-$v$ will label the file as malware. We count true positive (TP), false positive (FP), true negative (TN), 
-and false negative (FN), by comparing our prediction with engines' real actions. 
+we first reduce all submissions based on submitted files, 
+filter out files without action propagation and all their related submissions, 
+and sort submissions chronologically for each file. 
+Before processing a submission, we use Equation~\ref{eq:setp} to
+calculate $p_v(S_v(a))$ for any engine $v$, 
+which labeled the submitted file as benign when analyzing early submissions, 
+but have not labeled the file as malware. 
+$S$ is the set of engines which labeled the file as malwares before.
+We compare $p_v(S_v(a))$ with a given threshold $\theta$ to decide whether we will predict 
+$v$ will label the file as malware, and we check what $v$ 
+really does in the submission to count true positive (TP) and false negative (FN). 
+After processing all submissions for a file, 
+we calculate $p_v(S_v(a))$ for any engine $v$, 
+which labels the file as benign, but have not labeled the file as malware.
+We compare $p_v(S_v(a))$ with $\theta$ to count false positive (FP) and true negative (TN).
 In the final stage, we reduce TP, TN, FP, and FN numbers from different files.
 
 
 \input{section/fig_predict}
 
-We change the probability threshold from 0.1\% to 99.9\%, by using 0.1\% as step. 
-We depict the performance of static models by using ROC curves, 
+We change the probability threshold $\theta$ from 0.1\% to 99.9\%, 
+by using 0.1\% as step. 
+We depict the performance of the four static models by using ROC curves, 
 with true positive rate ($TPR = TP/(TP+FN)$) as x-axis, 
-and false positive rate (FPR = FP/(FP + FN)) as y-axis. 
-ROC curves for the 4 static models are shown in Figure~\ref{fig:predict}. 
+and false positive rate ($FPR = FP/(FP + FN)$) as y-axis. 
+ROC curves for the four static models are shown in Figure~\ref{fig:predict}. 
 The closer the hump of the ROC curve to $(0,1)$, the better performance.
 Bernoulli with partial credit is as good as jaccard index, 
 and both of them are better than bernoulli and jaccard index. 
@@ -174,16 +194,25 @@ and both of them are better than bernoulli and jaccard index.
 
 \subsection{Discussion}
 
-There are also time models proposed by ~\citet{Influence}. 
-Time information we have is when a submission is conducted, or when an engine analyzes a submission. 
-Although we can obverse detection result change from submission sequence, 
-submission time is different from when engines change their detection results. 
+There are also time models proposed by~\citet{Influence}.
+When analyzing Flickr data, time models leverage accurate action time to provide better prediction performance. 
+However, we do not use time models, 
+because time information we access is when a submission is conducted, 
+or when an engine analyzes a submission, 
+is not when an engine changes its detection label for a file.
+The time information we have can only provide a relative order about when each vendor identifies a file as a malware.  
 
+\underline{Limitation.}
 Our data collection ends on 09/06/2016. 
-There could be cases where we predict engines will change their results, 
-engines have not change right now, but will change in the future.  
-We think prediction results we present are conservative. 
+We could count extra FPs, where we predict engines will label files as malwares, engines have not, but will do in the future, 
+and TNs, where we predict engine will not label, engines have not, but will in the future. 
+Monitoring \vt for a longer time will improve the precision of our prediction models. 
 
-End users can use our results to pick up good anti-virus products. 
-Security experts know which engines’ results are more trustable. 
-Vendors can identify possible false positive and false negatives in their products. 
+\underline{How to use?}
+Our trained models can serve as 
+a quantitative measurement for vendors’ influence in malware detection community. 
+Previously, when combining results from different vendors, 
+security experts simply treat each vendor equally and use the percentage of 
+vendors labeling a file as malware as likelihood of the file to be a malware. 
+Our model can provide a weigh, when considering results from different vendors.  
+For anti-virus vendors, the prediction part of our models can help alarm possible false negatives in their products.

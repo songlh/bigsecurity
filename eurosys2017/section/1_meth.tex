@@ -11,8 +11,9 @@ before delving into more advanced analysis in later sections.
 \vt\ is a free online malware scan service.
 It was founded in 2004 and was acquired by google in 2012. 
 \vt\ is widely used by both normal users and anti-virus vendors.
-Normal users submit suspicious files to \vt\ \yiying{when they do not have any anti-virus software, true?}, 
-or when they want to check for viruses possibly missed by their own anti-virus software or false alarms from their anti-virus software.  
+Normal users submit suspicious files to \vt\ when they do not have any anti-virus software, 
+or when they want to check for viruses possibly missed by their own anti-virus software 
+or false alarms from their own anti-virus software.  
 Anti-virus vendors use \vt to verify false positives and false negatives in their products.
 
 For each submission, \vt\ applies a set of anti-virus engines to analyze it. 
@@ -41,6 +42,7 @@ We performed our data collection using \vt{}’s distribution API.
 We insert all collected metadata into a table in Cassandra~\cite{cassandra} 
 using the combination of sha256, source\_id, and timestamp as the key.
 \yiying{say something about the spark environment here}
+{\color{red} All our analysis is conducted by using Spark 1.4.0~\cite{spark}, on a cluster with 19 nodes, 266 cores, and 560 GB memory. }
 
 \input{section/fig_type}
 
@@ -73,6 +75,8 @@ and serve as the foundation for our more advanced analysis in the next two secti
 
 \input{section/fig_subnum}
 \input{section/fig_pesize}
+\input{section/fig_countryPie}
+
 \noindent{\textit{\underline{Submission temporal, geo-location, and size distribution.}}}
 Figure~\ref{fig:subnum} plots the number of submissions of all types and the number of \pe\ submissions per day 
 over the whole collection period.
@@ -84,12 +88,20 @@ One PE file could be submitted more than once to VirusTotal.
 On average, each PE file was submitted 1.19 times and 6.72\% PE files were submitted more than once. 
 
 \yiying{we still need the country distribution}
+{\color{red} For around 16\% of PE submission, 
+\vt fails to provide their source country information. 
+All other submissions are conducted from 221 countries. 
+The top 6 countries in PE submission number are US, Canada, France, Russia, Germany, and China, 
+as shown in Figure~\ref{fig:countryPie}.}
+
 
 Figure~\ref{fig:pesize} shows the file size distribution for PE submissions. 
-The smallest PE file is only xxx bytes, and the largest one is more than xxx\,MB. 
-xxx\% of PE file fall into the range from xx\,KB to xx\,MB. 
+The smallest PE file is only 187 bytes, and the largest one is more than 1\,GB. 
+99.58\% of PE file fall into the range from 4\,KB to 32\,MB. 
 
 \noindent{\textit{\underline{Submission sources.}}}
+
+\input{section/fig_iddistribute}
 \yiying{TODO: normal vs. vendors}
 
 \input{section/fig_vendornum}
@@ -125,7 +137,7 @@ than submissions analyzed by one engine and detected by one engine.
 Figure~\ref{fig:detectiorate} shows the distribution of detection rates over all \pe\ submissions.
 Interestingly, most submissions to \vt\ are likely to be benign files, \ie, has low detection rate.
 Around half of the submissions were labeled as benign by all engines (a detection rate of zero),
-and only XX\% \yiying{fill number here} submissions were labeled as malware by at least half of the engines.
+and only 31.53\% \yiying{fill number here} submissions were labeled as malware by at least half of the engines.
 
 \if 0
 Some anti-virus engines can produce different detection results when analyzing the same file under different submissions.
