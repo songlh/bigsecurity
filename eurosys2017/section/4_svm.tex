@@ -1,6 +1,52 @@
-\section{SSDeep-based Clustering and Classification}
+\section{Malware Classification}
 \label{sec:ssdeep}
+
+ssdeep~\cite{ssdeep} is a program to compute fuzzy hashes. 
+Similarity between calculated hash strings can serve as a good estimation for similarity between the two original files. 
+ssdeep hash strings are also provided for each submitted file with other metadata fields by \vt. 
+In this section, we explore the feasibility to build malware classifier and detector based on ssdeep similarity. 
+
+Malware detectors mainly rely on signatures manually extracted by security researchers. 
+ssdeep only takes static binary executable as inputs. 
+If we can build malware detector based on ssdeep similarity, 
+We can reduce or eliminate manual efforts in malware detection. 
+
+\subsection{Data Collection}
 
 \input{section/tbl_svm}
 
+Microsoft has a good reputation in detecting PE malwares~\cite{SongAPsys2016}.
+For each detected malware, Microsoft assigns it a tag, which contains type, platform, family, and variant information~\cite{microsoft}. 
+We divide PE malwares into different groups, and malwares in the same group share the same Microsoft malware tag. 
+We sample 10 groups, each of which with more than 10000 malwares.  
+Microsoft tag and number of malwares in each sampled group are shown in Table~\ref{tab:benchmark}.
+
+For each group, we sample 10000 malwares, and use these malwares in our following experiments. 
+
+We compute the percentage of tailing malwares in each group. 
+We call malwares, which have 0 similarity with all other samples in the same group, as tailing malwares. 
+The percentage of tailing malwares for each sampled group is also shown in Table~\ref{tab:benchmark}. 
+
+\subsection{Clustering Experiments}
+
+\input{section/tbl_svm2}
+
+Before we conduct classification experiments, 
+we run clustering on each group firstly to understand whether malwares in each group looks similar to each other. 
+
+The clustering algorithm we use is hierarchical clustering, 
+which will iteratively merge two clusters with minimum distance until distance threshold or cluster number threshold is reached. 
+We use distance as threshold in all clustering experiments. 
+Given two malwares, we use 1 minus their ssdeep similarity as distance between two malwares. 
+We use single linkage distance for distance between two clusters. 
+
 \input{section/fig_MoreData}
+
+\subsection{Classification Experiments}
+
+
+\subsection{Discussion}
+1. Future work about indexing ssdeep string
+2. Upper bound
+3. More data better results
+4. Need human effort or dynamic information 

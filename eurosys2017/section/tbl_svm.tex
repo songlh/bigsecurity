@@ -1,6 +1,7 @@
 \begin{table}
   \centering
   \scriptsize
+  {
   \begin{tabular}{clcc}
     \toprule
 {\bf Index} & {\bf Microsoft Tag} & {\bf \# of Malwares} & {\bf \% of Tailing} \\
@@ -18,41 +19,13 @@
 
 \bottomrule
    \end{tabular}
+   }
+   \mycaption{tab:benchmark}{Benchmark Information.}
+{\footnotesize{(Information for malwares used in our clustering and classification experiments. \# of Malwares: \# of distinct malwares we collected in each sampled malware group from 05/07/2016 to 09/06/2016. \% of tailing examples for each group.)}}
   %\nocaptionrule
-  \caption{Malware Family Information.
-  \footnotesize{(Malware families used in our clustering and classification experiments. \# of Malwares: \# of distinct malwares we collected for each malware family from 05/07/2016 to 09/06/2016. \% of Tailing: \% of tailing examples after we sampled 10000 malwares for each malware family from our collection.  
-  ) 
-}
- }
-  \label{tab:benchmarks}
+  %\mycaption{tab:benchmark}{Malware Data Set.}
+  %\footnotesize{(Information for malwares used in our clustering and classification experiments. \# of Malwares: \# of distinct malwares we collected in each sampled malware group from 05/07/2016 to 09/06/2016. \% of Tailing: \% of tailing examples for each group in the sampled 10000 malwares.)}
+ %}
 \end{table}
 
 
-\begin{table*}
-\centering
-\footnotesize
-\begin{tabular}{cccccccccccc}
- \toprule
-  & \multicolumn{9}{c}{Clustering} &\multicolumn{2}{c}{Classification}\\
-\cline{1-1}
-\cline{2-10}
-\cline{11-12}
- \bf{Index}             & {\bf 0.1}  & {\bf 0.2} & {\bf 0.3} & {\bf 0.4} & {\bf 0.5}  & {\bf 0.6} & {\bf 0.7} & {\bf 0.8} & {\bf 0.9} & {\bf Best k} & {\bf Precision} \\
-              \midrule  
-          1   & 2483       & 575       &  503      &   456     & 443        & 381       & 356       & 356       & 356       &     1        & 81.27\%  \\
-          2   & 4192       & 762       &  635      &   588     & 580        & 534       & 526       & 526       & 526       &     1        & 82\%     \\
-          3   &  5         & 4         &  3        &    2      & 2          & 2         & 2         & 2         & 2         &     1        & 82.55\%  \\
-          4   & 10000      & 9999      & 9998      & 9997      & 9997       & 9997      & 9997      & 9997      & 9997      &     2        & 59.81\%  \\
-          5   & 8688       & 7727      & 6630      & 5462      & 4699       & 3690      & 3103      & 3028      & 3028      &     1        & 76.23\%   \\
-          6   & 5807       & 3915      & 1590      & 373       & 18         & 1         & 1         & 1         & 1         &     3        & 81.79\%   \\
-          7   & 5429       & 3651      & 2703      & 1615      & 726        & 400       & 369       & 362       & 362       &     1        & 81.79\%   \\
-          8   & 2721       & 1400      & 871       & 642       & 549        & 420       & 399       & 396       & 396       &     1        & 82.26\%    \\
-          9   & 8500       & 8199      & 8012      & 7808      & 7597       & 7327      & 7171      & 7150      & 7150      &     1        & 64.41\%    \\
-          10  & 8075       & 7241      & 6343      & 5193      & 4382       & 3800      & 3506      & 3480      & 3480      &     1        & 74.06\%    \\
-
-\bottomrule
-\end{tabular}
-\caption{Clustering and Classification Results. \footnotesize{(Numbers of resulting clusters under distance threshold from 0.1 to 0.9 are shown in \bf{Clustering} column.
-K with best precision during cross validation and precision of knn with best k are shown in \bf{Classification} column.)}
-}
-\end{table*}
