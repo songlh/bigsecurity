@@ -1,9 +1,9 @@
 \section{Malware Classification}
 \label{sec:ssdeep}
 
-Machine learning systems are just as good
-as the data they consumed---One potential 
-use case of the massive amount of data 
+%Machine learning systems are just as good
+%as the data they consumed. 
+One potential use case of the massive amount of data 
 available on \vt{} is to build 
 machine learning models for applications
 such as malware classifications and
@@ -13,8 +13,8 @@ provided by \vt{} enough to support
 classifications and clusterings tasks?''}
 
 Our study reveals both positive and
-negative answers to this question---For
-some classification tasks, we are able
+negative answers to this question.
+For some classification tasks, we are able
 to build an automatic classifier whose
 accuracy is higher than 80\% by just
 using the static fuzzy hash strings provided by \vt{}
@@ -40,88 +40,107 @@ detection.
 \input{section/tbl_svm}
 
 Our study uses features based on ssdeep~\cite{ssdeep}, a program to compute fuzzy hashes. 
+Specifically, ssdeep \yiying{fill here, what ssdeep exactly is and does}
 Similarity between calculated hash strings can serve as an estimation for similarity between the two original files. 
-ssdeep hash strings are also provided for each submitted file with other metadata fields by \vt. 
+\yiying{why can it estimate? we need some deeper understanding of the hash or need to be mroe careful when saying things like this. people's assumption is that hash cannot represent original data and is just a highly compressed string.}
+\vt\ provides ssdeep hash strings as one of its metadata files and we collected them together with other metadata.
 
-We focus on classifying each malware into
-different malware families. Because Microsoft 
-has a good reputation in detecting PE malwares~\cite{SongAPsys2016}, 
-we create training and testing
-data using its assignment. For each detected malware, 
-Microsoft assigns it a tag, which contains type, platform, family, 
+%We focus on classifying each malware into
+%different malware families. 
+We create training and testing
+datasets using the detection results from Microsoft,
+since Microsoft is more reliable in successfully detecting PE malwares~\cite{SongAPsys2016} than other anti-virus engines.
+For each detected malware, 
+Microsoft assigns a tag that contains type, platform, family, 
 and variant information~\cite{microsoft}. 
+
 We divide PE malwares detected by Microsoft engine into different groups, 
 and malwares in the same group share the same Microsoft malware tag. 
-We sample 10 groups, each of which with more than 10000 malwares.  
-Microsoft tag and number of malwares in each sampled group we collected from \vt{} 
-are shown in Table~\ref{tab:benchmark}. 
-For each group, we sample 10000 malwares, and use these malwares in our following experiments. 
+We randomly sample 10 groups that have more than 10000 malwares.  
+Table~\ref{tab:benchmark} presents the Microsoft tag sand the number of malwares in each sampled group we collected from \vt{}. 
+Within each group, we randomly sample 10000 malwares and use these malwares in our classification and clustering experiments. 
 
-\subsection{Classification Accuracy}
+\subsection{Classification Methodology and Results}
+We use an API that \vt\ provides to compute the similarity between ssdeep string. \yiying{is the previous sentence correct?}
+%ssdeep's compare API takes two ssdeep hash strings as inputs, 
+%and return similarity between these two strings. 
+We use 1 minus ssdeep similarity to get ssdeep distance.  
 
-We use KNN~\cite{knn} as the classifier.
-ssdeep's compare API takes two ssdeep hash strings as inputs, 
-and return similarity between these two strings. 
-We use 1 to minus ssdeep similarity to get ssdeep distance.  
-We design several experiments to understand performance of 
-the combination of knn and ssdeep 
+\subsubsection{KNN Classification}
+
+We first use KNN~\cite{knn}, a simple classifier, to classify XXX.
+KNN does ....
+\yiying{full name of KNN, a simple description of it}
+We design several experiments to understand the accuracy of 
+the combination of KNN and ssdeep 
 distance (or similarity) when handling different classification tasks. 
 
-We build a two-class classifier for each of the sampled groups. 
-We use the 10000 sampled malwares from each group as positive examples. 
-We sample 10000 benign files as negative examples. 
-Benign files are files submitted to \vt{}, but are not labeled as malwares by any anti-virus engines. 
-We randomly choose 5000 malwares and 5000 benign files for training, 
-and use the left malwares and benign files for testing. 
-We run cross validation for k from 1 to 10 to pick up best k value, 
-and use the best k value to test knn using the testing set. 
+\noindent{\underline{\textit{Pair-wise two-class classification.}}}
+We first build a two-class classifier for each of the 10 sampled groups. 
+We use the 10000 sampled malwares in each group as positive examples (positive means being labeled as malware)
+and randomly sample 10000 benign files as negative examples. 
+Benign files are files submitted to \vt{} but are not labeled as malwares by any anti-virus engines. 
+We randomly choose 5000 malwares and 5000 benign files for training and use the remaining files for testing.
 
-The best k used for testing and classification results are shown in Table~\ref{tab:benchmark}.
-We see that $k=1$ is always the best k value for testing, except for two groups.
-For five out of
-ten malware families, we achieve an accuracy higher than 80\%.
+We run cross validation for $k$ from 1 to 10 to pick up best $k$ value
+and use the best $k$ value to test KNN using the testing set. 
+Table~\ref{tab:benchmark} presents the best $k$ used for testing and classification results.
+$k=1$ is always the best $k$ value for testing, except for two groups.
+
+The classification accuracy of the two-class classifier differs in different groups.
+For five out of ten malware groups, we achieve an accuracy higher than 80\%.
 On the other hand, for
-families such as ``Virus:Win32/Nabucur.D'',
-the classification accuracy are significantly
-lower. We get an accuracy of 59\% when
+groups such as ``Virus:Win32/Nabucur.D'',
+the classification accuracy is significantly lower. 
+We get an accuracy of 59\% when
 the accuracy of random guesses would be 50\%.
-For this classifier, we think there are quite limited malwares and benign files in training set similar to instances in testing set. 
+Overall, for the two-class classifier, 
+there are not enough malwares and benign files in the training set to generate high-accuracy results. 
 
+\noindent{\underline{\textit{Compelete ten-class classification.}}}
 We also build a ten-class classifier.
-We randomly choose 2000 malwares from each group, 
-and put half of them in training set, and half of them in testing set. 
-We also run cross validation to pick up best k from 1 to 10. 
-The accuracy on the testing set with best k value 1 is 70.15\%. 
+We randomly choose 2000 malwares from each group and put half of them in the training set and the remaining half in the testing set. 
+We run cross validation to pick up best $k$ from 1 to 10. 
+The accuracy on the testing set with the best $k$ value 1 is 70.2\%. 
 
 \input{section/fig_MoreData}
 
 \input{section/fig_accuracy}
 
-For each designed classifier, we investigate 
-how the size of training set influences its accuracy.
-We keep test sets unchanged.  
-We increase the size of training set from 50 to 10000, 
-while keeping the number of examples from different classes equal to each other.  
-We use the best k value got from cross validation in earlier experiments.
-How accuracy changes with the size of training set is shown in Figure~\ref{fig:moredata}. 
-Accuracy increases as we have more data for all these classifier. For all these classifiers, the slope of these curves implies that
-when we have more training data as VirusTotal
-continue to grow, we should expect even higher
-accuracy.
+\noindent{\underline{\textit{Effect of training set size.}}}
+For each designed classifier, we further investigate 
+how the size of training sets influences its accuracy.
+We keep the test sets unchanged and increase the size of training sets from 50 to 10000.
+%The total number of data points in all groups is the same.
+We use the best $k$ value got from cross validation in earlier experiments.
+Figure~\ref{fig:moredata} presents how accuracy changes with the size of training sets. 
+As expected, for all classifiers, accuracy increases as there are more data in the training sets.
+This constant increase in accuracy implies that with more data from \vt,
+the classification accuracy is expected to be even higher.
 
-We also design several other two-class classification tasks. 
-We classify malwares from Group 7 with malwares from Group 10. 
-They are malwares from the same class ``Ramnit'', but in different variant. 
-The accuracy is 85.31\%. 
-We classify malwares from Group 3 with malwares from Group 7 and Group 10, 
+\noindent{\underline{\textit{Classifications with semantics labels.}}}
+To make classification based on more criteria, 
+we further design a set of two-class classifications. 
+First, we test the classfication of malwares with the same {\em class} but with different {\em variants} in the class.
+Specifically, we classify malwares from Group 7 with malwares from Group 10. 
+They are both from the same class ``Ramnit'', but in different variants. 
+The accuracy we gotis 85.3\%. 
+
+We then target to classify malwares in different {\em families}.
+To do this, we classify malwares from Group 3 with malwares from Group 7 and Group 10
 and classify malwares from Group 5 with malwares from Group 7 and Group 10. 
-These two classifiers try to classify malwares in different families. 
-We get accuracy 94.15\% and 85.82\%, respectively. 
-We classify malwares from Group 8 and Group 9 with malwares from Group 4, Group 5, Group 7 and Group 10, 
-because we want to classify malwares in different types, one is Trojan and the other is Virus. We get accuracy 77.04\%. 
-We use the same experimental setting as previous two-class classifiers.  
+We get accuracies of 94.2\% and 85.8\%, respectively. 
 
-\underline{Tailing Malwares}
+Finally, we test the classification of different {\em types} of malware.
+Specifically, we classify malwares from Group 8 and Group 9 with malwares from Group 4, Group 5, Group 7, and Group 10, 
+the former groups have Trojan malwares and the latter group contains Virus. 
+For this classification, we get 77.0\% accuracy. 
+%We use the same experimental setting as previous two-class classifiers.  
+
+{\bf Observation 9:}
+{\em }
+
+\subsection{Tailing malwares.}
 We identify one metrics to predict whether
 a classification task falls into the
 high-accuracy category or low-accuracy
@@ -133,7 +152,7 @@ we compute the percentage of tailing malwares in each group--We call malwares, w
 The percentage of tailing malwares for each sampled group is also shown in Table~\ref{tab:benchmark}. 
 How accuracy changes with the percentage of tailing for each two-class classifier is shown in Figure~\ref{fig:accuracy}. 
 
-{\bf Observation xx:} 
+{\bf Observation 10:} 
 {\em The percentage of tailing malwares
 can predict whether a given malware classification task belongs
 the high-quality category or the low-quality
@@ -141,9 +160,10 @@ category.}
 
 \input{section/fig_cluster}
 
-\underline{Challenge of Applying Nystrom Methods for SVM}
+\subsection{SVM Classification}
+%\noindent{\underline{\textit{SVM classification.}}}
 Our previous experiments use KNN.
-In this section, we discuss the potential of using
+We now discuss the potential of using
 more sophisticated classifiers such as
 support vector machines (SVM). 
 SVM could take distance matrix as input.
@@ -170,9 +190,6 @@ This illustrates a challenge of directly applying
 classic Nystrom method, however, we believe
 it is possible to develop new approaches to
 accommodate this observation.
-
-
-%\subsection{Classification Experiments}
 
 
 \subsection{Discussion}
