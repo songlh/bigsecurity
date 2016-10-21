@@ -38,10 +38,11 @@ detection.
 \subsection{Data Preparation}
 
 \input{section/tbl_svm}
-
-Our study uses features based on ssdeep~\cite{ssdeep}, a program to compute fuzzy hashes. 
+We set out to answer an interesting yet challenging question:
+can we use compressed representation of files to detect malware?
+To answer this question, we use features based on ssdeep~\cite{ssdeep}, a program to compute fuzzy hashes. 
 Specifically, ssdeep computes a hash value for each block of the input file.
-The end of each block only depends on content of the block. 
+The end of each block only depends on the content of the block. 
 All calculated hash values are concatenated into a fuzzy hash string. 
 So identical blocks in original files can be matched.  
 Similarity between calculated hash strings can serve as an estimation for similarity between the two original files. 
