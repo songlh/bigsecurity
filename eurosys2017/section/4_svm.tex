@@ -59,7 +59,7 @@ For each group, we sample 10000 malwares, and use these malwares in our followin
 
 \subsection{Classification Accuracy}
 
-We use knn~\cite{knn} as our classifier.
+We use KNN~\cite{knn} as the classifier.
 ssdeep's compare API takes two ssdeep hash strings as inputs, 
 and return similarity between these two strings. 
 We use 1 to minus ssdeep similarity to get ssdeep distance.  
@@ -77,7 +77,7 @@ We run cross validation for k from 1 to 10 to pick up best k value,
 and use the best k value to test knn using the testing set. 
 
 The best k used for testing and classification results are shown in Table~\ref{tab:benchmark}.
-We see that 1 is always the best k value for testing, except for two groups.
+We see that $k=1$ is always the best k value for testing, except for two groups.
 For five out of
 ten malware families, we achieve an accuracy higher than 80\%.
 On the other hand, for
@@ -104,7 +104,10 @@ We increase the size of training set from 50 to 10000,
 while keeping the number of examples from different classes equal to each other.  
 We use the best k value got from cross validation in earlier experiments.
 How accuracy changes with the size of training set is shown in Figure~\ref{fig:moredata}. 
-Accuracy increases as we have more data for all these classifier. 
+Accuracy increases as we have more data for all these classifier. For all these classifiers, the slope of these curves implies that
+when we have more training data as VirusTotal
+continue to grow, we should expect even higher
+accuracy.
 
 We also design several other two-class classification tasks. 
 We classify malwares from Group 7 with malwares from Group 10. 
@@ -139,7 +142,7 @@ category.}
 \input{section/fig_cluster}
 
 \underline{Challenge of Applying Nystrom Methods for SVM}
-Our previous experiments use knn classifier.
+Our previous experiments use KNN.
 In this section, we discuss the potential of using
 more sophisticated classifiers such as
 support vector machines (SVM). 
@@ -166,7 +169,7 @@ the size of the resulting feature vector would have a very large variance across
 This illustrates a challenge of directly applying
 classic Nystrom method, however, we believe
 it is possible to develop new approaches to
-accommodate this observation in the future.
+accommodate this observation.
 
 
 %\subsection{Classification Experiments}
@@ -186,7 +189,7 @@ we can get better precision.
 For a testing instance, if there are similar instances in training set, 
 classifier based on ssdeep similarity can precisely classify the instance. 
 \vt{} contains huge amount of submitted files. We suggest \vt{} provides an extra API, 
-where users only need to submit ssdeep hash strings for suspicious files, 
+where users only need to submit ssdeep strings for suspicious files, 
 and this could improve privacy protection for \vt{}’s users.  
 
 
