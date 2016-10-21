@@ -1,10 +1,10 @@
 \section{Correlation between Submission Properties and Detection Rate}
 \label{sec:corr}
 This section presents our study of the correlation between various properties of \pe\ submissions and the detection rate of \pe\ submissions.
-Detection rate is what most \vt\ users use to decide if their submissions are malware 
+Detection rate is what most \vt\ users use to decide whether their submissions are benign or malware 
 and the first thing that a user of \vt\ uses.
 Therefore, it is important to study what factors affects or correlates to detection rate
-and the results can guide security researchers and vendors to invest XXX
+and the results can guide security researchers and vendors to invest 
 
 We studied a range of properties and their correlation with detection rate
 and found that ** factors have higher correlation:
@@ -25,10 +25,10 @@ and if detection rate is a perfect measurement of the likelihood of malware.
 \label{sec:size}
 Anecdotely, \pe\ malwares are most likely to have small to medium size. 
 To verify this, we analyzed the relationship between submission file size and detection rate. 
-Figure~\ref{fig:size} present the average detection rate and 95\% confidence interval for each preprocessed 
+Figure~\ref{fig:size} presents the average detection rate and 
+the 95\% confidence interval for each preprocessed 
 For each submission, we round up binary logarithm for its file size to nearest 0.5,
 and calculate average detection rate for submissions with the same preprocessed file size.
-file size.
 \yiying{what do you mean by preprocessed file size? Also, change the X axis lables of this figure and figure 3 to be 1KB, 1MB, 1GB}
 Except for the last two points, all other confidence intervals are invisible.   
 \yiying{what do you mean by invisible?}
@@ -161,21 +161,22 @@ that it is feasible to use source IDs' submission history to predict their futur
 \subsection{Discussion}
 
 \noindent{\textit{\underline{How to use our data?}}}
-As we discussed from Section~\ref{sec:reputation} to Section~\ref{sec:country}, 
-source ID reputation, historical number in certain range, file size, 
-and source country are highly correlated with detection rate. 
-Future work could train a regression model to combine all these factors together and 
+File size, historical number in certain range, and source ID reputation
+are highly correlated with detection rate. 
+
+A possible future work could train a regression model to combine all these factors together and 
 predict how many engines could detect a malware or how likely a file is a malware. 
 Using the regression model or our studying results alone, 
 security experts can prioritize malwares and focus their efforts on malwares which are more malicious. 
 Anti-virus vendors could inspect results which are variant from our studying results 
 to identify possible false positives or false negatives in their products. 
 
+\yiying{I would delete the following paragraph. it just sounds too defensive. and you've already explained the limitation in sec 2.4.}
 \noindent{\textit{\underline{Limitations of our study.}}}
-As we discussed in Section~\ref{sec:meth}, our study is binded with our methodology.
+As discussed in Section~\ref{sec:meth}, our study is bound with our methodology.
 We do not have any data before 05/07/2016, 
-which may cause some reputation and historical numbers 
-we calculate different from their real values. 
+which may cause some inaccuracy in measuring historical statistics and 
+source ID reputation and historical numbers.
 However, we think we can tolerate this error, 
 since we conduct our study in a relatively long time range and in a large scale. 
-In the future, we could design our reputation and historical metrics based on a tunable time windows, and investigate whether correlations still exist.   
+%In the future, we could design our reputation and historical metrics based on a tunable time windows, and investigate whether correlations still exist.   
