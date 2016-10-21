@@ -41,6 +41,12 @@ if __name__ == '__main__':
 	xmax = XList[-1] + 0.05
 
 	ax.set_xlim(xmin, xmax)
+
+	ind = np.arange(0, 1.1, 0.2)
+	plt.xticks(ind, [ '0', '20', '40', '60', '80', '100'])
+
+	#plt.show()
+	#ax.set_xlim(xmin, xmax)
 	fig.savefig('accuracy.pdf')
 	fig.savefig('accuracy.png')
 	plt.close(fig)

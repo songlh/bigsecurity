@@ -47,6 +47,13 @@ ax.plot(XList, YList, 'r:', label = 'Bernoulli with PC', linewidth=2.0)
 XList, YList = loadData(sJaccardPC)
 ax.plot(XList, YList, 'k-.', label = 'Jaccard with PC', linewidth=2.0)
 
+XList = range(0, 1000, 20)
+XList = [num * 1.0 / 1000 for num in XList]
+YList = range(0, 1000, 20)
+YList = [num * 1.0 / 1000 for num in YList]
+ax.plot(XList, YList, 'k-.', label = 'Random Guess', linewidth=2.0)
+
+
 
 legend = ax.legend(loc='lower right', fontsize='large')
 
@@ -73,6 +80,8 @@ ax.set_xlim(xmin, xmax)
 ymin = 0.0
 ymax = 1.0
 ax.set_ylim(ymin, ymax)
+
+#plt.show()
 
 fig.savefig('predict.png')
 fig.savefig('predict.pdf')
