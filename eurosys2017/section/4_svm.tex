@@ -46,33 +46,78 @@ ssdeep hash strings are also provided for each submitted file with other metadat
 We focus on classifying each malware into
 different malware families. Because Microsoft 
 has a good reputation in detecting PE malwares~\cite{SongAPsys2016}, we create training
-data using its assignment. For each detected malware, Microsoft assigns it a tag, which contains type, platform, family, and variant information~\cite{microsoft}. 
-We divide PE malwares detected by Microsoft engine into different groups, and malwares in the same group share the same Microsoft malware tag. 
+data using its assignment. For each detected malware, 
+Microsoft assigns it a tag, which contains type, platform, family, 
+and variant information~\cite{microsoft}. 
+We divide PE malwares detected by Microsoft engine into different groups, 
+and malwares in the same group share the same Microsoft malware tag. 
 We sample 10 groups, each of which with more than 10000 malwares.  
-Microsoft tag and number of malwares in each sampled group we collected from \vt{} are shown in Table~\ref{tab:benchmark}. 
+Microsoft tag and number of malwares in each sampled group we collected from \vt{} 
+are shown in Table~\ref{tab:benchmark}. 
 For each group, we sample 10000 malwares, and use these malwares in our following experiments. 
-
 
 \subsection{Classification Accuracy}
 
-We build an classifier as follows. \ce{XXXX LINHAI, ADD IN THE PROTOCOL.}
 
-Table~\ref{tab:results} shows the classification
-result and Figure~\ref{fig:moredata} shows
-the relationship between the amount of
-training data and the accuracy of classifiers. 
-We see that for five out of ten 
-malware families, we achieve an accuracy
-higher than 80\%. Moreover, as indicated
-by Figure~\ref{fig:moredata}, when more
-training data are available for these
-families, we expect the accuracy to be even
-higher. On the other hand, for
+We use knn~\cite{knn} as our classifier.
+compare API of ssdeep takes two ssdeep hash strings as inputs, 
+and return similarity between these two strings. 
+We use 1 to minus ssdeep similarity to get ssdeep distance.  
+We design several experiments to understand performance of 
+the combination of knn and ssdeep 
+distance (or similarity) when handling different classification tasks. 
+
+
+We build a two-class classifier for each of the sampled groups. 
+We use the 10000 sampled malwares from each group as positive examples. 
+We sample 10000 benign files as negative examples. 
+Benign files are files submitted to \vt{}, but are not labeled as malwares by any anti-virus engines. 
+We randomly choose 5000 malwares and 5000 benign files for training, 
+and use the left malwares and benign files for testing. 
+We run cross validation for k from 1 to 10 to pick up best k, 
+and use the best k to test knn with the testing set. 
+
+The best k used for testing and classification results are shown in Table~\ref{tab:results}.
+We see that 1 is always the best k value for testing, except for two groups.
+For five out of
+ten malware families, we achieve an accuracy higher than 80\%.
+On the other hand, for
 families such as ``Virus:Win32/Nabucur.D'',
 the classification accuracy are significant
 lower. We get an accuracy of 59\% when
-\ce{the accuracy of random guesses would be 50\%. LINHAI IS THIS RIGHT?}
-\ce{LINHAI, ADD ONE SENTENCE ABOUT THE REASON.}
+the accuracy of random guesses would be 50\%.
+For this classifier, we think there are quite limited malwares and benign files similar to instances in testing set. 
+
+We also build a ten-class classifier.
+We randomly choose 2000 malwares from each group, 
+and put half of them in training set, and half of them in testing set. 
+We also run cross validation to pick up best k from 1 to 10. 
+The accuracy on the testing set with best k value 1 is 70.15\%. 
+
+\input{section/fig_MoreData}
+
+\input{section/fig_accuracy}
+
+For each designed classifier, we investigate 
+how the size of training set influences its accuracy.
+We keep test sets unchanged.  
+We increase the size of training set from 50 to 10000, 
+while keeping the number of examples from different classes equal to each other.  
+We use the best k value got from cross validation in earlier experiments.
+How accuracy changes with the size of training set is shown in Figure~\ref{fig:moredata}. 
+Accuracy increases as we have more data for all these classifier. 
+
+We also design several other two-class classification tasks. 
+We classify malwares from Group 7 with malwares from Group 10. 
+They are malwares from the same class Ramnit, but in different variant. 
+The precision is 85.31\%. 
+We classify malwares from Group 3 with malwares from Group 7 and Group 10, 
+and classify malwares from Group 5 with malwares from Group 7 and Group 10. 
+These two classifications try to classify malwares in different families. 
+We get precision 94.15\% and 85.82\%, respectively. 
+We classify malwares from Group 8 and Group 9 with malwares from Group 4, Group 5, Group 7 and Group 10, 
+because we want to classify malwares in different types, one is Trojan and the other is Virus. We get precision 77.04\%. 
+All experimental setting are the same as what we did during classifying malwares in each group with benign files. 
 
 \paragraph*{Discussion: Tailing Malwares}
 
@@ -85,14 +130,15 @@ the training set is a proxy of the upper bound
 of accuracy that we can expect. Therefore,
 we compute the percentage of tailing malwares in each group--We call malwares, which have 0 similarity with all the other samples in the same group, as tailing malwares. 
 The percentage of tailing malwares for each sampled group is also shown in Table~\ref{tab:benchmark}. 
+How accuracy changes with the percentage of tailing for each two-class classifier is shown in Figure~\ref{fig:accuracy}. 
 
-\ce{LINHAI, ADD IN THAT \#TRAILING-VS.ACCURACY FIGURE AND ARGUE ABOUT CORRELATION HERE.}
+%\ce{LINHAI, ADD IN THAT \#TRAILING-VS.ACCURACY FIGURE AND ARGUE ABOUT CORRELATION HERE.}
 
 \paragraph*{Discussion: Challenge of Applying Nystrom Methods for Kernel Machines}
 
-\input{section/tbl_svm2}
+%\input{section/tbl_svm2}
 
-Our previous experiment uses k-means classifier.
+Our previous experiment uses knn classifier.
 In this section, we discuss the potential of using
 more sophisticated classifiers such as
 support vector machines. One challenge
@@ -126,7 +172,6 @@ classic Nystrom method, however, we believe
 it is possible to develop new approaches to
 accommodate this observation in the future.}
 
-\input{section/fig_MoreData}
 
 %\subsection{Classification Experiments}
 
@@ -142,100 +187,6 @@ accommodate this observation in the future.}
 }
 
 
-\subsection{Clustering Experiments}
 
 
-Before conducting classification experiments, 
-we run clustering on each group firstly. 
-There are two purposes for clustering experiments.
-First, we want to understand whether malwares in each group looks similar to each other, 
-and understand possible upper bound of precision in malware classification.
-Second, some research findings~\cite{clustering-purpose} show that changing instances to feature vectors, 
-based on each instance’s distance to the center of each cluster, 
-can improve the speed of classification.  
 
-The clustering algorithm we use is hierarchical clustering~\cite{hcluster}.
-Hierarchical clustering starts with each instance as a cluster, 
-and then it iteratively merge two clusters with minimum distance 
-until distance threshold or cluster number threshold is reached. 
-We use distance as threshold. 
-Given two malwares, 
-we use 1 to minus their ssdeep similarity to calculate distance between the two malwares. 
-We calculate single linkage distance as distance between two clusters. 
-Single linkage
-distance~\cite{single-link} when we need to compute distance between two clusters. 
-
-We change distance threshold from 0.1 to 0.9, 
-and count resulting clusters under each experiment. 
-Experimental results are shown in Table~\ref{tab:results}. 
-As we increase distance threshold, the number of resulting clusters decreases for each sampled group. 
-The number of resulting clusters is always bounded by the number of tailing in each group. 
-If we want to change a ssdeep hash string to a feature vector, 
-based on distance of the string to the center of all clusters in training set, 
-the size of the resulting feature vector would have a very large variance across different malware groups. 
-This is the reason why we do not apply method proposed by~\citet{clustering-purpose} in our classification experiments. 
-
-
-\subsection{Classification Experiments}
-
-We use knn~\cite{knn} as our classification algorithm.
-We design several experiments to understand performance of 
-the combination of knn and ssdeep distance (or similarity) when handling different classification tasks. 
-
-We first run two-class classification for each group. 
-We use the 10000 sampled malwares from each group as positive examples. 
-We sample 10000 benign files as negative examples. 
-Benign files are files submitted to \vt{}, but are not labeled as malwares by any anti-virus engines. 
-We randomly choose 5000 malwares and 5000 benign files as training examples, 
-and use the left malwares and benign files as testing set. 
-We run cross validation for k from 1 to 10 to pick up best k, 
-and use the best k to test knn with the testing set. 
-
-Experimental results from two-class 
-classification for each group are shown in Table~\ref{tab:results}.
-Except group 4 and group 6, 1 is the best k for all other groups. 
-During cross validation, precision roughly decreases, with k increasing. 
-This means that given a testing instance, 
-considering more instances in training set usually bring more noise. 
-The precision on testing sets with best k varies from 59.81\% to 82.55\%.
-
-We then run ten-class classification.
-We randomly choose 100 malwares from each group, 
-and put 50 malwares in training set and 50 malwares in testing set.
-We also run cross validation to pick up best k from 1 to 10. 
-Similar to two-class classification, precision roughly decreases, with k increasing, 
-and the best k is 1. 
-The precision on the testing set with $k = 1$ is 70.15\%, 
-which is roughly equal to average percentage of tailing in all sampled malware groups. 
-
-For each experiment, we investigate 
-how the size of training set influences precision.
-We keep test sets unchanged.  
-We increase the size of training set from 50 to 10000, 
-while keeping the number of examples from different classes equal to each other.  
-We use the best k got from earlier cross validation.
-How precision changes with the size of training set is shown in Figure~\ref{fig:moredata}. 
-Precision increases for all experiments, as we put more data in training set.   
-
-We also design several other two-class classification tasks. 
-We classify malwares from Group 7 with malwares from Group 10. 
-They are malwares from the same class Ramnit, but in different variant. 
-The precision is 85.31\%. 
-We classify malwares from Group 3 with malwares from Group 7 and Group 10, 
-and classify malwares from Group 5 with malwares from Group 7 and Group 10. 
-These two classifications try to classify malwares in different families. 
-We get precision 94.15\% and 85.82\%, respectively. 
-We classify malwares from Group 8 and Group 9 with malwares from Group 4, Group 5, Group 7 and Group 10, 
-because we want to classify malwares in different types, one is Trojan and the other is Virus. We get precision 77.04\%. 
-All experimental setting are the same as what we did during classifying malwares in each group with benign files. 
-
-\subsection{Discussion}
-In our experiments, 1 is almost always the best k value. 
-So using ssdeep similarity to conduct malware classification 
-is roughly to search the most similar example in the training set for each testing example.
-In our knn experiment, we compare the testing example with every example in training set. 
-In the future, indexing techniques could be leveraged to reduce the complexity of identify 
-the most similar example in training set from $O(n)$ to $O(1)$, where n is the number of examples in training set. 
-
-Our experimental results show that with more data in training set, 
-we can get better precision, but the precision is upper bounded by the percentage of tailing in test set. 
