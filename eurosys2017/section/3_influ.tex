@@ -222,6 +222,7 @@ behavior of malware detection. }
 
 \subsection{Discussion}
 
+\if 0
 There are also time models proposed by~\citet{Influence}.
 When analyzing Flickr data, time models leverage accurate action time to provide better prediction performance. 
 However, we do not use time models, 
@@ -237,8 +238,11 @@ and TNs, where we predict engine will not label, engines have not, but will in t
 Monitoring \vt for a longer time will make the evaluation of our prediction models more precise. 
 
 \underline{How to use?}
-Our trained models can serve as 
-a quantitative measurement for vendors' influence in malware detection community. 
+\fi
+
+Our findings in this section rings an alert toward using detection rate as the pure measurement of the likelihood of a file being malware
+and shed light on how vendors can influence each other.
+Our study results can serve as a quantitative measurement for vendors' influence in malware detection community. 
 Previously, when combining results from different vendors, 
 security experts simply treat each vendor equally and use the percentage of 
 vendors labeling a file as malware as likelihood of the file to be a malware. 
