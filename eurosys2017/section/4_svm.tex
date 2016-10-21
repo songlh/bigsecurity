@@ -14,16 +14,16 @@ classifications and clusterings tasks?''}
 
 Our study reveals both positive and
 negative answers to this question.
-For some classification tasks, we are able
-to build an automatic classifier whose
-accuracy is higher than 80\% by just
-using the static fuzzy hash strings provided by \vt{}
+Surprisingly, by just using the fuzzy hash strings of files submitted to \vt{},
+we are able to build an automatic classifier whose
+accuracy is higher than 80\% for some classification tasks
 and we expect the quality to keep increasing
-given more data; on the other hand,
-we identify some classification tasks
+given more data.
+Meanwhile, we identify some classification tasks
 whose accuracy hardly beat random guesses.
-We also identify a simple metrics
-to predict whether a given task belongs
+
+To differentiate these cases and offer future researchers with more insights, 
+we propose the use of a simple metrics to predict whether a given task belongs
 the high-quality category or the low-quality
 category. We hope our study shed lights
 on future design of signatures for malware
@@ -35,7 +35,7 @@ detection.
 %We can reduce or even eliminate manual efforts in malware detection. 
 
 
-\subsection{Data Collection}
+\subsection{Data Preparation}
 
 \input{section/tbl_svm}
 
@@ -224,9 +224,18 @@ For a testing instance, if there are similar instances in training set,
 classifier based on ssdeep similarity can precisely classify the instance. 
 \fi
 
-\vt{} contains huge amount of submitted files. We suggest \vt{} provides an extra API, 
-where users only need to submit ssdeep strings for suspicious files, 
-and this could improve privacy protection for \vt{}’s users.  
+Our study found that by just using the ssdeep fuzzy hash string, 
+we can achieve high accuracy in certain classification tasks, especially so with more data, 
+and we developed a technique to predict when classification accuracy will be high.
+The combination of these results point to one interesting direction for future researchers and security vendors, and to \vt:
+instead of original files, we can use compressed representation of files to identify malwares.
+
+With the ``big data'' available in the current world, we believe that this is a fruitful area to investigate.
+The implication of this finding is significant. 
+Users can have stronger privacy and do not need to submit, or reveal, their files to know if these files are likely to be malware.
+%\vt{} contains huge amount of submitted files. We suggest \vt{} provides an extra API, 
+%where users only need to submit ssdeep strings for suspicious files, 
+%and this could improve privacy protection for \vt{}’s users.  
 
 
 
