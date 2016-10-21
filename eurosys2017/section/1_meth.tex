@@ -97,10 +97,26 @@ Figure~\ref{fig:pesize} shows the file size distribution for PE submissions.
 The smallest PE file is only 187 bytes, and the largest one is more than 1\,GB. 
 99.58\% of PE file fall into the range from 4\,KB to 32\,MB. 
 
-\noindent{\textit{\underline{Submission sources.}}}
+{\bf Observation 1:} 
+{\em \vt\ constantly receives large amount of submissions from all over the world. 
+Most submitted files have small to middle sizes and are only submitted once, 
+but some files are submitted many times.}
 
 \input{section/fig_iddistribute}
-\yiying{TODO: normal vs. vendors}
+\noindent{\textit{\underline{Submission sources.}}}
+Both normal users and anti-virus vendors use \vt\ to detect malwares or evaluate products.
+Usually, vendors tend to make more submissions than normal users, since they need to test their products on many files.
+Thus, we use the number of submissions to measure what type of users a source ID is.
+
+We seperate the number of submissions into six categories:
+one submission, one to ten submissions, ten to 100 submissions, 100 to 10000 submissions, 10000 to 1 million submissions, and larger than 1 million submissions.
+Figure~\ref{figure/IDDistribution} plots the number of source IDs in log scale in the first five categories.
+\yiying{change figure X axis to 1 1-10 10-100 100-10K 10K-1Mil and change Y axis label to 0 10\^5 10\^10 etc.}
+There are only 6 source IDs that have more than 1 million submissions and we suspect that these IDs are either bogus or robots 
+that constantly make submissions to \vt.
+
+{\bf Observation 2:} 
+{\em Most \vt\ users are normal users that make occasional submissions, while a small set of anti-virus vendors use \vt\ and make a huge amount of submissions.}
 
 \input{section/fig_vendornum}
 \input{section/fig_detectionrate}
@@ -143,6 +159,9 @@ We assume there is influence among different anti-virus vendors,
 and this influence is a very important reason causing engines to change their results.
 We will discuss how we model this influence and how to predict possible detection result change by using our model in Section~\ref{sec:influ}.
 \fi
+
+{\bf Observation 3:} 
+{\em }
 
 \subsection{Caveats}
 Like all other empirical study works, 

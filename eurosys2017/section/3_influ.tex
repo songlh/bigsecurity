@@ -178,7 +178,7 @@ For each row in all influence tables, we sum all its number together.
 The results can serve as a quantitative measurement for engines' influence in malware detection community. 
 Influence rankings from all the four static models also share a similar pattern. 
 
-{\bf Observation N:} 
+{\bf Observation 7:} 
 {\em Certain anti-virus vendors are influenced by all other vendors in their malware detection decision.}
 
 \noindent{\underline{\textit{Testing stage methodology.}}}
@@ -205,16 +205,22 @@ In the final stage, we reduce TP, TN, FP, and FN numbers from different files.
 \input{section/fig_predict}
 
 \noindent{\underline{\textit{Testing results.}}}
-We change the probability threshold $\theta$ from 0.1\% to 99.9\%, 
-by using 0.1\% as step. 
-We depict the performance of the four static models by using ROC curves, 
-with true positive rate ($TPR = TP/(TP+FN)$) as x-axis, 
-and false positive rate ($FPR = FP/(FP + FN)$) as y-axis. 
-ROC curves for the four static models are shown in Figure~\ref{fig:predict}. 
+We change the probability threshold $\theta$ from 0.1\% to 99.9\% 
+and 
+%by using 0.1\% as step. 
+We measure the accuracy of the four static models using ROC curves, 
+\yiying{what's the full name of ROC?}
+with true positive rate ($TPR = TP/(TP+FN)$) as X-axis
+and false positive rate ($FPR = FP/(FP + FN)$) as Y-axis. 
+Figure~\ref{fig:predict} plots the ROC curves for the four static models.
 The closer the hump of the ROC curve to $(0,1)$, the better performance.
-Bernoulli with partial credit is as good as jaccard index, 
-and both of them are better than bernoulli and jaccard index. 
+\yiying{what is hump? what is (0,1)?}
+We find that the difference between Bernoulli and Jaccard index is small.
+But using partial credits improves the accuracy of both Bernoulli and Jaccard index.
+\yiying{What does this result mean?}
 
+{\bf Observation 8:} 
+{\em \yiying{fill this}}
 
 \subsection{Discussion}
 
