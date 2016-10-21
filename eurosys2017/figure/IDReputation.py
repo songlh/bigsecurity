@@ -82,7 +82,7 @@ if __name__ == '__main__':
 	labels[1] = '-1'
 	labels[2] = '0'
 
-	legend = ax.legend(loc='upper right', fontsize='large')
+	legend = ax.legend(loc='upper left', fontsize='large')
 
 	ax.set_xticklabels(labels)
 
