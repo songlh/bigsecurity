@@ -184,16 +184,16 @@ can predict whether a given malware classification task is likely to have high o
 Our previous experiments all used KNN as the classification algorithm.
 We now discuss the potential of using
 more sophisticated classifiers such as
-support vector machines (SVM) on. 
+support vector machines (SVM). 
 SVM could take distance matrix as input,
-but the size of the distance matrix is quadratic to the number of samples in the training set. 
-\yiying{why is quadratic a problem? too big? cluster runs too slow?}
+but the size of the distance matrix is quadratic to the number of samples in the training set, 
+which would consume large memory and long execution time.
 Nystrom methods~\cite{clustering-purpose} are popular ways to
 approximate a distance matrix with clusters.
-\yiying{is it cluster or classifier?}
+%\yiying{is it cluster or classifier?}
 Using Nystrom methods, each instance is transformed to a feature vector, where each dimension is the distance to a cluster center. 
 
-\yiying{is it cluster or class? in all the discussion here you used cluster}
+%\yiying{is it cluster or class? in all the discussion here you used cluster}
 To understand the potential of applying Nystrom methods, we run hierarchical clustering~\cite{hcluster} on our data.
 Hierarchical clustering starts with each instance as a cluster, 
 and then it iteratively merges two clusters with minimum distance 
@@ -209,11 +209,11 @@ based on distance of the string to the center of all clusters in training set,
 the size of the resulting feature vector would have a very large variance across different malware groups. 
 This illustrates a challenge of directly applying
 classic Nystrom method to our problem. 
-However, we believe that it is possible to develop new approaches to
+However, we think that it is promising to explore how to develop new approaches to
 accommodate this observation.
-\yiying{it's dangerous to say you believe some future work while you don't know what that future work is}
+%\yiying{it's dangerous to say you believe some future work while you don't know what that future work is}
 
-\yiying{Do we have any observation here?}
+%\yiying{Do we have any observation here?}
 
 \subsection{Discussion}
 \if 0

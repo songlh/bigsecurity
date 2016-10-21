@@ -76,24 +76,24 @@ In the range that detection rate drops,
 VirusTotal users stop submitting files that have already been identified as malwares,
 and the increase of percentage of benign files submitted to VirusTotal dominates. 
 
-\noindent{\textit{\underline{Number of submitted source IDs in history.}}}
-One file can be submitted by one source ID multiple times 
-and can also be submitted by different source IDs multiple times. 
-We now study the correlation between the number of source IDs in the submission history and the detection rate. 
+%\noindent{\textit{\underline{Number of submitted source IDs in history.}}}
+%One file can be submitted by one source ID multiple times 
+%and can also be submitted by different source IDs multiple times. 
+%We now study the correlation between the number of source IDs in the submission history and the detection rate. 
 
-\yiying{the whole explanation for this figure needs to be filled here.}
-Figure~\ref{fig:hisid} plots the detection rate and confidence interval as the number of historical source IDs increases. 
-Confidence intervals increases when there are more than 50 source IDs. 
-Detection rate is higher for historical source IDs less than 12, compared with historical source IDs more than 12.
-{\color{red} The X for the largest point is 11. }
-\yiying{is it 12? I cannot tell for sure by just looking at the figure}
-The number of historical source IDs reflects the popularity of a submitted file.
-When the popularity of a file is larger than a certain value, 12 for our dataset, 
-file popularity is unrelated to detection rate. 
-{\color{red} When a file is submitted more than certain number of users, or popular than centain threshold, 
-it is likely to be thoroughly analyzed by all engines, and all vendors have made their decision. 
-They either consider the file as malware or not. They will not change decision. }
-\yiying{why?}
+%\yiying{the whole explanation for this figure needs to be filled here.}
+%Figure~\ref{fig:hisid} plots the detection rate and confidence interval as the number of historical source IDs increases. 
+%Confidence intervals increases when there are more than 50 source IDs. 
+%Detection rate is higher for historical source IDs less than 12, compared with historical source IDs more than 12.
+%{\color{red} The X for the largest point is 11. }
+%\yiying{is it 12? I cannot tell for sure by just looking at the figure}
+%The number of historical source IDs reflects the popularity of a submitted file.
+%When the popularity of a file is larger than a certain value, 12 for our dataset, 
+%file popularity is unrelated to detection rate. 
+%{\color{red} When a file is submitted more than certain number of users, or popular than centain threshold, 
+%it is likely to be thoroughly analyzed by all engines, and all vendors have made their decision. 
+%They either consider the file as malware or not. They will not change decision. }
+%\yiying{why?}
 
 {\bf Observation 5:} 
 {\em {\color{red} When historical numbers fall into certain range, they are correlated with detection rate. }}
