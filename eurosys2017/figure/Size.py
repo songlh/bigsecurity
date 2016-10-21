@@ -47,7 +47,7 @@ if __name__ == '__main__':
 	for tick in ax.xaxis.get_major_ticks():
 		tick.label.set_fontsize(18)
 
-	ax.set_xticklabels(['', 'KB', 'MB', 'GB'])
+	ax.set_xticklabels(['', '1KB', '1MB', '1GB'])
 	plt.xlabel('File Size', fontsize=24)
 
 	for tick in ax.yaxis.get_major_ticks():

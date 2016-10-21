@@ -48,7 +48,7 @@ for tick in ax.xaxis.get_major_ticks():
 for tick in ax.yaxis.get_major_ticks():
 	tick.label.set_fontsize(18)  
 
-ax.set_xticklabels(['', 'KB', 'MB', 'GB'])
+ax.set_xticklabels(['', '1KB', '1MB', '1GB'])
 
 plt.gcf().subplots_adjust(bottom=0.15)
 plt.gcf().subplots_adjust(left=0.15)

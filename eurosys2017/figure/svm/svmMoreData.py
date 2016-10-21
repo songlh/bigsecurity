@@ -44,7 +44,7 @@ for datafile in DataFiles:
 	ax.yaxis.set_tick_params(labelsize=22)
 
 	plt.xlabel('# of Samples in Training Set', fontsize=28)
-	plt.ylabel('Precision', fontsize=28)
+	plt.ylabel('Accuracy', fontsize=28)
 	plt.gcf().subplots_adjust(bottom=0.20)
 	plt.gcf().subplots_adjust(left=0.20)
 	#plt.show()
