@@ -110,8 +110,8 @@ Thus, we use the number of submissions to measure what type of users a source ID
 
 We seperate the number of submissions into six categories:
 one submission, one to ten submissions, ten to 100 submissions, 100 to 10000 submissions, 10000 to 1 million submissions, and larger than 1 million submissions.
-Figure~\ref{figure/IDDistribution} plots the number of source IDs in log scale in the first five categories.
-\yiying{change figure X axis to 1 1-10 10-100 100-10K 10K-1Mil and change Y axis label to 0 10\^5 10\^10 etc.}
+Figure~\ref{fig:iddis} plots the number of source IDs in log scale in the first five categories.
+%\yiying{change figure X axis to 1 1-10 10-100 100-10K 10K-1Mil and change Y axis label to 0 10\^5 10\^10 etc.}
 There are only 6 source IDs that have more than 1 million submissions and we suspect that these IDs are either bogus or robots 
 that constantly make submissions to \vt.
 For the rest, we find that the number of source IDs dramatically drops when the number of submissions is more than 100.
@@ -158,6 +158,8 @@ Interestingly, overall most submissions to \vt\ are likely to be benign files, \
 Around half of the submissions were labeled as benign by all engines (a detection rate of zero),
 and only 31.5\% submissions were labeled as malware by at least half of the engines.
 Surprisingly, the detection rates of submissions made by normal user and by anti-virus vendors are very similar.
+{\color{red}We think that all vendors’ suspicious files actually come from their users, 
+or all malicious files encountered by users will eventually come to all anti-virus vendors’ hand. }
 \yiying{any guess why?}
 
 \if 0
