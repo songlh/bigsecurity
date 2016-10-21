@@ -10,11 +10,11 @@ and applies the trained models to fill uncompleted programs with call innovation
 JSNICE~\cite{big-predicting} aims to predict identifier types and obfuscated identifier names for JavaScript programs. 
 A score function based on learned CRF model is optimized to make all predictions. 
 Phrase-based statistical translation approaches have also been proposed
-to translate C\# programs to Java programs~\citet{big-translation}. 
+to translate C\# programs to Java programs~\cite{big-translation}. 
 
-These systems analyze source codes by leverage large code bases in open-source code repositories.
+These systems analyze source codes by leveraging large code bases in open-source code repositories.
 We have different objectives and methods: 
-we analyze malwares and anti-virus engines by leveraging an open-source malware repository.
+we analyze malwares and anti-virus engines by leveraging an open malware repository.
 %and we rely on malwares’ metadata information and ssdeep hash strings calculated from binary executables.
 
 
@@ -23,7 +23,7 @@ We are not the first to investigate \vt.
 The research community starts to pay more attention to VirusTotal repository recently
 and there have been several works on \vt.
 
-The closest relaed work is a recent study on \vt~\citet{SongAPsys2016}. 
+The closest relaed work is a recent study on \vt{}~\cite{SongAPsys2016}. 
 Similar to our work, they downloaded one-month data from VirusTotal
 and focused on PE files.
 They studied a set of basic properties of PE malwares,
@@ -32,7 +32,7 @@ We collected a longer period of data from \vt.
 More important, we performed deeper analysis into what are the fundamental factors 
 that correlate and influence malware detection.
 Apart from studying malwares, we also study anti-virus engines and how they influence each other
-and performed classification and clustering on \vt\ data.
+and perform classification and clustering on \vt\ data.
 These findings provide far more insights than the previous work and will be able to help future researchers more.
 %Different from our work, 
 Finally, the previous work only relied on detection results from Microsoft anti-virus engines,
@@ -42,18 +42,20 @@ while we conducted our study using all engines.
 
 Recently, researchers noticed that some malware writers use VirusTotal as testing platform~\cite{huangvt2016bigdata, neeles}.
 They explored this phenomenon and developed techniques to identify malware writers. 
-Huang \etal\ downloaded four months of VirusTotal metadata to identify Android malware development cases~\citet{huangvt2016bigdata}. 
+Huang \etal\ downloaded four months of VirusTotal metadata to identify Android malware development cases~\cite{huangvt2016bigdata}. 
 Their technique first alerts suspicious source IDs 
 and then conducts program analysis to further validate whether 
-these source IDs are really testing their Android malware prototypes on VirusTotal. 
-Graziano \etal\ tried to identify Windows malware development cases on Anubis~\citet{neeles}. 
+these source IDs are really testing their Android malware prototypes on \vt{}. 
+Graziano \etal\ tried to identify Windows malware development cases on Anubis~\cite{neeles}. 
 They used data on VirusTotal to validate their findings. 
-Their works focus on submission history of each source ID, 
-while we \yiying{fill}.  
+{\color{red} Their works target to identify suspicious source IDs, 
+while we focus on understanding correlations between source IDs' history and detection rate of their submissions.} 
+%Their works focus on submission history of each source ID, 
+%while we \yiying{fill}.  
 
 Kantchelian \etal\ applied various supervised and unsupervised 
 techniques to aggregate various labels from different anti-virus engines into one ground truth label 
-on a dataset collected from VirusTotal~\citet{betterGT}. 
+on a dataset collected from VirusTotal~\cite{betterGT}. 
 Their goal is to find better ground truth label for distinct samples, 
 while our work tries to model influence among different anti-virus vendors.  
 

@@ -33,17 +33,18 @@ if __name__ == '__main__':
 
 	XList = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]      
 
+	#plt.subplot(223)
 	fig, ax = plt.subplots()
-	ax.plot(XList, group1, 'b-o', label = 'Group 1')
-	ax.plot(XList, group2, 'g--o', label = 'Group 2')
-	ax.plot(XList, group3, 'r-.o', label = 'Group 3')
-	ax.plot(XList, group4, 'c:o', label = 'Group 4')
-	ax.plot(XList, group5, 'm-o', label = 'Group 5')
-	ax.plot(XList, group6, 'y--o', label = 'Group 6')
-	ax.plot(XList, group7, 'k-.o', label = 'Group 7')
-	ax.plot(XList, group8, 'b:o', label = 'Group 8')
-	ax.plot(XList, group9, 'g-o', label = 'Group 9')
-	ax.plot(XList, group10, 'r--o', label = 'Group 10')
+	ax.plot(XList, group1, 'b-o', label = 'Group 1', marker='*')
+	ax.plot(XList, group2, 'g--o', label = 'Group 2', marker='8')
+	ax.plot(XList, group3, 'r-.o', label = 'Group 3', marker='d')
+	ax.plot(XList, group4, 'c:o', label = 'Group 4', marker='>')
+	ax.plot(XList, group5, 'm-o', label = 'Group 5', marker='D')
+	ax.plot(XList, group6, 'y--o', label = 'Group 6', marker='<')
+	ax.plot(XList, group7, 'k-.o', label = 'Group 7', marker='H')
+	ax.plot(XList, group8, 'b:o', label = 'Group 8', marker='^')
+	ax.plot(XList, group9, 'g-o', label = 'Group 9', marker='v')
+	ax.plot(XList, group10, 'r--o', label = 'Group 10', marker='p')
 
 	majorLocator = MultipleLocator(0.1)
 	ax.xaxis.set_major_locator(majorLocator)
@@ -64,8 +65,9 @@ if __name__ == '__main__':
 	plt.ylabel('# of Clusters (log scale)', fontsize=20)
 	plt.gcf().subplots_adjust(bottom=0.15)
 	plt.gcf().subplots_adjust(left=0.15)
+	plt.gcf().subplots_adjust(right=0.75)
 
-	xmin = 0
+	xmin = 0.05
 	xmax = XList[-1] + 0.05
 
 	ax.set_xlim(xmin, xmax)
@@ -76,9 +78,9 @@ if __name__ == '__main__':
 
 
 
-	legend = ax.legend(loc='upper left', fontsize='large', fancybox=True)
-	legend.get_frame().set_alpha(0.5)
-
+	#legend = ax.legend(loc='upper left', fontsize='large', fancybox=True)
+	#legend.get_frame().set_alpha(0.5)
+	plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
 
 	#plt.show()
 
