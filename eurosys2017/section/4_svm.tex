@@ -1,28 +1,60 @@
 \section{Malware Classification}
 \label{sec:ssdeep}
 
-ssdeep~\cite{ssdeep} is a program to compute fuzzy hashes. 
-Similarity between calculated hash strings can serve as an estimation for similarity between the two original files. 
-ssdeep hash strings are also provided for each submitted file with other metadata fields by \vt. 
-In this section, we explore the feasibility to build malware classifier and detector based on ssdeep similarity. 
+Machine learning systems are just as good
+as the data they consumed---One potential 
+use case of the massive amount of data 
+available on VirusTotal is to build 
+machine learning models for applications
+such as malware classifications and
+clustering. In this section, we study
+the question that {\em Is the data
+provided by VirusTotal enough to support
+classifications and clusterings tasks?}
 
-Malware detectors mainly rely on signatures manually extracted by security researchers. 
-ssdeep only takes static binary executable as inputs. 
-If we can build malware detector based on ssdeep similarity, 
-We can reduce or even eliminate manual efforts in malware detection. 
+Our study reveals both positive and
+negative answers to this question---For
+some classification tasks, we are able
+to build an automatic classifier whose
+accuracy is higher than 80\% by just
+using the static signature provided by VirusTotal
+and we expect the quality to keep increasing
+given more data; on the other hand,
+we identify some classification tasks
+whose accuracy hardly beat random guesses.
+We also identify a simple metrics
+to predict whether a given task belongs
+the high-quality category or the low-quality
+category. We hope our study shed lights
+on future design of signatures for malware
+detection.
+
+%Malware detectors mainly rely on signatures manually extracted by security researchers. 
+%ssdeep only takes static binary executable as inputs. 
+%If we can build malware detector based on ssdeep similarity, 
+%We can reduce or even eliminate manual efforts in malware detection. 
 
 
 \subsection{Data Collection}
 
 \input{section/tbl_svm}
 
-Microsoft has a good reputation in detecting PE malwares~\cite{SongAPsys2016}.
-For each detected malware, Microsoft assigns it a tag, which contains type, platform, family, and variant information~\cite{microsoft}. 
+Our study uses features based on ssdeep~\cite{ssdeep}, a program to compute fuzzy hashes. 
+Similarity between calculated hash strings can serve as an estimation for similarity between the two original files. 
+ssdeep hash strings are also provided for each submitted file with other metadata fields by \vt. 
+
+We focus on classifying each malware into
+different malware families. Because Microsoft 
+has a good reputation in detecting PE malwares~\cite{SongAPsys2016}, we create training
+data using its assignment. For each detected malware, Microsoft assigns it a tag, which contains type, platform, family, and variant information~\cite{microsoft}. 
 We divide PE malwares detected by Microsoft engine into different groups, and malwares in the same group share the same Microsoft malware tag. 
 We sample 10 groups, each of which with more than 10000 malwares.  
 Microsoft tag and number of malwares in each sampled group we collected from \vt{} are shown in Table~\ref{tab:benchmark}. 
-
 For each group, we sample 10000 malwares, and use these malwares in our following experiments. 
+
+
+\subsection{Classification Accuracy}
+
 
 We compute the percentage of tailing malwares in each group. 
 We call malwares, which have 0 similarity with all the other samples in the same group, as tailing malwares. 
