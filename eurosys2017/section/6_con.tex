@@ -1,2 +1,17 @@
 \section{Conclusion}
 \label{sec:con}
+
+\vt{} serves as a fruitful resource to understand malwares and anti-virus engines in the real world. 
+In this paper, 
+we conduct a thorough study on metadata \vt{} provides for each PE submission. 
+We first study which factors correlate with submissions' detection rate. 
+We find that most PE malwares have small to medium size, 
+and source ids' reputation is highly correlated with the detection rate of their submissions. 
+We then try to model influence between different vendors. 
+Our experimental results show that   
+influence model borrowed from social media analysis can help predict the temporal behavior of malware detection, 
+and some vendors are influenced by all other vendors.
+Finally, we study whether data provided by \vt{} is enough to support classification tasks. 
+We design several classifiers based on ssdeep similarity, and these classifiers have varied accuracy. 
+We also identify a simple metric, which can predict accuracy for a given classification
+task.
