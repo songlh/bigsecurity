@@ -149,17 +149,23 @@ But in some cases, the accuracy is very high.
 To make use of these high-accuracy classification,
 we need a good technique to seperate them from low-accuracy classification.
 
-We identify one metric to predict whether
+We identify a new metric to predict whether
 a classification task falls into the
 high-accuracy category or the low-accuracy
-category. The intuition is that the probability
-that a given sample has similar samples in
+category. The intuition behind our idea is simple:
+the ssdeep hash similarity of a data sample to other samples in the same group in
 the training set is a proxy of the upper bound
-of accuracy that we can expect. Therefore,
-we compute the percentage of tailing malwares in each group.
-We call malwares that have 0 similarity with all the other samples in the same group {\em tailing malwares}. 
+of accuracy that we can expect. 
+If no samples in a group are similar to each other, 
+then no classifier can have high accuracy in predicting this class.
+On the other hand, more similar samples will make it easy for a classifier to have high accuracy.
+
+We call malwares that have no similarity with any other samples in the same group {\em tailing malwares}
+and compute the percentage of tailing malwares in each group.
 Table~\ref{tab:benchmark} lists the percentage of tailing malwares for each sampled group. 
-Figure~\ref{fig:accuracy} plots the classification accuracy against the percentage of tailing malwares.
+Figure~\ref{fig:accuracy} plots the classification accuracy for all two-class classifiers against the percentage of tailing malwares.
+The percentage of tailing malwares has a perfect linear relationship with classification accuracy,
+implying that we can use tailing malware to predict the accuracy of a classifier.
 
 {\bf Observation 10:} 
 {\em The percentage of tailing malwares
