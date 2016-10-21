@@ -22,7 +22,7 @@ to study real-world malwares and their relationship with anti-virus engines.
 To conduct such study, we utilized an open data repository
 that contains billions of real-world malwares, {\em \vt}.
 
-\vt{} is a free online malware scanning servive
+\vt{} is a free online malware scanning service
 that applies a set of state-of-the-art anti-virus engines to analyze user-submitted files 
 and sends a detection report back to user.
 \vt{} provides public access to all its submitted files and analysis results. 
@@ -79,14 +79,14 @@ into what they should have further investigation.
 
 Second, we study the question of whether or not different anti-virus vendors can influence each other
 and if detection rate is a perfect measurement of the likelihood of a file being a true malware.
-Anecdotely, anti-virus vendors frequently leverage VirusTotal to identify false negatives in their products, 
+Anecdotally, anti-virus vendors frequently leverage VirusTotal to identify false negatives in their products, 
 which are malwares detected by others’ products but not detected by their own products. 
 To verify this hypothesis, we use the detection history from VirusTotal 
 and developed statistical models based on a known technique from from the web mining area to quantify the influence between vendors. 
 With this method, we confirmed that there do exist high influence between vendors;
 certain vendors are highly influenced by the detection results of other vendors and use this information to change their detection results.
 This result alerts \vt\ users and researchers to be more careful about the detection results from vendors 
-and use detection rate more precautiously.
+and use detection rate more cautiously.
 %Anti-virus vendors can rely on this technique to identify false negatives in their products. 
 
 Third, we explore the feasibility of building malware classifiers or detectors based only on hash values of files.

@@ -2,7 +2,7 @@
 \label{sec:meth}
 
 This section introduces \vt\ and 
-discusses how we collect data from \vt\ and preprocess them.
+discusses how we collect data from \vt\ and pre-process them.
 We also present the analysis results of their basic properties, 
 before delving into more advanced analysis in later sections.
 
@@ -71,7 +71,7 @@ In total, we collected 76 million \pe\ submissions.
 After collecting data, we first conducted a set of analysis 
 to learn various basic properties of submission files, 
 submission sources, and anti-virus engines.
-These properties give an overview of how real-world submissions and anti-virus enginesare like
+These properties give an overview of how real-world submissions and anti-virus engines are like
 and serve as the foundation for our more advanced analysis in the next two sections. 
 
 \input{section/fig_subnum}
@@ -109,7 +109,7 @@ Both normal users and anti-virus vendors use \vt\ to detect malwares or evaluate
 Usually, vendors tend to make more submissions than normal users, since they need to test their products on many files.
 Thus, we use the number of submissions to measure what type of users a source ID is.
 
-We seperate the number of submissions into six categories:
+We separate the number of submissions into six categories:
 one submission, one to ten submissions, ten to 100 submissions, 100 to 10000 submissions, 10000 to 1 million submissions, and larger than 1 million submissions.
 Figure~\ref{fig:iddis} plots the number of source IDs in log scale in the first five categories.
 There are only 6 source IDs that have more than 1 million submissions and we suspect that these IDs are either bogus or robots 
@@ -152,7 +152,7 @@ than submissions analyzed by one engine and detected by one engine.
 %A larger detection rate usually indicates a more malicious malware suggested by analyzed anti-virus engines. 
 
 Figure~\ref{fig:detectiorate} shows the distribution of detection rates over all \pe\ submissions.
-We seperately consider submissions made by normal users and by anti-virus vendors 
+We separately consider submissions made by normal users and by anti-virus vendors 
 (as defined above).
 Interestingly, overall most submissions to \vt\ are likely to be benign files, \ie, has low detection rate.
 Around half of the submissions were labeled as benign by all engines (a detection rate of zero),
@@ -172,7 +172,7 @@ We will discuss how we model this influence and how to predict possible detectio
 
 {\bf Observation 3:} 
 {\em Most submissions to \vt\ are labeled as benign and 
-submissions made by normal user and by anti-virus vendors have similar probabilities of being labled as malware.}
+submissions made by normal user and by anti-virus vendors have similar probabilities of being labeled as malware.}
 
 \subsection{Caveats}
 Like all other empirical study works, 
