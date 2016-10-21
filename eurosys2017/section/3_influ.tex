@@ -1,59 +1,63 @@
 \section{Influence Propagation}
 \label{sec:influ}
 
-As we discussed in Section~\ref{sec:meth}, 
-many files are submitted to VirusTotal more than once, 
+As discussed in Section~\ref{sec:meth}, many files are submitted to VirusTotal more than once, 
 and more than 99\% submissions are analyzed by at least 50 anti-virus engines. 
 We observe that some engines fail to identify some malwares during early submissions, 
 but they catch up when analyzing later submissions. 
 Anti-virus vendors frequently use VirusTotal to identify false negatives in their products, 
 which are malwares they fail to detect but detected by other vendors. 
-We assume that there are influence among different anti-virus vendors.
-In this section, we try to model this influence,
-and try to predict whether an engine will identify a file as malware in the future, 
-after the engine has already labeled the file as benign.
-
-Influence propagation on social graph is a well-studied topic in the web mining area. 
-We model influence among different vendors based on static models 
-originally proposed to analyze Flickr data~\cite{Influence}.
-In this section, we first overview static models in our usage scenario,
-and then we discuss how we evaluate static models on data we collect. 
+We hypothesize that there are influence among different anti-virus vendors.
+This section presents our verifification of this hypothesis by modeling the cross-vendor influence.
+We also provide the prediction model of whether an engine will identify a file as malware in the future
+after labeling the file as benign.
 
 \subsection{Influence Model}
 \label{sec:model}
+Influence propagation on social graph is a well-studied topic in the web mining area. 
+Borrowing this idea, we use graphs to represent the relationship between vendors 
+and model influence among different vendors based on static models 
+originally proposed to analyze Flickr data~\cite{Influence}.
+We now explain our graph-based model for anti-virus vendor influence.
+% first overview static models in our usage scenario,
+%and then we discuss how we evaluate static models on data we collect. 
 
-
-We assume that all vendors form a complete directed graph $G = (V, E)$, 
+We first connect all vendors with a complete directed graph $G = (V, E)$, 
 where the nodes $V$ are vendors. 
 The graph is complete, 
 since we assume there is possible influence from any vendor to all other vendors.
-We assume there are action logs generated, 
+We  there are action logs generated, 
 when VirusTotal applies a set of anti-virus engines to analyze a submission. 
 For each engine, there is an action log $(u, a, t)$ or an action log $(u, \bar{a}, t)$, 
 representing whether or not $u$ takes action to identify the submission as a malware at time $t$. 
-To make things easy, after a vendor $u$ labels a file as malware, 
-we assume $u$ will insist its decision.
-{\color{red} Flipping related setting in our model can handle cases where a vendor $u$ labels a file as malware, 
-but changes its mind to label the file as benign later.}
-\yiying{why can we ignore this case?}
+Since the goal of our study is to detect if the change from labeling a file as benign to labeling it as malware by a vendor is influenced by other vendors, 
+we do not consider the case of changing from labeling benign to malware and assume that after a vendor labels a file as malware, it will not change its decision.
+A similar model can be applied to study the latter type.
+%{\color{red} Flipping related setting in our model can handle cases where a vendor $u$ labels a file as malware, 
+%but changes its mind to label the file as benign later.}
+%\yiying{why can we ignore this case?}
 
-We use $A_u$ to represent the number of actions taking by u, 
-or the number of malwares identified by $u$. 
-We use $\bar{A}_u$ to represent the number of malwares ever analyzed and labeled as benign by $u$.
-We use $A_{u\&v}$ to represent the number of actions taken by both $u$ and $v$, 
-and $A_{u|v}$ to represent the number of actions taken by either $u$ or $v$.
-Clearly, $A_{u|v} =   A_u + A_v - A_{u\&v}$.
-We use $A_{u2v}$ to represent the number of actions propagated from $u$ to $v$. 
-We define action propagation as follows: 
+We use $A_u$ to represent the set of submissions identified by $u$ as malwares in its history
+and $\bar{A}_u$ represents the set of submissions labeled as benign by $u$.
+%the number of actions taken by $u$, 
+%or the number of malwares identified by $u$. 
+\yiying{I think all these $A$ should be a collection/set, not the total number, since you use $\in$ later}
+\yiying{Verify that the above sentence is correct.}
+Further, we define the set of actions taken by both $u$ and $v$ as $A_{u\&v}$ 
+and the set of actions taken by either $u$ or $v$ as $A_{u|v}$.
+Thus, $|A_{u|v}| =   |A_u| + |A_v| - |A_{u\&v}|$.
+Finally, $A_{u2v}$ represents the set of actions propagated from $u$ to $v$. 
+With these terms, we define {\em action propagation} as follows: 
 
 \begin{definition}{Action Propagation:}
-We say that an action $a$ propagated from $u$ to $v$ iff: (i) $\exists$ $(v, \bar{a}, t_i)$ $\in$ $\bar{A}_v$, 
-and $(v, a, t_k)$ $\in$ $A_v$, with $t_i < t_k$; (ii) $\exists$ $(u, a, t_j)$ $\in$ $A_u$, with $t_j < t_k$. 
+We say that an action $a$ propagated from $u$ to $v$ iff: (i) $\exists$ $(v, \bar{a}, t_i)$ $\in$ $\bar{A}_v$ 
+and $(v, a, t_k)$ $\in$ $A_v$, with $t_i < t_k$; (ii) $\exists$ $(u, a, t_j)$ $\in$ $A_u$, with $t_j < t_k$ and $u != v$. 
 \end{definition}
+\yiying{change the above != to the proper math format}
 
 For each edge $(u, v) \in E$ in the social graph $G$, 
-there is an influence probability: $p_{u,v}$,
-which represent after $u$ takes an action the probability that $v$ will follow $u$ to take the same action. 
+there is an influence probability $p_{u,v}$,
+which represents after $u$ takes an action the probability that $v$ will follow $u$ to take the same action. 
 Since social graph $G$ is a complete graph, 
 all other nodes are all $v$'s neighbors. 
 For an action $a$, we use $S_v(a)$ to represent the set of $v$'s neighbors taking action $a$ before v. 
@@ -70,7 +74,7 @@ For node $v$ without taking an action $a$,
 if $P_v(S_v(a))>\theta$, 
 we predict $v$ will follow its neighbors to take the action $a$ in the future. 
 
-There are four static models, and they differ in how to estimate $p_{u,v}$ by using data in training set. 
+There are four static models, and they differ in how to estimate $p_{u,v}$ by using the data in training set. 
 
 
 {\bf Bernoulli distribution.} $p_{u,v}$ is estimated as the ratio of the number of actions 

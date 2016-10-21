@@ -3,12 +3,16 @@
 This section presents our study of the correlation between various properties of \pe\ submissions and the detection rate of \pe\ submissions.
 Detection rate is what most \vt\ users use to decide if their submissions are malware 
 and the first thing that a user of \vt\ uses.
-Therefore, it is important to study what correlates to detection rate.
-In this section, we study the correlation between detection rate and submission file size,
-two types of historical submission properties, and the reputation and type of source IDs.
+Therefore, it is important to study what factors affects or correlates to detection rate
+and the results can guide security researchers and vendors to invest XXX
 
-In the next section, we will present our further analysis of what 
-and if detection rate
+We studied a range of properties and their correlation with detection rate
+and found that ** factors have higher correlation:
+the correlation between detection rate and submission file size,
+historical submission properties, and the reputation and type of source IDs.
+We present these correlation study results in this section.
+In the next section, we will present our further analysis of what can affect the detection result of anti-virus engines
+and if detection rate is a perfect measurement of the likelihood of malware.
 %Detection rate is a good indication of the likelihood of malware.
 %A higher detection rate means that more anti-virus engines identify a submitted file as malicious.
 %\yiying{Can we say that higher detection rate indicates that the file is likely to be a malware?}
@@ -19,14 +23,22 @@ and if detection rate
 
 \subsection{File Size}
 \label{sec:size}
-
+Anecdotely, \pe\ malwares are most likely to have small to medium size. 
+To verify this, we analyzed the relationship between submission file size and detection rate. 
+Figure~\ref{fig:size} present the average detection rate and 95\% confidence interval for each preprocessed 
 For each submission, we round up binary logarithm for its file size to nearest 0.5,
 and calculate average detection rate for submissions with the same preprocessed file size.
-Average detection rate and 95\% confidence interval for each preprocessed 
-file size are shown in Figure~\ref{fig:size}.
+file size.
+\yiying{what do you mean by preprocessed file size? Also, change the X axis lables of this figure and figure 3 to be 1KB, 1MB, 1GB}
 Except for the last two points, all other confidence intervals are invisible.   
-Files with size from 90KB to 4MB have average higher detection rate, which is more than 0.2. 
-One likely reason of this correlation is that 
+\yiying{what do you mean by invisible?}
+Files with size from 90KB to 4MB have higher detection rate, more than 20\% on average. 
+
+{\bf Observation 1:} 
+{\em \pe\ malwares are mostly likely to have small to medium size.}
+
+Figure~\ref{fig_pesize}
+One likely reason of this correlation is that  
 \yiying{how is this result relates to the size distribution of files? 
 what does it this result imply? any suspected reason behind this? My suspition is just that these sizes have more submissions and thus? has higher detection rate.}
 
@@ -149,8 +161,7 @@ As we discussed from Section~\ref{sec:reputation} to Section~\ref{sec:country},
 source ID reputation, historical number in certain range, file size, 
 and source country are highly correlated with detection rate. 
 Future work could train a regression model to combine all these factors together and 
-predict how many engines could detect a malware or how malicious a malware is. 
-\yiying{what do you mean by how malicious a malware is? Do you mean more damage a malware can cause? THis cannot be told by VT data. We need to be very careful about these things, since there will be security experts in the PC, I assume.}
+predict how many engines could detect a malware or how likely a file is a malware. 
 Using the regression model or our studying results alone, 
 security experts can prioritize malwares and focus their efforts on malwares which are more malicious. 
 Anti-virus vendors could inspect results which are variant from our studying results 

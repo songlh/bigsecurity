@@ -41,8 +41,8 @@ In deed, we drew several meaningful conclusions with this dataset, as will be pr
 We performed our data collection using \vt{}’s distribution API.
 We insert all collected metadata into a table in Cassandra~\cite{cassandra} 
 using the combination of sha256, source\_id, and timestamp as the key.
-\yiying{say something about the spark environment here}
-{\color{red} All our analysis is conducted by using Spark 1.4.0~\cite{spark}, on a cluster with 19 nodes, 266 cores, and 560 GB memory. }
+We then used Spark~\cite{spark} and wrote Spark programs to efficiently analyze the vast amount of data.
+All our analysis is conducted by using Spark 1.4.0 on a cluster with 19 nodes, 266 cores, and 560 GB memory. 
 
 \input{section/fig_type}
 
@@ -87,13 +87,11 @@ The same conclusion can be made to \pe\ submissions.
 One PE file could be submitted more than once to VirusTotal. 
 On average, each PE file was submitted 1.19 times and 6.72\% PE files were submitted more than once. 
 
-\yiying{we still need the country distribution}
-{\color{red} For around 16\% of PE submission, 
+For around 16\% of PE submission, 
 \vt fails to provide their source country information. 
 All other submissions are conducted from 221 countries. 
 The top 6 countries in PE submission number are US, Canada, France, Russia, Germany, and China, 
-as shown in Figure~\ref{fig:countryPie}.}
-
+as shown in Figure~\ref{fig:countryPie}.
 
 Figure~\ref{fig:pesize} shows the file size distribution for PE submissions. 
 The smallest PE file is only 187 bytes, and the largest one is more than 1\,GB. 
@@ -137,7 +135,7 @@ than submissions analyzed by one engine and detected by one engine.
 Figure~\ref{fig:detectiorate} shows the distribution of detection rates over all \pe\ submissions.
 Interestingly, most submissions to \vt\ are likely to be benign files, \ie, has low detection rate.
 Around half of the submissions were labeled as benign by all engines (a detection rate of zero),
-and only 31.53\% \yiying{fill number here} submissions were labeled as malware by at least half of the engines.
+and only 31.5\% submissions were labeled as malware by at least half of the engines.
 
 \if 0
 Some anti-virus engines can produce different detection results when analyzing the same file under different submissions.
