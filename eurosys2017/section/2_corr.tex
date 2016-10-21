@@ -28,13 +28,13 @@ and if detection rate is a perfect measurement of the likelihood of malware.
 Anecdotely, \pe\ malwares are most likely to have small to medium size. 
 To verify this, we analyzed the relationship between submission file size and detection rate. 
 Figure~\ref{fig:size} presents the average detection rate and 
-the 95\% confidence interval for each preprocessed 
-For each submission, we round up binary logarithm for its file size to nearest 0.5,
-and calculate average detection rate for submissions with the same preprocessed file size.
-\yiying{what do you mean by preprocessed file size? Also, change the X axis lables of this figure and figure 3 to be 1KB, 1MB, 1GB}
-Except for the last two points, all other confidence intervals are invisible.   
-\yiying{what do you mean by invisible?}
-Files with size from 90KB to 4MB have higher detection rate, more than 20\% on average. 
+the 95\% confidence interval for different file sizes.
+A wider confidence interval implies that \yiying{fill here}.
+We use discrete file sizes of powers of two in our analysis and in this graph,
+i.e., we calculate the log2 of each original file size and round it to the nearest 0.5 value.
+Overall, we find that files with size from 90KB to 4MB have higher detection rate, more than 20\% on average. 
+Except for the last two points which represent a small amount of files that are bigger than 1GB, 
+all other sizes have high confidence.   
 
 {\bf Observation 4:} 
 {\em \pe\ malwares are mostly likely to have small to medium size.}
@@ -72,17 +72,23 @@ we can see that submissions source countries are correlated with detection rate.
 
 \input{section/fig_SubHistory}
 
-One file could be submitted more than once to VirusTotal. 
-Given a submission, we also study whether information for historical 
-submissions of the same file influences detection rate for the current submission. 
+As discussed in Section~\ref{sec:basicanal}, there are files that have been submitted more than once to VirusTotal. 
+It is worthwhile to investigate this {\em history of submission} and how history affects future.
+We study the correlation between submission history and the detection rate of the current submission.
+Among the different types of historical information that we study,
+we find that two types have higher correlation to detection rate:
+the number of submissions made in history and the number of source IDs that made submissions of the same file in history.
+%Given a submission, we also study whether information for historical 
+%submissions of the same file influences detection rate for the current submission. 
 
-\noindent{\textit{\underline{Historical submission number.}}}
-We sort submissions for each file chronologically, 
-and then calculate the correlation between detection rate and historical submission number for each submission. 
-Figure~\ref{fig:hisnum} plots the change in detection rate over the number of historical submissions.
+\noindent{\textit{\underline{The number of submissions in history.}}}
+To study the submission history, we first sort all submissions for each file chronologically
+and then collect the number of all submissions made before submission $s$ for each submission $s$ in \vt.
+Next, we calculate the correlation between detection rate and the number of submission in history.
+Figure~\ref{fig:hisnum} plots how detection rates change over the number of historical submissions.
 Interestingly, there are ranges from XX to XX. \yiying{fill exact X-axis numbers here}
 
-Two possible factors can influence detection rate and explain the 
+Two possible factors can influence detection rate and explain the above effect.
 First, the percentage of benign files submitted to VirusTotal, 
 and with more benign files submitted, detection rate will decrease.   
 The other one is the percentage of engines identifying the submitted malwares, 
