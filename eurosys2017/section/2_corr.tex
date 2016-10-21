@@ -86,19 +86,19 @@ To study the submission history, we first sort all submissions for each file chr
 and then collect the number of all submissions made before submission $s$ for each submission $s$ in \vt.
 Next, we calculate the correlation between detection rate and the number of submission in history.
 Figure~\ref{fig:hisnum} plots how detection rates change over the number of historical submissions.
-Interestingly, there are ranges from XX to XX. \yiying{fill exact X-axis numbers here}
+Interestingly, there are two main ranges that steadily increase and there are three drops in the beginning, middle, and end.
 
-Two possible factors can influence detection rate and explain the above effect.
-First, the percentage of benign files submitted to VirusTotal, 
-and with more benign files submitted, detection rate will decrease.   
-The other one is the percentage of engines identifying the submitted malwares, 
-and with more engines identifying the malware, detection rate will increase. 
-In the two stages of detection rate decreasing, 
-VirusTotal users stop submitting identified malwares, 
-and the increase of percentage of benign files submitted to VirusTotal dominates. 
+To explain this effect, we first look at the two factors that can both influence detection rates:
+the percentage of benign files submitted and the amount of anti-virus engines labeling the submission as malware.
+%Two factors can influence detection rates and explain the above effect.
+Obviously, with more benign files submitted, detection rate will decrease.   
+and with more engines labeling malwares, detection rate will increase. 
 In the the two stages of detection rate increasing, 
-more engines can identify submitted malwares, 
+with more submissions, more engines are able to identify malwares 
 and the increase of percentage of engines identifying submitted malwares dominates. 
+In the range that detection rate drops, 
+VirusTotal users stop submitting files that have already been identified as malwares,
+and the increase of percentage of benign files submitted to VirusTotal dominates. 
 
 \noindent{\textit{\underline{Historical source ID.}}}
 One file can be submitted by one source ID multiple times 
