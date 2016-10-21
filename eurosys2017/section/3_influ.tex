@@ -124,7 +124,7 @@ $$p_{u,v} = \frac{\sum\limits_{a \in A_{u2v}}{credit_{u,v}(a)}}{|A_{u|v}|}$$
 \subsection{Model Evaluation}
 \label{sec:predict}
 
-\noindent{\underline{\textit{Methodology.}}}
+\noindent{\underline{\textit{Training stage methodology.}}}
 We split all the \pe\ submissions we collected into a training set and a testing set based on the SHA256 values of the submitted files. 
 We place all submissions with SHA256 values starting with a numeric character, 
 i.e., from ‘0’ to ‘9’, into training set
@@ -132,7 +132,7 @@ and all the rest into the testing set.
 
 We implement the training process by several stages of map, filter, and reduce in Spark. 
 Specifically, we first reduce submission records according to submitted files. 
-We then sort submission records for each file chronologically
+We then sort submission records chronologically
 and filter out files without action propagation.
 \yiying{say why filter here} 
 For each remaining file, we compute four maps based on its submissions.
@@ -147,12 +147,14 @@ Finally, we reduce these 4 maps from different files,
 and calculate $p_{u,v}$ for the four static models. 
 
 After training the four static models, 
-we filter out engines taking less than 10000 actions,
-since for engines taking too few actions, results may not be reliable. 
+we filter out engines taking fewer than 10000 actions,
+since engines taking too few actions cannot produce meaningful results.
+\yiying{what's the avg num of actions taken by the remaining 59 engines? we need this number to say 10K is small and insignificant.}
 There are 59 engines left.
-For confidential reasons, we omit vendors’ name in the following discussion, 
-and use number from 0 to 58 to represent each engine. 
+For confidentiality reasons, we omit vendors’ name in the following discussion
+and use numbers from 0 to 58 to represent these vendors.
 
+\noindent{\underline{\textit{Training results.}}}
 For each static model, 
 we put all learned $p_{u,v}$ in a influence table, 
 by using $u$ as row number and $v$ as column number.
@@ -176,28 +178,30 @@ For each row in all influence tables, we sum all its number together.
 The results can serve as a quantitative measurement for engines' influence in malware detection community. 
 Influence rankings from all the four static models also share a similar pattern. 
 
-The testing process is also implemented by several stages of map, filter, and reduce.
-Same as what we did during training, 
-we first reduce all submissions based on submitted files, 
-filter out files without action propagation and all their related submissions, 
-and sort submissions chronologically for each file. 
-Before processing a submission, we use Equation~\ref{eq:setp} to
-calculate $p_v(S_v(a))$ for any engine $v$, 
-which labeled the submitted file as benign when analyzing early submissions, 
+\noindent{\underline{\textit{Testing stage methodology.}}}
+We also used Spark to implement the testing process and express the process using several stages of map, filter, and reduce.
+Similar to our training stage process, 
+we first reduce all submissions based on submitted files,
+next filter out files without action propagation, 
+and then sort submissions chronologically. 
+
+To test a submission, we first use Equation~\ref{eq:setp} to
+calculate $p_v(S_v(a))$ for all engines
+that labeled the submitted file as benign when analyzing early submissions 
 but have not labeled the file as malware. 
 $S$ is the set of engines which labeled the file as malwares before.
-We compare $p_v(S_v(a))$ with a given threshold $\theta$ to decide whether we will predict 
-$v$ will label the file as malware, and we check what $v$ 
-really does in the submission to count true positive (TP) and false negative (FN). 
+We compare $p_v(S_v(a))$ with a given threshold $\theta$ to decide whether we predict 
+$v$ will label the file as malware.
+We then check what $v$ actually labels in the submission to count true positive (TP) and false negative (FN). 
 After processing all submissions for a file, 
-we calculate $p_v(S_v(a))$ for any engine $v$, 
-which labels the file as benign, but have not labeled the file as malware.
+we calculate $p_v(S_v(a))$ for all engines  
+that label the file as benign but have not labeled the file as malware.
 We compare $p_v(S_v(a))$ with $\theta$ to count false positive (FP) and true negative (TN).
 In the final stage, we reduce TP, TN, FP, and FN numbers from different files.
 
-
 \input{section/fig_predict}
 
+\noindent{\underline{\textit{Testing results.}}}
 We change the probability threshold $\theta$ from 0.1\% to 99.9\%, 
 by using 0.1\% as step. 
 We depict the performance of the four static models by using ROC curves, 
