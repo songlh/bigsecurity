@@ -61,11 +61,11 @@ if __name__ == '__main__':
 	for i, num, in enumerate(numList):
 		print i, num, num * 1.0/total
 
-	XList = XList[0:16]
-	YList = YList[0:16]
-	errList = errList[0:16]
+	#XList = XList[0:16]
+	#YList = YList[0:16]
+	#errList = errList[0:16]
 
-	print YList
+	#print YList
 	#if tmpNum > 1:
 	#	XList.append(XList[-1] + 5)
 	#	YList.append(float(tmpSum * 1.0/tmpNum))
@@ -106,7 +106,7 @@ if __name__ == '__main__':
 
 	#ax.set_xticklabels(labels)
 
-	plt.show()
-	#fig.savefig('SubID.png')
-	#fig.savefig('SubID.pdf')
+	#plt.show()
+	fig.savefig('SubID.png')
+	fig.savefig('SubID.pdf')
 	plt.close(fig)

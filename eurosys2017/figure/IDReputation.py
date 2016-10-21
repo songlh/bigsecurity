@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from matplotlib.ticker import MultipleLocator, FormatStrFormatter
 
 if __name__ == '__main__':
-	sDataFile = '../data/IDTotalFilterReputation.stat'
+	sDataFile = '../data/VendorIDReputation.stat'
 	fData = open(sDataFile, 'r')
 
 	XList = []
@@ -70,8 +70,8 @@ if __name__ == '__main__':
 
 	ax.set_xticklabels(labels)
 
-	#plt.show()
+	plt.show()
 	#fig.savefig('IDReputation.pdf')
 	#plt.close(fig)
-	fig.savefig('IDReputation.png')
-	plt.close(fig)
+	#fig.savefig('IDReputation.png')
+	#plt.close(fig)

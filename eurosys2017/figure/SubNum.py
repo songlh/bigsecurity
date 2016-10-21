@@ -106,7 +106,7 @@ if __name__ == '__main__':
 
 	#ax.set_xticklabels(labels)
 
-	plt.show()
-	#fig.savefig('SubNum.png')
-	#fig.savefig('SubNum.pdf')
+	#plt.show()
+	fig.savefig('SubNum.png')
+	fig.savefig('SubNum.pdf')
 	plt.close(fig)
