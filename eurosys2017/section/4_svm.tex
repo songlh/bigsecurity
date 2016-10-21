@@ -175,38 +175,42 @@ can predict whether a given malware classification task is likely to have high o
 
 \subsection{SVM Classification}
 %\noindent{\underline{\textit{SVM classification.}}}
-Our previous experiments use KNN.
+Our previous experiments all used KNN as the classification algorithm.
 We now discuss the potential of using
 more sophisticated classifiers such as
-support vector machines (SVM). 
-SVM could take distance matrix as input.
-However, the problem is that the size of distance matrix is quadratic to the number of samples in the training set. 
+support vector machines (SVM) on. 
+SVM could take distance matrix as input,
+but the size of the distance matrix is quadratic to the number of samples in the training set. 
+\yiying{why is quadratic a problem? too big? cluster runs too slow?}
 Nystrom methods~\cite{clustering-purpose} are popular ways to
 approximate a distance matrix with clusters.
-By using Nystrom methods, each instance is transformed to a feature vector, where each dimension is the distance to a cluster center. 
+\yiying{is it cluster or classifier?}
+Using Nystrom methods, each instance is transformed to a feature vector, where each dimension is the distance to a cluster center. 
 
+\yiying{is it cluster or class? in all the discussion here you used cluster}
 To understand the potential of applying Nystrom methods, we run hierarchical clustering~\cite{hcluster} on our data.
 Hierarchical clustering starts with each instance as a cluster, 
 and then it iteratively merges two clusters with minimum distance 
 until distance threshold or cluster number threshold is reached. 
-We use distance as threshold. 
-We use single linkage distance~\cite{single-link} as distance between two clusters. 
+We use distance as threshold and the single linkage distance~\cite{single-link} as distance between two clusters. 
 
-We change distance threshold from 0.1 to 0.9, 
-and count resulting clusters under each experiment. 
-Experimental results are shown in Figure~\ref{fig:cluster}. 
-As we increase distance threshold, the number of resulting clusters decreases for each group. 
-If we want to change a ssdeep hash string to a feature vector, 
+We change the distance threshold from 0.1 to 0.9
+and count the resulting clusters under each experiment. 
+Figure~\ref{fig:cluster} presents the experimental results.
+As we increase the distance threshold, the number of resulting clusters decreases for each group. 
+If we want to change a ssdeep hash string to a feature vector
 based on distance of the string to the center of all clusters in training set, 
 the size of the resulting feature vector would have a very large variance across different malware groups. 
 This illustrates a challenge of directly applying
-classic Nystrom method, however, we believe
-it is possible to develop new approaches to
+classic Nystrom method to our problem. 
+However, we believe that it is possible to develop new approaches to
 accommodate this observation.
+\yiying{it's dangerous to say you believe some future work while you don't know what that future work is}
 
+\yiying{Do we have any observation here?}
 
 \subsection{Discussion}
-
+\if 0
 In our experiments, 1 is almost always the best k value. 
 So using ssdeep similarity to conduct malware classification 
 is roughly to search the most similar example in the training set for each testing example.
@@ -218,6 +222,8 @@ Our experimental results show that with more data in training set,
 we can get better precision. 
 For a testing instance, if there are similar instances in training set, 
 classifier based on ssdeep similarity can precisely classify the instance. 
+\fi
+
 \vt{} contains huge amount of submitted files. We suggest \vt{} provides an extra API, 
 where users only need to submit ssdeep strings for suspicious files, 
 and this could improve privacy protection for \vt{}’s users.  
