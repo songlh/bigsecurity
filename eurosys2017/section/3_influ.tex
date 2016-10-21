@@ -129,13 +129,7 @@ and all the rest into the testing set.
 
 We implement the training process by several stages of map, filter, and reduce in Spark. 
 Specifically, we first reduce submission records according to submitted files. 
-We then sort submission records chronologically
-and filter out files without action propagation.
-{\color{red} If we do not filter these files out, 
-all their related actions will be counted as $A_{u}$, 
-which contributes denominators in all static models, 
-and this will make all learned $p_{u,v}$ unnecessarily small. }
-\yiying{say why filter here} 
+We then sort submission records chronologically.
 For each remaining file, we compute four maps based on its submissions.
 There is one one-dimension map, 
 containing the number of actions taken by each vendor, 
@@ -213,14 +207,16 @@ We measure the accuracy of the four static models using ROC (Receiver Operating 
 with true positive rate ($TPR = TP/(TP+FN)$) as X-axis
 and false positive rate ($FPR = FP/(FP + FN)$) as Y-axis. 
 Figure~\ref{fig:predict} plots the ROC curves for the four static models.
-The closer the hump of the ROC curve to $(0,1)$, the better performance.
-\yiying{what is hump? what is (0,1)?}
-We find that the difference between Bernoulli and Jaccard index is small.
-But using partial credits improves the accuracy of both Bernoulli and Jaccard index.
-\yiying{What does this result mean?}
+The larger the area under the ROC curve, the better the performance.
+We find that, all models beat random guesses
+(the diagonal line between (0,0) to (1,1)) significantly. 
+Using partial credits improves the accuracy of both Bernoulli and Jaccard index.
 
 {\bf Observation 8:} 
-{\em \yiying{fill this}}
+{\em The influence model borrowed from
+social media analysis contains information
+that helps the prediction of the temporal
+behavior of malware detection. }
 
 \subsection{Discussion}
 
