@@ -121,6 +121,7 @@ the classification accuracy is expected to be even higher.
 \noindent{\underline{\textit{Classifications with semantics labels.}}}
 To make classification based on more criteria, 
 we further design a set of two-class classifications. 
+
 First, we test the classfication of malwares with the same {\em class} but with different {\em variants} in the class.
 Specifically, we classify malwares from Group 7 with malwares from Group 10. 
 They are both from the same class ``Ramnit'', but in different variants. 
@@ -138,12 +139,19 @@ For this classification, we get 77.0\% accuracy.
 %We use the same experimental setting as previous two-class classifiers.  
 
 {\bf Observation 9:}
-{\em }
+{\em Different types of classification on \vt\ file ssdeep hash strings result in different accuracy, and increasing the training set size results in higher accuracy.}
 
 \subsection{Tailing malwares.}
+From the above study of various types of classification,
+we find that using ssdeep hash strings to learn the similarities of \vt\ submission files 
+is not always accurate.
+But in some cases, the accuracy is very high.
+To make use of these high-accuracy classification,
+we need a good technique to 
+
 We identify one metrics to predict whether
 a classification task falls into the
-high-accuracy category or low-accuracy
+high-accuracy category or the low-accuracy
 category. The intuition is that the probability
 that a given sample has similar samples in
 the training set is a proxy of the upper bound
