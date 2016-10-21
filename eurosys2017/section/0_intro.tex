@@ -61,31 +61,33 @@ and conducted an extensive study on them.
 %Following previous works~\cite{SongAPsys2016} on studying VirusTotal,
 %We focus our effort on Windows \textit{Portable Executable} ({\em \pe}) files, 
 %which account for more than half of \vt{}’s submissions.
-We designed our study in three aspects: 
+After collecting and pre-processing data from \vt, 
+we first perform a set of basic analysis to gain an overall knowledge of the \vt\ data repository,
+including how big the files submitted to \vt\ are, who submit to \vt, and how many submissions are labeled as malware.
 
-First, we study the correlation between submissions’ metadata and their detection rates. 
-Given a submission, 
-we calculate its detection rate as the percentage of engines 
-labeling the submission as malware. 
-Higher detection rate indicates a more malicious submission viewed by engines.  
-We study correlation between detection rate 
-and source ids’ reputation, submission history, file size and source country. 
-Our studying results can help categorize which types of malwares are more malicious, 
-help security experts invest their limited manual efforts, 
-and help anti-virus vendors identify possible false positives and false negatives in their products.   
+On top of these basic findings, we developed a set of more advanced studies in three directions. 
 
+First, we study the correlation between submissions’ metadata and their {\em detection rates}, 
+the percentage of engines labeling a submission as malware. 
+We found high correlation between detection rate 
+and three factors: submission file size, the history of submitting a file, and the reputation of the submitters.
+These results shed light on what types of submission are more likely to be malware.
+With this result, future researchers and anti-virus vendors can have more guided direction 
+into what they should have further investigation.
+%help security experts invest their limited manual efforts, 
+%and help anti-virus vendors identify possible false positives and false negatives in their products.   
 
-Second, we study how influence propagate among different anti-virus vendors. 
-Anti-virus vendors frequently leverage VirusTotal to identify false negatives in their products, 
-which are malwares detected by others’ products, 
-but not detected by their own products. 
-We assume there is influence among each pair of vendors. 
-By using detection history from VirusTotal, 
-we train 4 static models from web mining area to quantize this influence. 
-Our trained models can be used to evaluate which vendors are more influential in security community. 
-We also use our trained models to predict whether a vendor will label a submitted file as malware, 
-after it previously labeled the file as benign. 
-Anti-virus vendors can rely on this technique to identify false negatives in their products. 
+Second, we study the question of whether or not different anti-virus vendors can influence each other
+and if detection rate is a perfect measurement of the likelihood of a file being a true malware.
+Anecdotely, anti-virus vendors frequently leverage VirusTotal to identify false negatives in their products, 
+which are malwares detected by others’ products but not detected by their own products. 
+To verify this hypothesis, we use the detection history from VirusTotal 
+and developed statistical models based on a known technique from from the web mining area to quantify the influence between vendors. 
+With this method, we confirmed that there do exist high influence between vendors;
+certain vendors are highly influenced by the detection results of other vendors and use this information to change their detection results.
+This result alerts \vt\ users and researchers to be more careful about the detection results from vendors 
+and use detection rate more precautiously.
+%Anti-virus vendors can rely on this technique to identify false negatives in their products. 
 
 Third, we explore the feasibility to build malware classifiers or detectors based on ssdeep similarity. 
 For each submission, ssdeep hash string is also provided by VirusTotal. 
@@ -102,4 +104,3 @@ Our study advances the understanding of malwares and anti-virus engines in the r
 and provides implications for future works to 
 apply machine learning to malware detection in a large scale. 
 
-{\color{red} TODO: Contributions:}
