@@ -7,7 +7,7 @@
 The competition between anti-virus engines and malwares is like cat-and-mouse game. 
 
 Malwares grow exponentially~\cite{avtest} and bring more and more damage to human society. 
-For example, there are more than 390000 new malwares registered in AVTest institute every day~\cite{avtest}, 
+For example, there are more than 390000 new malwares registered in AVTest institute every day~\cite{avtest}.
 For example, as a new type of threat, ransomware has already caused more than 1 billion cost this year~\cite{ransomware}. 
 In order to detect more malwares, anti-virus engines are also improving every day, 
 by updating their signature database, 
@@ -22,7 +22,7 @@ how malware writers create new malwares, how malwares escape from detection of a
 and how vendors' detection evolve. 
 However, all these works only study limited malwares, 
 and fail to understand malwares in a large scale, 
-and fail to study engines' behaviors when analyzing malwares in a large scale. 
+and fail to study engines' behaviors when they analyze malwares in a large scale. 
 We think that studying malwares in a large scale can expose more insights. 
 
 \vt{} is a free online malware scanning servive.
@@ -30,7 +30,7 @@ After users submit suspicious files to \vt{}, \vt{} applies a set of state-of-th
 \vt{} provides public access to all submitted files and analysis results. 
 
 
-VirusTotal provides a valuable resource to study and 
+\vt{} provides a valuable resource to study and 
 understand real-world malwares and anti-virus engines. 
 
 First, there are huge amount of suspicious files submitted to VirusTotal. 
@@ -53,7 +53,8 @@ source ID (country), which can help understand popularity of malwares,
 ssdeep digest string, by using which we can calculate code similarity without accessing binary executable, and so on. 
 
 Unfortunately, there has only been limited attention to \vt\ in the past. 
-Researchers have used \vt\ as a testing platform when \yiying{developing malwares?}
+%Researchers have used \vt\ as a testing platform when \yiying{developing malwares?}
+Researchers try to capture malware writers on \vt{}, who leverage \vt{} as testing platform during malware development~\cite{huangvt2016bigdata, neeles}. 
 Anti-virus vendors use \vt\ to detect possible false positives and false negatives in their products. 
 But none of them analyze or leverage rich malware data provided by \vt\ in a large scale. 
 
