@@ -55,38 +55,39 @@ and $(v, a, t_k)$ $\in$ $A_v$, with $t_i < t_k$; (ii) $\exists$ $(u, a, t_j)$ $\
 \end{definition}
 \yiying{change the above != to the proper math format}
 
-For each edge $(u, v) \in E$ in the social graph $G$, 
-there is an influence probability $p_{u,v}$,
-which represents after $u$ takes an action the probability that $v$ will follow $u$ to take the same action. 
-Since social graph $G$ is a complete graph, 
-all other nodes are all $v$'s neighbors. 
-For an action $a$, we use $S_v(a)$ to represent the set of $v$'s neighbors taking action $a$ before v. 
-The probability that $v$ will follow its neighbors to take the same action is calculated as:
+We associate each edge $(u, v) \in E$ in the graph $G$ 
+with an influence probability $p_{u,v}$,
+which represents the probability that after $u$ takes an action $v$ will follow $u$ to take the same action. 
+%Since the graph is a complete graph, 
+%all other nodes are all $v$'s neighbors. 
+For an action $a$, we use $S_v(a)$ to represent the set of $v$'s neighbors taking action $a$ before $v$ in time. 
+The probability that $v$ will follow its neighbors to take the same action can then be calculated as:
 
 \begin{equation} \label{eq:setp}
 %$$p_v(S_v(a)) = 1 - \prod\limits_{u \in S_v(a)}(1 - p_{u,v})$$
 p_v(S_v(a)) = 1 - \prod\limits_{u \in S_v(a)}(1 - p_{u,v})
 \end{equation}
 
-During training stage, we try to learn $p_{u,v}$ for each edge. 
-During prediction stage, we provide a tunable threshold $\theta$. 
-For node $v$ without taking an action $a$, 
-if $P_v(S_v(a))>\theta$, 
-we predict $v$ will follow its neighbors to take the action $a$ in the future. 
+During training stage, we learn $p_{u,v}$ for each edge. 
+During prediction stage, we test a node $v$ that has not taken the action $a$ yet
+and predict if it will take this action following other nodes (anti-virus vendors). 
+Specifically, we use a tunable threshold $\theta$
+and predict $v$ will follow its neighbors to take the action $a$ in the future
+if $P_v(S_v(a))>\theta$.
 
-There are four static models, and they differ in how to estimate $p_{u,v}$ by using the data in training set. 
+We designed four static models for the training stage, which differ in how to estimate $p_{u,v}$ by using the data in training set. 
 
 
-{\bf Bernoulli distribution.} $p_{u,v}$ is estimated as the ratio of the number of actions 
+{\bf Bernoulli distribution} estimates $p_{u,v}$ as the ratio of the number of actions 
 propagated from $u$ to $v$ over the total number of actions taken by $u$.
 
-$$p_{u,v} = \frac{A_{u2v}}{A_u}$$ 
+$$p_{u,v} = \frac{|A_{u2v}|}{|A_u|}$$ 
 
-{\bf Jaccard index.} 
-$p_{u,v}$ is estimated by the number of actions propagated from $u$ to $v$ dividing 
+{\bf Jaccard index} estimates 
+$p_{u,v}$ as the number of actions propagated from $u$ to $v$ divided by 
 the number of actions taken either by $u$ or by $v$.
 
-$$p_{u,v} = \frac{A_{u2v}}{A_{u|v}}$$ 
+$$p_{u,v} = \frac{|A_{u2v}|}{|A_{u|v}|}$$ 
 
 When $v$ takes an action $a$, it may be influenced by the combination of all its neighbors $S_v(a)$ 
 taking the action $a$ before $v$. Partial credit takes this intuition. 
@@ -94,17 +95,17 @@ Partial credit for $u$ who takes an action $a$ before $v$ is calculated as:
 
 $$credit_{u,v}(a) = \frac{1}{|S_v(a)|}$$
 
-{\bf Bernoulli distribution with partial credit.} 
-$p_{u,v}$ is estimated by the sum of all partial credits taking by $u$ for actions propagated from $u$ to $v$, 
+{\bf Bernoulli distribution with partial credit} 
+estimates $p_{u,v}$ as the sum of all partial credits taking by $u$ for actions propagated from $u$ to $v$, 
 dividing by the number of actions taken by $u$. 
 
-$$p_{u,v} = \frac{\sum\limits_{a \in A_{u2v}}{credit_{u,v}(a)}}{A_u}$$
+$$p_{u,v} = \frac{\sum\limits_{a \in A_{u2v}}{credit_{u,v}(a)}}{|A_u|}$$
 
-{\bf Jaccard index with partial credit.} 
-$p_{u,v}$ is estimated by the sum of all partial credits taking by $u$ for actions propagated from $u$ to $v$, 
+{\bf Jaccard index with partial credit} 
+estimates $p_{u,v}$ as the sum of all partial credits taking by $u$ for actions propagated from $u$ to $v$, 
 dividing by the number of actions taken either by $u$ or by $v$. 
 
-$$p_{u,v} = \frac{\sum\limits_{a \in A_{u2v}}{credit_{u,v}(a)}}{A_{u|v}}$$
+$$p_{u,v} = \frac{\sum\limits_{a \in A_{u2v}}{credit_{u,v}(a)}}{|A_{u|v}|}$$
 
 
 
