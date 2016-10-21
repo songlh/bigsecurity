@@ -57,7 +57,7 @@ the number of submissions made in history and the number of source IDs that made
 %Given a submission, we also study whether information for historical 
 %submissions of the same file influences detection rate for the current submission. 
 
-\noindent{\textit{\underline{The number of submissions in history.}}}
+%\noindent{\textit{\underline{The number of submissions in history.}}}
 To study the submission history, we first sort all submissions for each file chronologically
 and then collect the number of all submissions made before submission $s$ for each submission $s$ in \vt.
 Next, we calculate the correlation between detection rate and the number of submission in history.
@@ -96,7 +96,7 @@ and the increase of percentage of benign files submitted to VirusTotal dominates
 %\yiying{why?}
 
 {\bf Observation 5:} 
-{\em {\color{red} When historical numbers fall into certain range, they are correlated with detection rate. }}
+{\em  When historical numbers fall into certain range, they are correlated with detection rate.}
 
 \if 0
 \noindent{\textit{\underline{Historical source country.}}}
@@ -170,7 +170,7 @@ Vendors do not have this behavior and their detection rate always increases with
 
 \subsection{Discussion}
 
-\noindent{\textit{\underline{How to use our data?}}}
+%\noindent{\textit{\underline{How to use our data?}}}
 From our analysis, file size, number of submissions in history, and source ID reputation
 are all highly correlated with detection rate. 
 These results suggest that future researchers and vendors can use these values to have an initial estimation or prediction of future submissions.
@@ -186,12 +186,5 @@ to identify possible false positives or false negatives in their products.
 %Anti-virus vendors could inspect results which are variant from our studying results 
 %to identify possible false positives or false negatives in their products. 
 
-\yiying{I would delete the following paragraph. it just sounds too defensive. and you've already explained the limitation in sec 2.4.}
-\noindent{\textit{\underline{Limitations of our study.}}}
-As discussed in Section~\ref{sec:meth}, our study is bound with our methodology.
-We do not have any data before 05/07/2016, 
-which may cause some inaccuracy in measuring historical statistics and 
-source ID reputation and historical numbers.
-However, we think we can tolerate this error, 
-since we conduct our study in a relatively long time range and in a large scale. 
+
 %In the future, we could design our reputation and historical metrics based on a tunable time windows, and investigate whether correlations still exist.   
