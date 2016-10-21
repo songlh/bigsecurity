@@ -4,13 +4,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.ticker import MultipleLocator, FormatStrFormatter
 
-if __name__ == '__main__':
-	sDataFile = '../data/VendorIDReputation.stat'
-	fData = open(sDataFile, 'r')
-
+def loadData(sFileName):
 	XList = []
 	YList = []
 	errList = []
+
+	fData = open(sFileName, 'r')
 
 	while True:
 		line = fData.readline()
@@ -35,8 +34,23 @@ if __name__ == '__main__':
 
 	fData.close()
 
+	return XList, YList, errList
+
+
+
+
+if __name__ == '__main__':
+	sVendorDataFile = '../data/VendorIDReputation.stat'
+	sUserDataFile = '../data/UserIDReputation.stat' 
+
+	XVendorList, YVendorList, errVendorList = loadData(sVendorDataFile)
+	XUserList, YUserList, errUserList = loadData(sUserDataFile)
+
+	
+
 	fig, ax = plt.subplots()
-	ax.errorbar(XList, YList, yerr=errList, fmt='-o')
+	ax.errorbar(XVendorList, YVendorList, yerr=errVendorList, fmt='-o', label ='Vendor')
+	ax.errorbar(XUserList, YUserList, yerr=errUserList, fmt='-*', label='User')
 
 	majorLocator = MultipleLocator(0.1)
 	ax.xaxis.set_major_locator(majorLocator)
@@ -53,8 +67,8 @@ if __name__ == '__main__':
 	plt.gcf().subplots_adjust(bottom=0.15)
 	plt.gcf().subplots_adjust(left=0.15)
 
-	xmin = XList[0]  - 0.05
-	xmax = XList[-1] + 0.05
+	xmin = XVendorList[0]  - 0.05
+	xmax = XVendorList[-1] + 0.05
 
 	ax.set_xlim(xmin, xmax)
 
@@ -68,10 +82,12 @@ if __name__ == '__main__':
 	labels[1] = '-1'
 	labels[2] = '0'
 
+	legend = ax.legend(loc='upper right', fontsize='large')
+
 	ax.set_xticklabels(labels)
 
-	plt.show()
-	#fig.savefig('IDReputation.pdf')
+	#plt.show()
+	fig.savefig('IDReputation.pdf')
 	#plt.close(fig)
-	#fig.savefig('IDReputation.png')
-	#plt.close(fig)
+	fig.savefig('IDReputation.png')
+	plt.close(fig)
