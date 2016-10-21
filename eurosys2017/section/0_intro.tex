@@ -1,36 +1,32 @@
 \section{Introduction}
 \label{sec:intro}
 
+There is and will continue to be a constant competition between anti-virus tools and malwares.
+Malwares grow exponentially~\cite{avtest} and place an imperative threat to human society. 
+For example, more than 390000 new malwares are registered in AVTest institute every day~\cite{avtest}.
+As another example, a new type of threat, ransomware, has caused more than 1 billion dollars this year~\cite{ransomware}. 
+In order to keep up and detect these new types of malwares, anti-virus tools are also improving rapidly,
+by constantly updating their signature database, by using more advanced techniques like deep learning~\cite{cylance}, or by utilizing more data. 
 
-
-%{\color{red} TODO: Some Security Background}
-The competition between anti-virus engines and malwares is like cat-and-mouse game. 
-
-Malwares grow exponentially~\cite{avtest} and bring more and more damage to human society. 
-For example, there are more than 390000 new malwares registered in AVTest institute every day~\cite{avtest}.
-For example, as a new type of threat, ransomware has already caused more than 1 billion cost this year~\cite{ransomware}. 
-In order to detect more malwares, anti-virus engines are also improving every day, 
-by updating their signature database, 
-or by equipping with more advanced techniques, like deep learning~\cite{cylance}. 
-
-In order to improve anti-virus techniques and defend against emerging threats from malwares, 
-it is essential to understand malwares and current anti-virus engines in the real world. 
-
+In order to improve anti-virus tools and defend against emerging threats from malwares, 
+it is essential to understand malwares and existing anti-virus tools in the real world. 
 Previous works on studying malwares and anti-virus engines do provide valuable 
-insights~\cite{ZhouSP2012,GuptaComsnets2009, vendors-study}, like  
-how malware writers create new malwares, how malwares escape from detection of anti-virus engines, 
-and how vendors' detection evolve. 
-However, all these works only study limited malwares, 
-and fail to understand malwares in a large scale, 
-and fail to study engines' behaviors when they analyze malwares in a large scale. 
-We think that studying malwares in a large scale can expose more insights. 
+insights~\cite{ZhouSP2012,GuptaComsnets2009, vendors-study} such as  
+how malware writers create new malwares and how malwares escape from the detection of anti-virus engines.
+However, these previous works only studied limited malwares
+%and fail to understand malwares in a large scale, 
+and did not provide insights into the relationship between malwares and anti-virus engines. 
 
-\vt{} is a free online malware scanning servive.
-After users submit suspicious files to \vt{}, \vt{} applies a set of state-of-the-art anti-virus engines to analyze them. 
-\vt{} provides public access to all submitted files and analysis results. 
+We propose to use the vast amount of existing ``big data'' 
+to study real-world malwares and their relationship with anti-virus engines.
+To conduct such study, we utilized an open data repository
+that contains billions of real-world malwares, {\em \vt}.
 
-
-\vt{} provides a valuable resource to study and 
+\vt{} is a free online malware scanning servive
+that applies a set of state-of-the-art anti-virus engines to analyze user-submitted files 
+and sends a detection report back to user.
+\vt{} provides public access to all its submitted files and analysis results. 
+\vt{} is a valuable resource to study and 
 understand real-world malwares and anti-virus engines. 
 
 First, there are huge amount of suspicious files submitted to VirusTotal. 
@@ -43,27 +39,29 @@ This amount of diverse data on VirusTotal serves as a good representation of mal
 
 Second, for almost all submissions, 
 VirusTotal applies no less than 50 state-of-the-art anti-virus engines to analyze them. 
-VirusTotal keeps detailed detection results and provides open access to these results. 
+VirusTotal keeps detailed detection results and provides an open access to these results. 
 Analyzing historical detection results can help capture how anti-virus engines evolve over time. 
 
 Third, VirusTotal provides rich metadata for each submission. 
-Besides detection results from different engines, 
-VirusTotal also provides file type information, which can help categorize malwares, 
-source ID (country), which can help understand popularity of malwares, 
-ssdeep digest string, by using which we can calculate code similarity without accessing binary executable, and so on. 
+Besides the detection results of various anti-virus engines, 
+VirusTotal also provides file type information, submitter information, and a hash string of the original submitted file.
+These types of information is valuable to study 
+%which can help categorize malwares, 
+%source ID (country), which can help understand popularity of malwares, 
+%ssdeep digest string, by using which we can calculate code similarity without accessing binary executable, and so on. 
 
 Unfortunately, there has only been limited attention to \vt\ in the past. 
 %Researchers have used \vt\ as a testing platform when \yiying{developing malwares?}
-Researchers try to capture malware writers on \vt{}, who leverage \vt{} as testing platform during malware development~\cite{huangvt2016bigdata, neeles}. 
+Researchers tried to capture malware writers who leverage \vt{} as the testing platform during malware development~\cite{huangvt2016bigdata, neeles}. 
 Anti-virus vendors use \vt\ to detect possible false positives and false negatives in their products. 
-But none of them analyze or leverage rich malware data provided by \vt\ in a large scale. 
+But none of them study the rich malware data provided by \vt\ in a large scale. 
 
-We collected 4-month metadata of all submissions to VirusTotal 
+We collected 4 months of metadata of all submissions to VirusTotal 
 and conducted an extensive study on them.
 %Following previous works~\cite{SongAPsys2016} on studying VirusTotal,
-We focus our effort on Windows \textit{Portable Executable} ({\em \pe}) files, 
-which account for more than half of \vt{}’s submissions.
-Our study is mainly conducted in three aspects: 
+%We focus our effort on Windows \textit{Portable Executable} ({\em \pe}) files, 
+%which account for more than half of \vt{}’s submissions.
+We designed our study in three aspects: 
 
 First, we study the correlation between submissions’ metadata and their detection rates. 
 Given a submission, 
