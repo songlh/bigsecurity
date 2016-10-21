@@ -29,9 +29,9 @@ for datafile in DataFiles:
 	fig, ax = plt.subplots()
 	ax.plot(range(len(precisionList)), precisionList, 'b-x', mew=2, markersize = 8, linewidth=2.0)
 
-	#ymin = 0.0
-	#ymax = 1.0
-	#ax.set_ylim(ymin, ymax)
+	ymin = 0.4
+	ymax = 0.9
+	ax.set_ylim(ymin, ymax)
 
 	xmin = -1
 	xmax = len(precisionList) + 1

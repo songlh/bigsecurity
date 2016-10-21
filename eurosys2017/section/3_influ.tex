@@ -36,9 +36,11 @@ We associate each edge $(u, v) \in E$ in the graph $G$
 with an influence probability $p_{u,v}$,
 which represents the probability that after $u$ takes an action $v$ will follow $u$ to take the same action.
 We only consider cases of changing from labeling benign to malwares, 
-which means $u$ has labeled a submission as malware, $v$ will label a submission as malware this time, 
+which means that when calculating $p_{u,v}$, we only consider cases where $u$ has labeled a submission as malware, 
+$v$ will label a submission as malware in the future, 
 and $v$ labeled the submitted file as benign earlier. 
-\yiying{does this action include both turning from labeling benign to malware and from malware to benign? does it include the first label (no prior labeling by the same node)? you need to explain what an "action" is.}
+%\yiying{does this action include both turning from labeling benign to malware and from malware to benign? 
+%does it include the first label (no prior labeling by the same node)? you need to explain what an "action" is.}
 %Since the graph is a complete graph, 
 %all other nodes are all $v$'s neighbors. 
 For an action $a$, we use $S_v(a)$ to represent the set of $v$'s neighbors taking action $a$ before $v$ in time. 
@@ -232,13 +234,13 @@ The time information we have can only provide a relative order about when each v
 Our data collection ends on 09/06/2016. 
 We could count extra FPs, where we predict engines will label files as malwares, engines have not, but will do in the future, 
 and TNs, where we predict engine will not label, engines have not, but will in the future. 
-Monitoring \vt for a longer time will improve the precision of our prediction models. 
+Monitoring \vt for a longer time will make the evaluation of our prediction models more precise. 
 
 \underline{How to use?}
 Our trained models can serve as 
-a quantitative measurement for vendors’ influence in malware detection community. 
+a quantitative measurement for vendors' influence in malware detection community. 
 Previously, when combining results from different vendors, 
 security experts simply treat each vendor equally and use the percentage of 
 vendors labeling a file as malware as likelihood of the file to be a malware. 
-Our model can provide a weigh, when considering results from different vendors.  
+Our model can provide a weight, when combining results from different vendors.  
 For anti-virus vendors, the prediction part of our models can help alarm possible false negatives in their products.

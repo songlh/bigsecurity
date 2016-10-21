@@ -4,7 +4,9 @@ This section presents our study of the correlation between various properties of
 Detection rate is what most \vt\ users use to decide whether their submissions are benign or malware 
 and the first thing that a user of \vt\ uses.
 Therefore, it is important to study what factors affects or correlates to detection rate
-and the results can guide security researchers and vendors to invest \yiying{TODO}. 
+and the results can guide security researchers and vendors to invest 
+{\color{red} more efforts to investigate irregular malwares, (malwares not follow our identified patterns.)}
+\yiying{TODO}. 
 
 We studied a range of properties and their correlation with detection rate
 and found that three factors have higher correlation:
@@ -29,7 +31,9 @@ Anecdotely, \pe\ malwares are most likely to have small to medium size.
 To verify this, we analyzed the relationship between submission file size and detection rate. 
 Figure~\ref{fig:size} presents the average detection rate and 
 the 95\% confidence interval for different file sizes.
-A wider confidence interval implies that \yiying{fill here}.
+A wider confidence interval implies that
+{\color{red} our calculated average detection rate is more far away from the real average detection rate.}
+\yiying{fill here}.
 We use discrete file sizes of powers of two in our analysis and in this graph,
 i.e., we calculate the log2 of each original file size and round it to the nearest 0.5 value.
 Overall, we find that files with size from 90KB to 4MB have higher detection rate, more than 20\% on average. 
@@ -44,7 +48,9 @@ is because these files also contribute to most of the submissions as shown in Fi
 As we will discuss in Section~\ref{sec:history}, the correlation of submissions and detection rate is more complex and non-linear.
 Thus, there is a more fundamental reason behind the file size correlation with detection rate.
 One likely reason of this correlation is that files that are too small are not enough to express the
-malware functions while files that are too big is \yiying{fill here}.
+malware functions while files that are too big 
+{\color{red} are too difficult to spread.}
+\yiying{fill here}.
 
 \if 0
 \subsection{Source Country}
@@ -109,13 +115,18 @@ We now study the correlation between the number of source IDs in the submission 
 Figure~\ref{fig:hisid} plots the detection rate and confidence interval as the number of historical source IDs increases. 
 Confidence intervals increases when there are more than 50 source IDs. 
 Detection rate is higher for historical source IDs less than 12, compared with historical source IDs more than 12.
+{\color{red} The X for the largest point is 11. }
 \yiying{is it 12? I cannot tell for sure by just looking at the figure}
 The number of historical source IDs reflects the popularity of a submitted file.
 When the popularity of a file is larger than a certain value, 12 for our dataset, 
-file popularity is unrelated to detection rate. \yiying{why?}
+file popularity is unrelated to detection rate. 
+{\color{red} When a file is submitted more than certain number of users, or popular than centain threshold, 
+it is likely to be thoroughly analyzed by all engines, and all vendors have made their decision. 
+They either consider the file as malware or not. They will not change decision. }
+\yiying{why?}
 
 {\bf Observation 5:} 
-{\em }
+{\em {\color{red} When historical numbers fall into certain range, they are correlated with detection rate. }}
 
 \if 0
 \noindent{\textit{\underline{Historical source country.}}}
@@ -137,7 +148,9 @@ Different users of online services such as \vt\ often have different {\em reputa
 because of different motivations, objectives, and backgrounds.
 For example, some users can randomly trying out \vt\ with no specific objective and thus submit random files
 while other users have clear goals and motivations and thus only submit suspicious files.
-\yiying{is reputation a well-known term? what's the rationale behind defining reputation like the follow? is my explanation above correct?}
+{\color{red} The rationale behind reputation is that \vt{} users would have a roughly constant submission pattern, 
+and it is promissing to use their historical submission to predict their future submission.}
+\yiying{is reputation a well-known term? what's the rationale behind defining reputation like the follow? is my explanation above correct? Yes}
 Previous work~\cite{GuoICSE2010} reported that there is a correlation between bug reporter’s reputation and the likelihood for the bug being fixed. 
 We also observe correlation between the reputation of source ID and submission’s detection rate. 
 
@@ -178,7 +191,9 @@ are overall have higher detection rate than
 the submissions conducted by IDs that have only submitted benign files (reputation 0).
 
 For normal users, the detection rate drops when reputation is greater than 0.8.
-This means that for normal users \yiying{fill this, your original explanation doesn't say why} %it is difficult for source IDs with highest reputation to always submit files detected by all engines. 
+This means that for normal users,
+{\color{red} it is difficult for them to always submit suspicious files detected by almost all vendors.}
+\yiying{fill this, your original explanation doesn't say why} %it is difficult for source IDs with highest reputation to always submit files detected by all engines. 
 Vendors do not have this behavior and their detection rate always increases with higher reputation (other than reputation -1).
 
 
