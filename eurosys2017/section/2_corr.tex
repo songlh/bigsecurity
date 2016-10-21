@@ -4,9 +4,8 @@ This section presents our study of the correlation between various properties of
 Detection rate is what most \vt\ users use to decide whether their submissions are benign or malware 
 and the first thing that a user of \vt\ uses.
 Therefore, it is important to study what factors affects or correlates to detection rate
-and the results can guide security researchers and vendors to invest 
-{\color{red} more efforts to investigate irregular malwares, (malwares not follow our identified patterns.)}
-\yiying{TODO}. 
+and the results can guide security researchers and vendors to have targeted investigation over {\em suspicious} files, 
+files that have the factors that we identify as highly correlated to detection rate.
 
 We studied a range of properties and their correlation with detection rate
 and found that three factors have higher correlation:
@@ -15,13 +14,6 @@ historical submission properties, and the reputation of source IDs.
 We present these correlation study results in this section.
 In the next section, we will present our further analysis of what can affect the detection result of anti-virus engines
 and if detection rate is a perfect measurement of the likelihood of malware.
-%Detection rate is a good indication of the likelihood of malware.
-%A higher detection rate means that more anti-virus engines identify a submitted file as malicious.
-%\yiying{Can we say that higher detection rate indicates that the file is likely to be a malware?}
-%Our study is conducted from four aspects: reputation of source id, submission history, 
-%file size, and source country.
-
-%\input{section/fig_2corr1}
 
 \input{section/fig_size}
 
@@ -32,8 +24,7 @@ To verify this, we analyzed the relationship between submission file size and de
 Figure~\ref{fig:size} presents the average detection rate and 
 the 95\% confidence interval for different file sizes.
 A wider confidence interval implies that
-{\color{red} our calculated average detection rate is more far away from the real average detection rate.}
-\yiying{fill here}.
+the calculated average detection rate is farther away from the real average detection rate.
 We use discrete file sizes of powers of two in our analysis and in this graph,
 i.e., we calculate the log2 of each original file size and round it to the nearest 0.5 value.
 Overall, we find that files with size from 90KB to 4MB have higher detection rate, more than 20\% on average. 
@@ -48,28 +39,7 @@ is because these files also contribute to most of the submissions as shown in Fi
 As we will discuss in Section~\ref{sec:history}, the correlation of submissions and detection rate is more complex and non-linear.
 Thus, there is a more fundamental reason behind the file size correlation with detection rate.
 One likely reason of this correlation is that files that are too small are not enough to express the
-malware functions while files that are too big 
-{\color{red} are too difficult to spread.}
-\yiying{fill here}.
-
-\if 0
-\subsection{Source Country}
-\label{sec:country}
-
-All PE submissions in our collection are conducted from 222 countries, 
-and for roughly 17\% PE submissions, 
-VirusTotal fails to provide their source country information. 
-We rank source countries, based on their submission numbers. 
-Average detection rate for top 20 source countries are calculated and shown in 
-Figure~\ref{fig:Country}. 
-Confidence intervals are also drawn for each source country, 
-and all confidence intervals are almost invisible. 
-From Figure~\ref{fig:Country}, 
-we can see that submissions source countries are correlated with detection rate.
-\yiying{What's the order of the x axis in this figure? we should either sort it alphabetically or by detection rate.}
-
-\fi
-
+malware functions while files that are too big are difficult to spread.
 
 \subsection{Submission History}
 \label{sec:history}
@@ -148,9 +118,8 @@ Different users of online services such as \vt\ often have different {\em reputa
 because of different motivations, objectives, and backgrounds.
 For example, some users can randomly trying out \vt\ with no specific objective and thus submit random files
 while other users have clear goals and motivations and thus only submit suspicious files.
-{\color{red} The rationale behind reputation is that \vt{} users would have a roughly constant submission pattern, 
-and it is promissing to use their historical submission to predict their future submission.}
-\yiying{is reputation a well-known term? what's the rationale behind defining reputation like the follow? is my explanation above correct? Yes}
+The rationale behind reputation is that \vt{} users would have a roughly constant submission pattern, 
+and it is promissing to use their historical submission to predict their future submission.
 Previous work~\cite{GuoICSE2010} reported that there is a correlation between bug reporter’s reputation and the likelihood for the bug being fixed. 
 We also observe correlation between the reputation of source ID and submission’s detection rate. 
 
@@ -191,9 +160,7 @@ are overall have higher detection rate than
 the submissions conducted by IDs that have only submitted benign files (reputation 0).
 
 For normal users, the detection rate drops when reputation is greater than 0.8.
-This means that for normal users,
-{\color{red} it is difficult for them to always submit suspicious files detected by almost all vendors.}
-\yiying{fill this, your original explanation doesn't say why} %it is difficult for source IDs with highest reputation to always submit files detected by all engines. 
+This means that for normal users, it is difficult for them to always submit suspicious files detected by almost all vendors.
 Vendors do not have this behavior and their detection rate always increases with higher reputation (other than reputation -1).
 
 

@@ -141,30 +141,29 @@ For this classification, we get 77.0\% accuracy.
 {\bf Observation 9:}
 {\em Different types of classification on \vt\ file ssdeep hash strings result in different accuracy, and increasing the training set size results in higher accuracy.}
 
-\subsection{Tailing malwares.}
+\subsection{Tailing Malwares}
 From the above study of various types of classification,
 we find that using ssdeep hash strings to learn the similarities of \vt\ submission files 
 is not always accurate.
 But in some cases, the accuracy is very high.
 To make use of these high-accuracy classification,
-we need a good technique to 
+we need a good technique to seperate them from low-accuracy classification.
 
-We identify one metrics to predict whether
+We identify one metric to predict whether
 a classification task falls into the
 high-accuracy category or the low-accuracy
 category. The intuition is that the probability
 that a given sample has similar samples in
 the training set is a proxy of the upper bound
 of accuracy that we can expect. Therefore,
-we compute the percentage of tailing malwares in each group--We call malwares, which have 0 similarity with all the other samples in the same group, as tailing malwares. 
-The percentage of tailing malwares for each sampled group is also shown in Table~\ref{tab:benchmark}. 
-How accuracy changes with the percentage of tailing for each two-class classifier is shown in Figure~\ref{fig:accuracy}. 
+we compute the percentage of tailing malwares in each group.
+We call malwares that have 0 similarity with all the other samples in the same group {\em tailing malwares}. 
+Table~\ref{tab:benchmark} lists the percentage of tailing malwares for each sampled group. 
+Figure~\ref{fig:accuracy} plots the classification accuracy against the percentage of tailing malwares.
 
 {\bf Observation 10:} 
 {\em The percentage of tailing malwares
-can predict whether a given malware classification task belongs
-the high-quality category or the low-quality
-category.}
+can predict whether a given malware classification task is likely to have high or low accuracy.}
 
 \input{section/fig_cluster}
 
