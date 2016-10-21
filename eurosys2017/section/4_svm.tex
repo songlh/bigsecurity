@@ -45,7 +45,7 @@ The end of each block only depends on content of the block.
 All calculated hash values are concatenated into a fuzzy hash string. 
 So identical blocks in original files can be matched.  
 Similarity between calculated hash strings can serve as an estimation for similarity between the two original files. 
-%\yiying{why can it estimate? we need some deeper understanding of the hash or need to be mroe careful when saying things like this. people's assumption is that hash cannot represent original data and is just a highly compressed string.}
+%\yiying{why can it estimate? we need some deeper understanding of the hash or need to be more careful when saying things like this. people's assumption is that hash cannot represent original data and is just a highly compressed string.}
 \vt\ provides ssdeep hash strings as one of its metadata files and we collected them together with other metadata.
 
 %We focus on classifying each malware into
@@ -103,7 +103,7 @@ the accuracy of random guesses would be 50\%.
 Overall, for the two-class classifier, 
 there are not enough malwares and benign files in the training set to generate high-accuracy results. 
 
-\noindent{\underline{\textit{Compelete ten-class classification.}}}
+\noindent{\underline{\textit{Complete ten-class classification.}}}
 We also build a ten-class classifier.
 We randomly choose 2000 malwares from each group and put half of them in the training set and the remaining half in the testing set. 
 We run cross validation to pick up best $k$ from 1 to 10. 
@@ -128,10 +128,10 @@ the classification accuracy is expected to be even higher.
 To make classification based on more criteria, 
 we further design a set of two-class classifications. 
 
-First, we test the classfication of malwares with the same {\em class} but with different {\em variants} in the class.
+First, we test the classification of malwares with the same {\em class} but with different {\em variants} in the class.
 Specifically, we classify malwares from Group 7 with malwares from Group 10. 
 They are both from the same class ``Ramnit'', but in different variants. 
-The accuracy we gotis 85.3\%. 
+The accuracy we got is 85.3\%. 
 
 We then target to classify malwares in different {\em families}.
 To do this, we classify malwares from Group 3 with malwares from Group 7 and Group 10
@@ -153,7 +153,7 @@ we find that using ssdeep hash strings to learn the similarities of \vt\ submiss
 is not always accurate.
 But in some cases, the accuracy is very high.
 To make use of these high-accuracy classification,
-we need a good technique to seperate them from low-accuracy classification.
+we need a good technique to separate them from low-accuracy classification.
 
 We identify a new metric to predict whether
 a classification task falls into the

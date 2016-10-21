@@ -64,7 +64,7 @@ Specifically, we use a tunable threshold $\theta$
 and predict $v$ will follow its neighbors to take the action $a$ in the future
 if $p_v(S_v(a))>\theta$.
 
-Before delving into the details of how our four static models estimate $p_{u,v}$ duing the training stage, 
+Before delving into the details of how our four static models estimate $p_{u,v}$ during the training stage, 
 we first gives a set of definitions that we make to assist the development of these models.
 We use $A_u$ to represent the set of submissions identified by $u$ as malwares in its history
 and $\bar{A}_u$ represents the set of submissions ever labeled as benign by $u$.
@@ -155,10 +155,10 @@ and use numbers from 0 to 58 to represent these vendors.
 For each static model, 
 we put all learned $p_{u,v}$ in a influence table, 
 by using $u$ as row number and $v$ as column number.
-For any $p_{u,v}$, bernoulli distribution has the largest value, 
-jaccard index has the second largest value, 
-bernoulli with partial credit has the third largest value,
-and jaccard index with partial credit has the least value. 
+For any $p_{u,v}$, Bernoulli distribution has the largest value, 
+Jaccard index has the second largest value, 
+Bernoulli with partial credit has the third largest value,
+and Jaccard index with partial credit has the least value. 
 
 \input{section/fig_heatmap}
 

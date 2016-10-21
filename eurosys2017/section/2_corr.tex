@@ -19,7 +19,7 @@ and if detection rate is a perfect measurement of the likelihood of malware.
 
 \subsection{File Size}
 \label{sec:size}
-Anecdotely, \pe\ malwares are most likely to have small to medium size. 
+Anecdotally, \pe\ malwares are most likely to have small to medium size. 
 To verify this, we analyzed the relationship between submission file size and detection rate. 
 Figure~\ref{fig:size} presents the average detection rate and 
 the 95\% confidence interval for different file sizes.
@@ -119,7 +119,7 @@ because of different motivations, objectives, and backgrounds.
 For example, some users can randomly trying out \vt\ with no specific objective and thus submit random files
 while other users have clear goals and motivations and thus only submit suspicious files.
 The rationale behind reputation is that \vt{} users would have a roughly constant submission pattern, 
-and it is promissing to use their historical submission to predict their future submission.
+and it is promising to use their historical submission to predict their future submission.
 Previous work~\cite{GuoICSE2010} reported that there is a correlation between bug reporter’s reputation and the likelihood for the bug being fixed. 
 We also observe correlation between the reputation of source ID and submission’s detection rate. 
 
@@ -146,7 +146,7 @@ files that are only submitted once, and files that are submitted more than 1 mil
 %because we think these are anti-virus vendors routinely test their products. 
 To calculate source ID reputation, we first sort all submissions from the same source ID chronologically, 
 and calculate reputation for each source id when conducting each submission. 
-We further seperate normal users from vendors and analyze the correlation of their ID reputation and detection rate.
+We further separate normal users from vendors and analyze the correlation of their ID reputation and detection rate.
 
 Figure~\ref{fig:idreputation} plots the average detection rate and the 95\% confidence interval 
 as the source ID reputation increases for normal users and for anti-virus vendors.
