@@ -89,18 +89,26 @@ This result alerts \vt\ users and researchers to be more careful about the detec
 and use detection rate more precautiously.
 %Anti-virus vendors can rely on this technique to identify false negatives in their products. 
 
-Third, we explore the feasibility to build malware classifiers or detectors based on ssdeep similarity. 
-For each submission, ssdeep hash string is also provided by VirusTotal. 
-The similarity between two ssdeep hash strings 
-is a good estimation of similarity between the two original binary files.
-Hash strings can be automatically calculated by ssdeep programs. 
-If we can build malware detectors by using ssdeep hash strings, 
-we can avoid manually extract signatures from malware samples.   
-We design several experiments to evaluate our ssdeep-based malware classifiers. 
-Our evaluation results show that precision of malware classifiers are 
-bounded by percentage of tailing examples and more training data tends to bring better results.
+Third, we explore the feasibility of building malware classifiers or detectors based only on hash values of files.
+We obtained hash strings of submitted files to \vt\ 
+and use the similarity of these hash string to build classifiers.
+%The similarity between two ssdeep hash strings 
+%is a good estimation of similarity between the two original binary files.
+%If we can build malware detectors by using ssdeep hash strings, 
+%we can avoid manually extract signatures from malware samples.   
+We design several machine learning experiments to evaluate our hash-based malware classifiers. 
+Surprisingly, our evaluation results show that by just using hash string, 
+we can obtain high accuracy for certain classification tasks.
+At the same time, other classification tasks are not as accurate.
+We further developed a mechanism to predict which classification task is likely to have high accuracy.
+With these classification and detection mechanisms and the large amount of data,
+it will be possible to just use a compressed representation of files instead of the original files 
+to detect malware.
+This result implies that future users can have higher privacy and do not need to reveal their files to know whether or not they are malware.
+%Our evaluation results show that precision of malware classifiers are 
+%bounded by percentage of tailing examples and more training data tends to bring better results.
 
-Our study advances the understanding of malwares and anti-virus engines in the real world, 
-and provides implications for future works to 
-apply machine learning to malware detection in a large scale. 
+Our study advances the understanding of malwares and anti-virus engines in the real world 
+and provides various valuable insights for future researchers and vendors.
+%apply machine learning to malware detection in a large scale. 
 
