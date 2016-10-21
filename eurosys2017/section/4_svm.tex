@@ -4,20 +4,20 @@
 Machine learning systems are just as good
 as the data they consumed---One potential 
 use case of the massive amount of data 
-available on VirusTotal is to build 
+available on \vt{} is to build 
 machine learning models for applications
 such as malware classifications and
 clustering. In this section, we study
-the question that {\em Is the data
-provided by VirusTotal enough to support
-classifications and clusterings tasks?}
+the question that {\em ``Is the data
+provided by \vt{} enough to support
+classifications and clusterings tasks?''}
 
 Our study reveals both positive and
 negative answers to this question---For
 some classification tasks, we are able
 to build an automatic classifier whose
 accuracy is higher than 80\% by just
-using the static signature provided by VirusTotal
+using the static fuzzy hash strings provided by \vt{}
 and we expect the quality to keep increasing
 given more data; on the other hand,
 we identify some classification tasks
@@ -45,7 +45,8 @@ ssdeep hash strings are also provided for each submitted file with other metadat
 
 We focus on classifying each malware into
 different malware families. Because Microsoft 
-has a good reputation in detecting PE malwares~\cite{SongAPsys2016}, we create training
+has a good reputation in detecting PE malwares~\cite{SongAPsys2016}, 
+we create training and testing
 data using its assignment. For each detected malware, 
 Microsoft assigns it a tag, which contains type, platform, family, 
 and variant information~\cite{microsoft}. 
@@ -58,15 +59,13 @@ For each group, we sample 10000 malwares, and use these malwares in our followin
 
 \subsection{Classification Accuracy}
 
-
 We use knn~\cite{knn} as our classifier.
-compare API of ssdeep takes two ssdeep hash strings as inputs, 
+ssdeep's compare API takes two ssdeep hash strings as inputs, 
 and return similarity between these two strings. 
 We use 1 to minus ssdeep similarity to get ssdeep distance.  
 We design several experiments to understand performance of 
 the combination of knn and ssdeep 
 distance (or similarity) when handling different classification tasks. 
-
 
 We build a two-class classifier for each of the sampled groups. 
 We use the 10000 sampled malwares from each group as positive examples. 
@@ -74,19 +73,19 @@ We sample 10000 benign files as negative examples.
 Benign files are files submitted to \vt{}, but are not labeled as malwares by any anti-virus engines. 
 We randomly choose 5000 malwares and 5000 benign files for training, 
 and use the left malwares and benign files for testing. 
-We run cross validation for k from 1 to 10 to pick up best k, 
-and use the best k to test knn with the testing set. 
+We run cross validation for k from 1 to 10 to pick up best k value, 
+and use the best k value to test knn using the testing set. 
 
-The best k used for testing and classification results are shown in Table~\ref{tab:results}.
+The best k used for testing and classification results are shown in Table~\ref{tab:benchmark}.
 We see that 1 is always the best k value for testing, except for two groups.
 For five out of
 ten malware families, we achieve an accuracy higher than 80\%.
 On the other hand, for
 families such as ``Virus:Win32/Nabucur.D'',
-the classification accuracy are significant
+the classification accuracy are significantly
 lower. We get an accuracy of 59\% when
 the accuracy of random guesses would be 50\%.
-For this classifier, we think there are quite limited malwares and benign files similar to instances in testing set. 
+For this classifier, we think there are quite limited malwares and benign files in training set similar to instances in testing set. 
 
 We also build a ten-class classifier.
 We randomly choose 2000 malwares from each group, 
@@ -109,18 +108,17 @@ Accuracy increases as we have more data for all these classifier.
 
 We also design several other two-class classification tasks. 
 We classify malwares from Group 7 with malwares from Group 10. 
-They are malwares from the same class Ramnit, but in different variant. 
-The precision is 85.31\%. 
+They are malwares from the same class ``Ramnit'', but in different variant. 
+The accuracy is 85.31\%. 
 We classify malwares from Group 3 with malwares from Group 7 and Group 10, 
 and classify malwares from Group 5 with malwares from Group 7 and Group 10. 
-These two classifications try to classify malwares in different families. 
-We get precision 94.15\% and 85.82\%, respectively. 
+These two classifiers try to classify malwares in different families. 
+We get accuracy 94.15\% and 85.82\%, respectively. 
 We classify malwares from Group 8 and Group 9 with malwares from Group 4, Group 5, Group 7 and Group 10, 
-because we want to classify malwares in different types, one is Trojan and the other is Virus. We get precision 77.04\%. 
-All experimental setting are the same as what we did during classifying malwares in each group with benign files. 
+because we want to classify malwares in different types, one is Trojan and the other is Virus. We get accuracy 77.04\%. 
+We use the same experimental setting as previous two-class classifiers.  
 
-\paragraph*{Discussion: Tailing Malwares}
-
+\underline{Tailing Malwares}
 We identify one metrics to predict whether
 a classification task falls into the
 high-accuracy category or low-accuracy
@@ -132,46 +130,43 @@ we compute the percentage of tailing malwares in each group--We call malwares, w
 The percentage of tailing malwares for each sampled group is also shown in Table~\ref{tab:benchmark}. 
 How accuracy changes with the percentage of tailing for each two-class classifier is shown in Figure~\ref{fig:accuracy}. 
 
-%\ce{LINHAI, ADD IN THAT \#TRAILING-VS.ACCURACY FIGURE AND ARGUE ABOUT CORRELATION HERE.}
+{\bf Observation xx:} 
+{\em The percentage of tailing malwares
+can predict whether a given malware classification task belongs
+the high-quality category or the low-quality
+category.}
 
-\paragraph*{Discussion: Challenge of Applying Nystrom Methods for Kernel Machines}
-
-%\input{section/tbl_svm2}
 \input{section/fig_cluster}
 
-Our previous experiment uses knn classifier.
+\underline{Challenge of Applying Nystrom Methods for SVM}
+Our previous experiments use knn classifier.
 In this section, we discuss the potential of using
 more sophisticated classifiers such as
-support vector machines. One challenge
-of applying kernel machines is to
-approximate the kernel matrix whose
-size is quadratic to the number of samples
-in the training set. Nystrom Methods~\cite{clustering-purpose} are popular ways to
-approximate a kernel matrix with clusters.
+support vector machines (SVM). 
+SVM could take distance matrix as input.
+However, the problem is that the size of distance matrix is quadratic to the number of samples in the training set. 
+Nystrom methods~\cite{clustering-purpose} are popular ways to
+approximate a distance matrix with clusters.
+By using Nystrom methods, each instance is transformed to a feature vector, where each dimension is the distance to a cluster center. 
 
-To understand the potential of applying Nystrom Methods, we run hierarchical clustering~\cite{hcluster} on our data.
+To understand the potential of applying Nystrom methods, we run hierarchical clustering~\cite{hcluster} on our data.
 Hierarchical clustering starts with each instance as a cluster, 
-and then it iteratively merge two clusters with minimum distance 
+and then it iteratively merges two clusters with minimum distance 
 until distance threshold or cluster number threshold is reached. 
 We use distance as threshold. 
-Given two malwares, 
-we use 1 to minus their ssdeep similarity to calculate distance between the two malwares. 
-We calculate single linkage distance as distance between two clusters. 
-Single linkage
-distance~\cite{single-link} when we need to compute distance between two clusters. 
+We use single linkage distance~\cite{single-link} as distance between two clusters. 
 
 We change distance threshold from 0.1 to 0.9, 
 and count resulting clusters under each experiment. 
-Experimental results are shown in Table~\ref{tab:results}. 
-As we increase distance threshold, the number of resulting clusters decreases for each sampled group. 
-The number of resulting clusters is always bounded by the number of tailing in each group. 
+Experimental results are shown in Figure~\ref{fig:cluster}. 
+As we increase distance threshold, the number of resulting clusters decreases for each group. 
 If we want to change a ssdeep hash string to a feature vector, 
 based on distance of the string to the center of all clusters in training set, 
 the size of the resulting feature vector would have a very large variance across different malware groups. 
-\ce{This illustrates a challenge of directly applying
+This illustrates a challenge of directly applying
 classic Nystrom method, however, we believe
 it is possible to develop new approaches to
-accommodate this observation in the future.}
+accommodate this observation in the future.
 
 
 %\subsection{Classification Experiments}
@@ -179,15 +174,20 @@ accommodate this observation in the future.}
 
 \subsection{Discussion}
 
-\ce{ LINHAI 
-1. Future work about indexing ssdeep string
-2. Upper bound
-3. More data better results
-4. Need human effort or dynamic information 
-5. security of using ssdeep
-}
+In our experiments, 1 is almost always the best k value. 
+So using ssdeep similarity to conduct malware classification 
+is roughly to search the most similar example in the training set for each testing example.
+In our knn experiment, we compare a testing example with every example in training set. 
+In the future, indexing techniques could be leveraged to reduce the complexity of identify 
+the most similar example in training set from $O(n)$ to $O(1)$, where n is the number of examples in training set. 
 
-
+Our experimental results show that with more data in training set, 
+we can get better precision. 
+For a testing instance, if there are similar instances in training set, 
+classifier based on ssdeep similarity can precisely classify the instance. 
+\vt{} contains huge amount of submitted files. We suggest \vt{} provides an extra API, 
+where users only need to submit ssdeep hash strings for suspicious files, 
+and this could improve privacy protection for \vt{}’s users.  
 
 
 
