@@ -37,27 +37,10 @@ A similar model can be applied to study the latter type.
 %but changes its mind to label the file as benign later.}
 %\yiying{why can we ignore this case?}
 
-We use $A_u$ to represent the set of submissions identified by $u$ as malwares in its history
-and $\bar{A}_u$ represents the set of submissions labeled as benign by $u$.
-%the number of actions taken by $u$, 
-%or the number of malwares identified by $u$. 
-\yiying{I think all these $A$ should be a collection/set, not the total number, since you use $\in$ later}
-\yiying{Verify that the above sentence is correct.}
-Further, we define the set of actions taken by both $u$ and $v$ as $A_{u\&v}$ 
-and the set of actions taken by either $u$ or $v$ as $A_{u|v}$.
-Thus, $|A_{u|v}| =   |A_u| + |A_v| - |A_{u\&v}|$.
-Finally, $A_{u2v}$ represents the set of actions propagated from $u$ to $v$. 
-With these terms, we define {\em action propagation} as follows: 
-
-\begin{definition}{Action Propagation:}
-We say that an action $a$ propagated from $u$ to $v$ iff: (i) $\exists$ $(v, \bar{a}, t_i)$ $\in$ $\bar{A}_v$ 
-and $(v, a, t_k)$ $\in$ $A_v$, with $t_i < t_k$; (ii) $\exists$ $(u, a, t_j)$ $\in$ $A_u$, with $t_j < t_k$ and $u != v$. 
-\end{definition}
-\yiying{change the above != to the proper math format}
-
 We associate each edge $(u, v) \in E$ in the graph $G$ 
 with an influence probability $p_{u,v}$,
 which represents the probability that after $u$ takes an action $v$ will follow $u$ to take the same action. 
+\yiying{does this action include both turning from labeling benign to malware and from malware to benign? does it include the first label (no prior labeling by the same node)? you need to explain what an "action" is.}
 %Since the graph is a complete graph, 
 %all other nodes are all $v$'s neighbors. 
 For an action $a$, we use $S_v(a)$ to represent the set of $v$'s neighbors taking action $a$ before $v$ in time. 
@@ -68,15 +51,40 @@ The probability that $v$ will follow its neighbors to take the same action can t
 p_v(S_v(a)) = 1 - \prod\limits_{u \in S_v(a)}(1 - p_{u,v})
 \end{equation}
 
-During training stage, we learn $p_{u,v}$ for each edge. 
-During prediction stage, we test a node $v$ that has not taken the action $a$ yet
-and predict if it will take this action following other nodes (anti-virus vendors). 
-Specifically, we use a tunable threshold $\theta$
-and predict $v$ will follow its neighbors to take the action $a$ in the future
-if $P_v(S_v(a))>\theta$.
+Thus, if we know the probability of a node influencing another node ($p_{u,v}$) for all node pairs,
+we can know the probability of a node (an anti-virus vendor) being influenced by other nodes (other anti-virus vendors).
+The goal of our learning model is thus to estimate $p_{u,v}$.
 
+Specifically, during training stage, we learn $p_{u,v}$ for each edge. 
 We designed four static models for the training stage, which differ in how to estimate $p_{u,v}$ by using the data in training set. 
 
+During prediction stage, we test a node $v$ that has not taken the action $a$ yet
+and predict if it will take this action following other nodes. 
+Specifically, we use a tunable threshold $\theta$
+and predict $v$ will follow its neighbors to take the action $a$ in the future
+if $p_v(S_v(a))>\theta$.
+
+Before delving into the details of how our four static models estimate $p_{u,v}$ duing the training stage, 
+we first gives a set of definitions that we make to assist the development of these models.
+We use $A_u$ to represent the set of submissions identified by $u$ as malwares in its history
+and $\bar{A}_u$ represents the set of submissions labeled as benign by $u$.
+%the number of actions taken by $u$, 
+%or the number of malwares identified by $u$. 
+\yiying{I think all these $A$ should be a collection/set, not the total number, since you use $\in$ later}
+\yiying{Verify that the above sentence is correct.}
+Further, we define the set of actions taken by both $u$ and $v$ as $A_{u\&v}$ 
+and the set of actions taken by either $u$ or $v$ as $A_{u|v}$.
+Thus, $|A_{u|v}| =   |A_u| + |A_v| - |A_{u\&v}|$.
+
+Finally, we define {\em action propagation} as follow and use $A_{u2v}$ to represent the set of all the actions that are propagated from $u$ to $v$. 
+
+\begin{definition}{Action Propagation:}
+We say that an action $a$ propagated from $u$ to $v$ iff: (i) $\exists$ $(v, \bar{a}, t_i)$ $\in$ $\bar{A}_v$ 
+and $(v, a, t_k)$ $\in$ $A_v$, with $t_i < t_k$; (ii) $\exists$ $(u, a, t_j)$ $\in$ $A_u$, with $t_j < t_k$ and $u != v$. 
+\end{definition}
+\yiying{change the above != to the proper math format}
+
+With these definitions, we now present our four static models.
 
 {\bf Bernoulli distribution} estimates $p_{u,v}$ as the ratio of the number of actions 
 propagated from $u$ to $v$ over the total number of actions taken by $u$.
@@ -89,9 +97,12 @@ the number of actions taken either by $u$ or by $v$.
 
 $$p_{u,v} = \frac{|A_{u2v}|}{|A_{u|v}|}$$ 
 
+On top of the Bernoulli distribution and the Jaccord index,
+we add an additional consideration called {\em partial credit}.
 When $v$ takes an action $a$, it may be influenced by the combination of all its neighbors $S_v(a)$ 
-taking the action $a$ before $v$. Partial credit takes this intuition. 
-Partial credit for $u$ who takes an action $a$ before $v$ is calculated as:
+taking the action $a$ before $v$. %Partial credit takes this intuition. 
+To account for this effect, we use partial credit 
+and calculate the partial credit for $u$ who takes an action $a$ before $v$ as 
 
 $$credit_{u,v}(a) = \frac{1}{|S_v(a)|}$$
 
@@ -113,17 +124,18 @@ $$p_{u,v} = \frac{\sum\limits_{a \in A_{u2v}}{credit_{u,v}(a)}}{|A_{u|v}|}$$
 \subsection{Model Evaluation}
 \label{sec:predict}
 
-We split all PE submissions we collect into training set and testing set, based on submitted files' sha256. 
-If a sha256 starts with a numeric character, 
-from ‘0’ to ‘9’, we put all its related submissions to training set, 
-otherwise, we put all its related submissions to testing set.  
-For a submitted file, all its submissions are put together either in training set or in testing set. 
+\noindent{\underline{\textit{Methodology.}}}
+We split all the \pe\ submissions we collected into a training set and a testing set based on the SHA256 values of the submitted files. 
+We place all submissions with SHA256 values starting with a numeric character, 
+i.e., from ‘0’ to ‘9’, into training set
+and all the rest into the testing set.
 
-The training process is implemented by several stages of map, filter, and reduce. 
-We first reduce submission records according to submitted files. 
-We sort submission records for each file chronologically, 
-and filter out files without action propagation and all their submissions. 
-For each file, we compute four maps based on its submissions.
+We implement the training process by several stages of map, filter, and reduce in Spark. 
+Specifically, we first reduce submission records according to submitted files. 
+We then sort submission records for each file chronologically
+and filter out files without action propagation.
+\yiying{say why filter here} 
+For each remaining file, we compute four maps based on its submissions.
 There is one one-dimension map, 
 containing the number of actions taken by each vendor, 
 or the number of malwares identified by each vendor. 
