@@ -1,24 +1,9 @@
 \section{Related Works}
 \label{sec:related}
 
-\subsection{Leveraging Source Code Repositories}
+%\subsection{Leveraging Source Code Repositories}
 
-Recently, there have been many works on exploring how to leverage open-source code repositories that contain vast amount of source code projects, 
-such as GitHub, BitBucket, and CodePlex. 
-SLANG~\cite{code-completion} trains statistical models using extracted sequences of API calls from large code bases
-and applies the trained models to fill uncompleted programs with call innovations. 
-JSNICE~\cite{big-predicting} aims to predict identifier types and obfuscated identifier names for JavaScript programs. 
-A score function based on learned CRF model is optimized to make all predictions. 
-Phrase-based statistical translation approaches have also been proposed
-to translate C\# programs to Java programs~\cite{big-translation}. 
-
-These systems analyze source codes by leveraging large code bases in open-source code repositories.
-We have different objectives and methods: 
-we analyze malwares and anti-virus engines by leveraging an open malware repository.
-%and we rely on malwares’ metadata information and ssdeep hash strings calculated from binary executables.
-
-
-\subsection{Analyzing and Leveraging VirusTotal}
+%\subsection{Analyzing and Leveraging VirusTotal}
 We are not the first to investigate \vt.
 The research community starts to pay more attention to VirusTotal repository recently
 and there have been several works on \vt.
@@ -58,4 +43,17 @@ Their goal is to find better ground truth label for distinct samples,
 while our work tries to model influence among different anti-virus vendors.  
 
 %3. Code classification and clustering
+There have also been many works on exploring how to leverage open-source code repositories that contain vast amount of source code projects, 
+such as GitHub, BitBucket, and CodePlex~\cite{code-completion,big-predicting,big-translation}. 
+%SLANG~\cite{code-completion} trains statistical models using extracted sequences of API calls from large code bases
+%and applies the trained models to fill uncompleted programs with call innovations. 
+%JSNICE~\cite{big-predicting} aims to predict identifier types and obfuscated identifier names for JavaScript programs. 
+%A score function based on learned CRF model is optimized to make all predictions. 
+%Phrase-based statistical translation approaches have also been proposed
+%to translate C\# programs to Java programs~\cite{big-translation}. 
+These systems analyze source codes by leveraging large code bases in open-source code repositories.
+We have different objectives and methods: 
+we analyze malwares and anti-virus engines by leveraging an open malware repository.
+%and we rely on malwares’ metadata information and ssdeep hash strings calculated from binary executables.
+
 
