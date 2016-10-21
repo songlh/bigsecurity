@@ -24,25 +24,20 @@ We now explain our graph-based model for anti-virus vendor influence.
 
 We first connect all vendors with a complete directed graph $G = (V, E)$, 
 where the nodes $V$ are vendors. 
-The graph is complete, 
-since we assume there is possible influence from any vendor to all other vendors.
-There are action logs generated, 
-when VirusTotal applies a set of anti-virus engines to analyze a submission. 
-For each engine, there is an action log $(u, a, t)$ or an action log $(u, \bar{a}, t)$, 
-representing whether or not $u$ takes action to identify the submission as a malware at time $t$. 
+The graph is complete because we assume that influence from any vendor to any other vendor is possible.
+We define an action ($a$) at time $t$ as $(u, a, t)$ or $(u, \bar{a}, t)$,
+as the former represents an anti-virus engine identifies the submission as malware 
+and the latter represents it identifies the submission as benign.
 Since the goal of our study is to detect if the change from labeling a file as benign to labeling it as malware by a vendor is influenced by other vendors, 
 we do not consider the case of changing from labeling benign to malware and assume that after a vendor labels a file as malware, it will not change its decision.
 A similar model can be applied to study the latter type.
-%{\color{red} Flipping related setting in our model can handle cases where a vendor $u$ labels a file as malware, 
-%but changes its mind to label the file as benign later.}
-%\yiying{why can we ignore this case?}
 
 We associate each edge $(u, v) \in E$ in the graph $G$ 
 with an influence probability $p_{u,v}$,
 which represents the probability that after $u$ takes an action $v$ will follow $u$ to take the same action.
-{\color{red} We only consider cases of changing from labeling benign to malwares, 
+We only consider cases of changing from labeling benign to malwares, 
 which means $u$ has labeled a submission as malware, $v$ will label a submission as malware this time, 
-and $v$ labeled the submitted file as benign earlier. } 
+and $v$ labeled the submitted file as benign earlier. 
 \yiying{does this action include both turning from labeling benign to malware and from malware to benign? does it include the first label (no prior labeling by the same node)? you need to explain what an "action" is.}
 %Since the graph is a complete graph, 
 %all other nodes are all $v$'s neighbors. 
@@ -85,9 +80,6 @@ Finally, we define {\em action propagation} as follow and use $A_{u2v}$ to repre
 We say that an action $a$ propagated from $u$ to $v$ iff: (i) $\exists$ $(v, \bar{a}, t_i)$ $\in$ $\bar{A}_v$ 
 and $(v, a, t_k)$ $\in$ $A_v$, with $t_i < t_k$; (ii) $\exists$ $(u, a, t_j)$ $\in$ $A_u$, with $t_j < t_k$ and $u \neq v$. 
 \end{definition}
-
-
-\yiying{change the above != to the proper math format}
 
 With these definitions, we now present our four static models.
 
@@ -158,9 +150,8 @@ and calculate $p_{u,v}$ for the four static models.
 After training the four static models, 
 we filter out engines taking fewer than 10000 actions,
 since engines taking too few actions cannot produce meaningful results.
-{\color{red} The average number of actions taken by the remaining 59 engines is 190140, which is much larger than 10000. }
-\yiying{what's the avg num of actions taken by the remaining 59 engines? we need this number to say 10K is small and insignificant.}
-There are 59 engines left.
+There are 59 engines left
+and the average number of actions taken by these engines is around 190K. %190140, which is much larger than 10000.
 For confidentiality reasons, we omit vendors’ name in the following discussion
 and use numbers from 0 to 58 to represent these vendors.
 
@@ -218,8 +209,7 @@ In the final stage, we reduce TP, TN, FP, and FN numbers from different files.
 We change the probability threshold $\theta$ from 0.1\% to 99.9\% 
 and 
 %by using 0.1\% as step. 
-We measure the accuracy of the four static models using ROC curves {\color{red}(receiver operating characteristic)}, 
-\yiying{what's the full name of ROC?}
+We measure the accuracy of the four static models using ROC (Receiver Operating Characteristic) curves,
 with true positive rate ($TPR = TP/(TP+FN)$) as X-axis
 and false positive rate ($FPR = FP/(FP + FN)$) as Y-axis. 
 Figure~\ref{fig:predict} plots the ROC curves for the four static models.

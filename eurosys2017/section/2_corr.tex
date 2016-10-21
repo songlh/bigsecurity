@@ -4,12 +4,12 @@ This section presents our study of the correlation between various properties of
 Detection rate is what most \vt\ users use to decide whether their submissions are benign or malware 
 and the first thing that a user of \vt\ uses.
 Therefore, it is important to study what factors affects or correlates to detection rate
-and the results can guide security researchers and vendors to invest 
+and the results can guide security researchers and vendors to invest \yiying{TODO}. 
 
 We studied a range of properties and their correlation with detection rate
-and found that ** factors have higher correlation:
-the correlation between detection rate and submission file size,
-historical submission properties, and the reputation and type of source IDs.
+and found that three factors have higher correlation:
+submission file size,
+historical submission properties, and the reputation of source IDs.
 We present these correlation study results in this section.
 In the next section, we will present our further analysis of what can affect the detection result of anti-virus engines
 and if detection rate is a perfect measurement of the likelihood of malware.
@@ -37,10 +37,12 @@ Files with size from 90KB to 4MB have higher detection rate, more than 20\% on a
 {\bf Observation 4:} 
 {\em \pe\ malwares are mostly likely to have small to medium size.}
 
-Figure~\ref{fig_pesize}
-One likely reason of this correlation is that  
-\yiying{how is this result relates to the size distribution of files? 
-what does it this result imply? any suspected reason behind this? My suspition is just that these sizes have more submissions and thus? has higher detection rate.}
+An immediate question to raise is whether the high detection rate of files with small to medium size
+is because these files also contribute to most of the submissions as shown in Figure~\ref{fig:pesize}.
+As we will discuss in Section~\ref{sec:history}, the correlation of submissions and detection rate is more complex and non-linear.
+Thus, there is a more fundamental reason behind the file size correlation with detection rate.
+One likely reason of this correlation is that files that are too small are not enough to express the
+malware functions while files that are too big is \yiying{fill here}.
 
 \if 0
 \subsection{Source Country}
@@ -73,13 +75,11 @@ submissions of the same file influences detection rate for the current submissio
 \noindent{\textit{\underline{Historical submission number.}}}
 We sort submissions for each file chronologically, 
 and then calculate the correlation between detection rate and historical submission number for each submission. 
-All historical submission numbers are rounded up to the nearest 5. 
-How detection rate changes with historical submission number is shown in Figure~\ref{fig:hisnum}. 
-The curve decreases from 0 to 10, increases from 10 to 65, decreases from 65 to 75, and increases after 75. 
+Figure~\ref{fig:hisnum} plots the change in detection rate over the number of historical submissions.
+Interestingly, there are ranges from XX to XX. \yiying{fill exact X-axis numbers here}
 
-\yiying{I'm completely confused about your explanation here.}
-We think there are two factors influencing whether detection rate would increase or decrease.
-One is the percentage of benign files submitted to VirusTotal, 
+Two possible factors can influence detection rate and explain the 
+First, the percentage of benign files submitted to VirusTotal, 
 and with more benign files submitted, detection rate will decrease.   
 The other one is the percentage of engines identifying the submitted malwares, 
 and with more engines identifying the malware, detection rate will increase. 
@@ -91,17 +91,17 @@ more engines can identify submitted malwares,
 and the increase of percentage of engines identifying submitted malwares dominates. 
 
 \noindent{\textit{\underline{Historical source ID.}}}
-One file could be submitted by one source ID multiple times, 
-and could also submitted by different source IDs. 
-We study correlation between the number of historical source IDs and detection rate. 
-Each number of historical source IDs is rounded up to nearest 5. 
-\yiying{Can you not round to 5? the point at 15 is strange and you don't have a good explanation. maybe if we split into original interval (i.e., 1 instead of rounding), we can find some possible explanation?}
-Average detection rate and confidence interval for each number of historical source IDs are shown in Figure~\ref{fig:hisid}. 
+One file can be submitted by one source ID multiple times 
+and can also be submitted by different source IDs multiple times. 
+We now study the correlation between the number of source IDs in the submission history and the detection rate. 
+
+Figure~\ref{fig:hisid} plots the detection rate and confidence interval as the number of historical source IDs increases. 
 Confidence intervals are invisible before 80. 
-Detection rate is higher for historical source IDs less than 15, compared with historical source IDs more than 15.
+Detection rate is higher for historical source IDs less than 12, compared with historical source IDs more than 12.
+\yiying{is it 12? I cannot tell for sure by just looking at the figure}
 The number of historical source IDs reflects the popularity of a submitted file.
-Figure~\ref{fig:hisid} shows that when popularity of a file larger than a certain threshold, like 15 source IDs, 
-it is unrelated to detection rate and how malicious of the file viewed by anti-virus engines. 
+When the popularity of a file is larger than a certain value, 12 for our dataset, 
+file popularity is unrelated to detection rate. 
 
 {\bf Observation 5:} 
 {\em }
