@@ -10,7 +10,7 @@ such as malware classifications and
 clustering. In this section, we study
 the question that {\em ``Is the data
 provided by \vt{} enough to support
-classifications and clusterings tasks?''}
+classification and clustering tasks?''}
 
 Our study reveals both positive and
 negative answers to this question.
@@ -23,7 +23,7 @@ Meanwhile, we identify some classification tasks
 whose accuracy hardly beat random guesses.
 
 To differentiate these cases and offer future researchers with more insights, 
-we propose the use of a simple metrics to predict whether a given task belongs
+we propose the use of a simple metric to predict whether a given task belongs
 the high-quality category or the low-quality
 category. We hope our study shed lights
 on future design of signatures for malware
@@ -40,9 +40,12 @@ detection.
 \input{section/tbl_svm}
 
 Our study uses features based on ssdeep~\cite{ssdeep}, a program to compute fuzzy hashes. 
-Specifically, ssdeep \yiying{fill here, what ssdeep exactly is and does}
+Specifically, ssdeep computes a hash value for each block of the input file.
+The end of each block only depends on content of the block. 
+All calculated hash values are concatenated into a fuzzy hash string. 
+So identical blocks in original files can be matched.  
 Similarity between calculated hash strings can serve as an estimation for similarity between the two original files. 
-\yiying{why can it estimate? we need some deeper understanding of the hash or need to be mroe careful when saying things like this. people's assumption is that hash cannot represent original data and is just a highly compressed string.}
+%\yiying{why can it estimate? we need some deeper understanding of the hash or need to be mroe careful when saying things like this. people's assumption is that hash cannot represent original data and is just a highly compressed string.}
 \vt\ provides ssdeep hash strings as one of its metadata files and we collected them together with other metadata.
 
 %We focus on classifying each malware into
@@ -61,16 +64,19 @@ Table~\ref{tab:benchmark} presents the Microsoft tag sand the number of malwares
 Within each group, we randomly sample 10000 malwares and use these malwares in our classification and clustering experiments. 
 
 \subsection{Classification Methodology and Results}
-We use an API that \vt\ provides to compute the similarity between ssdeep string. \yiying{is the previous sentence correct?}
+%We use an API that \vt\ provides to compute the similarity between ssdeep string. \yiying{is the previous sentence correct?}
 %ssdeep's compare API takes two ssdeep hash strings as inputs, 
 %and return similarity between these two strings. 
+We install ssdeep library in a local machine, 
+and compute similarity by using ssdeep's compare API for downloaded ssdeep fuzzy hash strings. 
 We use 1 minus ssdeep similarity to get ssdeep distance.  
 
 \subsubsection{KNN Classification}
 
-We first use KNN~\cite{knn}, a simple classifier, to classify XXX.
-KNN does ....
-\yiying{full name of KNN, a simple description of it}
+
+We first use KNN~\cite{knn}, as our classifier. 
+KNN looks for k nearest neighbors for a given testing instance, 
+and classifies the test instance as a majority vote of its k nearest neighbors 
 We design several experiments to understand the accuracy of 
 the combination of KNN and ssdeep 
 distance (or similarity) when handling different classification tasks. 
