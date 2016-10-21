@@ -4,15 +4,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.ticker import MultipleLocator, FormatStrFormatter
 
-if __name__ == '__main__':
-	sDataFile = '../data/detection.stat'
+def loadDetectionRate(sDataFile):
 	fData = open(sDataFile, 'r')
 
 	XList = []
 	YList = []
-	errList = []
-
-	
 
 	while True:
 		line = fData.readline()
@@ -20,24 +16,37 @@ if __name__ == '__main__':
 			break
 
 		tmpList = line.split()
-
 		
 		XList.append(float(tmpList[0]))
 		YList.append(int(tmpList[1]))
 
-		#total += int(tmpList[1])
-
-
 	fData.close()
 
-	total = sum(YList)
-	YList = [num * 1.0/total for num in YList]
+	return XList, YList
 
-	print YList[5:]
-	print sum(YList[5:])
+if __name__ == '__main__':
+	sAllDataFile = '../data/detection.stat'
+	sVendorDataFile = '../data/vendorDetectionRate.stat'
+	sUserDataFile = '../data/hotUserDetectionRate.stat'
+
+	XALL, YALL = loadDetectionRate(sAllDataFile)
+	XVendor, YVendor = loadDetectionRate(sVendorDataFile)
+	XUser, YUser = loadDetectionRate(sUserDataFile)
+
+
+	YALL = [num * 1.0/sum(YALL) for num in YALL]
+	YVendor = [num * 1.0/sum(YVendor) for num in YVendor]
+	YUser = [num * 1.0/sum(YUser) for num in YUser]
+	#total = sum(YList)
+	#YList = [num * 1.0/total for num in YList]
+
+	#print YList[5:]
+	#print sum(YList[5:])
 
 	fig, ax = plt.subplots()
-	ax.plot(XList, YList, 'b-o') #, mew=2, markersize = 8, linewidth=2.0)
+	#ax.plot(XALL, YALL, 'b-o', label = 'All') #, mew=2, markersize = 8, linewidth=2.0)
+	ax.plot(XVendor, YVendor, 'b-o', label = 'Vendor')
+	ax.plot(XUser, YUser, 'g:o', label = 'User')
 
 
 	majorLocator = MultipleLocator(0.1)
@@ -55,14 +64,17 @@ if __name__ == '__main__':
 	plt.gcf().subplots_adjust(bottom=0.15)
 	plt.gcf().subplots_adjust(left=0.15)
 
-	xmin = XList[0]  - 0.05
-	xmax = XList[-1] + 0.05
+	xmin = XALL[0]  - 0.05
+	xmax = XALL[-1] + 0.05
 
 	ax.set_xlim(xmin, xmax)
 
 	ymin = 0.0
 	ymax = 0.6
 	ax.set_ylim(ymin, ymax)
+
+	legend = ax.legend(loc='upper right', fontsize='large')
+	#plt.ylabel('VirusTotal reports (in million)', fontsize=18)
 
 	#fig.canvas.draw()
 
@@ -75,6 +87,6 @@ if __name__ == '__main__':
 	#plt.show()
 	fig.savefig('DetectionRate.pdf')
 	fig.savefig('DetectionRate.png')
-	#plt.close(fig)
-	#fig.savefig('IDReputation.png')
 	plt.close(fig)
+	#fig.savefig('IDReputation.png')
+	#plt.close(fig)
