@@ -100,18 +100,19 @@ In the range that detection rate drops,
 VirusTotal users stop submitting files that have already been identified as malwares,
 and the increase of percentage of benign files submitted to VirusTotal dominates. 
 
-\noindent{\textit{\underline{Historical source ID.}}}
+\noindent{\textit{\underline{Number of submitted source IDs in history.}}}
 One file can be submitted by one source ID multiple times 
 and can also be submitted by different source IDs multiple times. 
 We now study the correlation between the number of source IDs in the submission history and the detection rate. 
 
+\yiying{the whole explanation for this figure needs to be filled here.}
 Figure~\ref{fig:hisid} plots the detection rate and confidence interval as the number of historical source IDs increases. 
-Confidence intervals are invisible before 80. 
+Confidence intervals increases when there are more than 50 source IDs. 
 Detection rate is higher for historical source IDs less than 12, compared with historical source IDs more than 12.
 \yiying{is it 12? I cannot tell for sure by just looking at the figure}
 The number of historical source IDs reflects the popularity of a submitted file.
 When the popularity of a file is larger than a certain value, 12 for our dataset, 
-file popularity is unrelated to detection rate. 
+file popularity is unrelated to detection rate. \yiying{why?}
 
 {\bf Observation 5:} 
 {\em }
@@ -180,24 +181,28 @@ For normal users, the detection rate drops when reputation is greater than 0.8.
 This means that for normal users \yiying{fill this, your original explanation doesn't say why} %it is difficult for source IDs with highest reputation to always submit files detected by all engines. 
 Vendors do not have this behavior and their detection rate always increases with higher reputation (other than reputation -1).
 
-Correlation between source ID's reputation and detection rate indicates 
-that it is feasible to use source IDs' submission history to predict their future submissions.
 
 {\bf Observation 6:} 
-{\em }
+{\em There is a high correlation between user reputation and detection rate of their submissions for both normal users and anti-virus vendors.}
+
 
 \subsection{Discussion}
 
 \noindent{\textit{\underline{How to use our data?}}}
-File size, historical number in certain range, and source ID reputation
-are highly correlated with detection rate. 
-
-A possible future work could train a regression model to combine all these factors together and 
-predict how many engines could detect a malware or how likely a file is a malware. 
-Using the regression model or our studying results alone, 
-security experts can prioritize malwares and focus their efforts on malwares which are more malicious. 
-Anti-virus vendors could inspect results which are variant from our studying results 
+From our analysis, file size, number of submissions in history, and source ID reputation
+are all highly correlated with detection rate. 
+These results suggest that future researchers and vendors can use these values to have an initial estimation or prediction of future submissions.
+Doing so can help reduce researchers' and vendors' effort to focus on more interesting files---files that are more likely to be malicious.
+Anti-virus vendors can also inspect results which are variant from our studying results 
 to identify possible false positives or false negatives in their products. 
+
+%Linhai, it's not good to say things that you haven't done, esp. in a system paper. so I deleted the regression model discussion
+%A possible future work is to train a regression model to combine all these factors together and 
+%predict how many engines could detect a malware or how likely a file is a malware. 
+%Using the regression model or our studying results alone, 
+%security experts can prioritize malwares and focus their efforts on malwares which are more malicious. 
+%Anti-virus vendors could inspect results which are variant from our studying results 
+%to identify possible false positives or false negatives in their products. 
 
 \yiying{I would delete the following paragraph. it just sounds too defensive. and you've already explained the limitation in sec 2.4.}
 \noindent{\textit{\underline{Limitations of our study.}}}
