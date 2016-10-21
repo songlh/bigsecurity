@@ -55,25 +55,54 @@ For each group, we sample 10000 malwares, and use these malwares in our followin
 
 \subsection{Classification Accuracy}
 
+We build an classifier as follows. \ce{XXXX LINHAI, ADD IN THE PROTOCOL.}
 
-We compute the percentage of tailing malwares in each group. 
-We call malwares, which have 0 similarity with all the other samples in the same group, as tailing malwares. 
+Table~\ref{tab:results} shows the classification
+result and Figure~\ref{fig:moredata} shows
+the relationship between the amount of
+training data and the accuracy of classifiers. 
+We see that for five out of ten 
+malware families, we achieve an accuracy
+higher than 80\%. Moreover, as indicated
+by Figure~\ref{fig:moredata}, when more
+training data are available for these
+families, we expect the accuracy to be even
+higher. On the other hand, for
+families such as ``Virus:Win32/Nabucur.D'',
+the classification accuracy are significant
+lower. We get an accuracy of 59\% when
+\ce{the accuracy of random guesses would be 50\%. LINHAI IS THIS RIGHT?}
+\ce{LINHAI, ADD ONE SENTENCE ABOUT THE REASON.}
+
+\paragraph*{Discussion: Tailing Malwares}
+
+We identify one metrics to predict whether
+a classification task falls into the
+high-accuracy category or low-accuracy
+category. The intuition is that the probability
+that a given sample has similar samples in
+the training set is a proxy of the upper bound
+of accuracy that we can expect. Therefore,
+we compute the percentage of tailing malwares in each group--We call malwares, which have 0 similarity with all the other samples in the same group, as tailing malwares. 
 The percentage of tailing malwares for each sampled group is also shown in Table~\ref{tab:benchmark}. 
 
-\subsection{Clustering Experiments}
+\ce{LINHAI, ADD IN THAT \#TRAILING-VS.ACCURACY FIGURE AND ARGUE ABOUT CORRELATION HERE.}
+
+\paragraph*{Discussion: Challenge of Applying Nystrom Methods for Kernel Machines}
 
 \input{section/tbl_svm2}
 
-Before conducting classification experiments, 
-we run clustering on each group firstly. 
-There are two purposes for clustering experiments.
-First, we want to understand whether malwares in each group looks similar to each other, 
-and understand possible upper bound of precision in malware classification.
-Second, some research findings~\cite{clustering-purpose} show that changing instances to feature vectors, 
-based on each instance’s distance to the center of each cluster, 
-can improve the speed of classification.  
+Our previous experiment uses k-means classifier.
+In this section, we discuss the potential of using
+more sophisticated classifiers such as
+support vector machines. One challenge
+of applying kernel machines is to
+approximate the kernel matrix whose
+size is quadratic to the number of samples
+in the training set. Nystrom Methods~\cite{clustering-purpose} are popular ways to
+approximate a kernel matrix with clusters.
 
-The clustering algorithm we use is hierarchical clustering~\cite{hcluster}.
+To understand the potential of applying Nystrom Methods, we run hierarchical clustering~\cite{hcluster} on our data.
 Hierarchical clustering starts with each instance as a cluster, 
 and then it iteratively merge two clusters with minimum distance 
 until distance threshold or cluster number threshold is reached. 
@@ -92,11 +121,14 @@ The number of resulting clusters is always bounded by the number of tailing in e
 If we want to change a ssdeep hash string to a feature vector, 
 based on distance of the string to the center of all clusters in training set, 
 the size of the resulting feature vector would have a very large variance across different malware groups. 
-This is the reason why we do not apply method proposed by~\citet{clustering-purpose} in our classification experiments. 
+\ce{This illustrates a challenge of directly applying
+classic Nystrom method, however, we believe
+it is possible to develop new approaches to
+accommodate this observation in the future.}
 
 \input{section/fig_MoreData}
 
-\subsection{Classification Experiments}
+%\subsection{Classification Experiments}
 
 
 \subsection{Discussion}
