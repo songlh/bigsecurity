@@ -58,6 +58,14 @@ if __name__ == '__main__':
 
 	fData.close()
 
+	numIndex = 0
+
+	while numIndex < len(XList):
+		print XList[numIndex], YList[numIndex]
+		numIndex += 1
+
+	exit(0)
+
 	for i, num, in enumerate(numList):
 		print i, num, num * 1.0/total
 
