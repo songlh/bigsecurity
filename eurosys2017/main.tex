@@ -2,21 +2,22 @@
 
 
 %\documentclass[pldi]{sigplanconf-pldi16}
-\documentclass[preprint]{sigplanconf-eurosys}
-% standard LaTeX packages
+\documentclass[sigconf,review,anonymous]{acmart}
+\acmConference[ESEC/FSE 2017]{11th Joint Meeting of the European Software Engineering Conference and the ACM SIGSOFT Symposium on the Foundations of Software Engineering}{4--8 September, 2017}{Paderborn, Germany}
 
 % standard LaTeX packages
 %\usepackage{changebar}
 
 \usepackage{balance}
 \usepackage{alltt}
+
 \usepackage{amsmath}
 \usepackage{balance}
 \usepackage{booktabs}
 \usepackage{fixltx2e}
 \usepackage{graphicx}
 \usepackage{boxedminipage}
-\usepackage[draft]{hyperref}
+
 \usepackage{nicefrac}
 \usepackage{subfig}
 \usepackage{xcolor}
@@ -31,22 +32,23 @@
 \usepackage{mathtools}
 \usepackage{amssymb}
 \usepackage{pifont}
+\usepackage{mathptmx}
+\usepackage{times}
 
 %\captionsetup{compatibility=false}
 %\usepackage{pgfplotstable}
 
-\usepackage[linesnumbered, vlined, ruled]{algorithm2e}
+%\usepackage[linesnumbered, vlined, ruled]{algorithm2e}
 % font selection
 %\usepackage{courier}
 %\usepackage[scaled]{helvet}
-\usepackage{mathptmx}
-\usepackage{times}
+
 
 % custom packages for this paper
 %\usepackage{double-blind}
-\usepackage{shared-affiliation}
+%\usepackage{shared-affiliation}
 
-\usepackage[numbers,sort&compress,square]{natbib}
+%\usepackage[numbers,sort&compress,square]{natbib}
 %\newcommand{\wenfei}[1]{\textcolor{red}{$<<$Wenfei: #1$>>$}}
 
 \lstset{
@@ -87,7 +89,7 @@
 
 
 \newcommand*{\Scale}[2][4]{\scalebox{#1}{$#2$}}%
-\newcommand{\comment}[1]{{}}
+%\newcommand{\comment}[1]{{}}
 
 
 
@@ -101,17 +103,26 @@
 \begin{document}
 
 
-\twocolumn[
-\begin{@twocolumnfalse}
-\begin{center}
-{\Large\bf Understanding Malwares and Anti-Virus Engines in the Real World}
-\end{center}
-\smallskip
-\centerline{paper 127 in xx pages}
+%\twocolumn[
+%\begin{@twocolumnfalse}
+%\begin{center}
+%{\Large\bf Understanding Malwares and Anti-Virus Engines in the Real World}
+%\end{center}
+%\smallskip
 
-\bigskip
-\end{@twocolumnfalse}
-]
+%\bigskip
+%\end{@twocolumnfalse}
+%]
+
+\title{Understanding Real-World Malwares and Anti-Virus Engines}
+
+
+\author{Linhai Song}
+\affiliation{%
+  \institution{ACM member}
+}
+\email{songlinhai0543@gmail.com}
+
 
 
 %\title{Understanding Malwares and Anti-Virus Engines in the Real World}
@@ -119,19 +130,25 @@
 %\maketitle
 
 %\theoremstyle{definition}
-\newtheorem{definition}{Definition}[section]
+%\newtheorem{definition}{Definition}[section]
+
 
 
 \begin{abstract}
-\input section/abstract.tex
+\input{section/abstract}
 \end{abstract}
 
 
+
+
+\maketitle
+
 \input{section/0_intro}
 \input{section/1_meth}
-\input{section/2_corr}
-\input{section/3_influ}
-\input{section/4_svm}
+\input{section/2_basic}
+\input{section/3_corr}
+\input{section/4_influ}
+%\input{section/4_svm}
 \input{section/5_related}
 \input{section/6_con}
 

@@ -26,5 +26,5 @@ Depends(pdf, [
 #        Glob('figures/traps/*.c'),
 #        Glob('figures/traps/*.pdf'),
 #        Glob('figures/traps/*.tex'),
-        'sig-alternate.cls',
+        'acmart.dtx',
         ])
