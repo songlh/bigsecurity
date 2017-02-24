@@ -1,0 +1,536 @@
+%% environ.sty 
+%% Layout definitions for the Book of Involutions
+
+%% This is for reminders
+%% comment in the final version
+%\newcommand{\REM}[1]{\marginpar{\tt\raggedright#1}%
+%\message{^^JReminder on input line \the\inputlineno: #1^^J}}
+%\newcommand{\REF}[1]{\REM{Reference missing: #1}}
+%\newcommand{\CITE}[2][]{[000]\REM{Citation missing: #1\space#2}}
+%%\newenvironment{typett}{\ttfamily\rightskip 0pt plus100em}{\par}
+
+%% \S sign in text with a little extra space.
+%% \Sorig is original version, used at several places
+\newcommand{\Sorig}{}\let\Sorig\S 
+\renewcommand{\S}{\Sorig\kern0.1em\ignorespaces}
+
+%%% TABLE OF CONTENTS
+
+%% subsections in tableofcontents
+\setcounter{tocdepth}{2} 
+
+%% Here seems to be a bug in amsbook.cls
+%% Although we don't need \tocparagraph, it will be written to .aux
+%% Although we don't need \tocparagraph, it will be read from .aux
+%% Since \tocparagraph and \l@paragraph are not defined, we get errors
+\def\l@paragraph{\@tocline{4}{0pt}{1pc}{7pc}{}}
+\let\tocparagraph\tocsubsubsection
+
+%%  layout of table of contents:
+\renewcommand{\tocchapter}[3]{%
+  \indentlabel{\@ifnotempty{#2}{\ignorespaces#1 
+      #2. \quad\vadjust{\nobreak\smallskip}}}#3}
+\renewcommand{\tocsection}[3]{%
+  \indentlabel{\@ifnotempty{#2}{\ignorespaces#1 
+      \rlap{\Sorig\kern0.1em #2.}\hphantom{\Sorig\ 00. }}}#3}
+\renewcommand{\tocsubsection}[3]{%
+  \indentlabel{\@ifnotempty{#2}{\ignorespaces#1 
+      \hphantom{\Sorig\ 00. }\rlap{#2.}\hphantom{00.B. }}}#3}
+
+%% a bad trick to have \goodbreak before chapters in toc
+%%\def\l@chapter{\@tocline{0}{8pt plus5pt\goodbreak}{0pt}{}{}}
+\def\l@chapter{\@tocline{0}{8pt plus5pt minus 8pt\goodbreak}{0pt}{}{}}
+\def\l@section{\@tocline{1}{0pt\penalty-250}{1pc}{}{}}
+
+%% dotted lines \BOOKtocdots in toc
+\newcommand{\BOOKtocdots}{\leaders\hbox to 1em{\hss.\hss}}
+%% edited from amsbook.cls
+\def\@tocline#1#2#3#4#5#6#7{\relax
+  \ifnum #1>\c@tocdepth % then omit
+  \else
+    \par \addpenalty\@secpenalty\addvspace{#2}%
+    \begingroup \hyphenpenalty\@M
+    \@ifempty{#4}{%
+      \@tempdima\csname r@tocindent\number#1\endcsname\relax
+    }{%
+      \@tempdima#4\relax
+    }%
+    \parindent\z@ \leftskip#3\relax \advance\leftskip\@tempdima\relax
+    \rightskip\@pnumwidth plus1em \parfillskip-\@pnumwidth
+    #5\leavevmode\hskip-\@tempdima #6\relax
+%% change: 
+    \BOOKtocdots
+%%
+    \hfil\hbox to\@pnumwidth{\@tocpagenum{#7}}\par
+    \nobreak
+    \endgroup
+  \fi}
+
+%%%  BIBLIOGRAPHY
+%% in case \cite with optional arg appears in an optional arg
+%% e.g., \begin{thm}[\cite[Theorem 5, p.~26]{Jacexcep}] does not work,
+%% but \begin{thm}[\Cite{Theorem 5, p.~26}{Jacexcep}] works
+\newcommand{\Cite}[1]{\cite[#1]}
+
+%% no bold numbers in citation
+\def\@cite#1#2{{%
+ \m@th\upshape\mdseries[{\relax #1}{\if@tempswa, #2\fi}]}}
+
+%% biblabel, bibsep as in amsplain
+\def\bibliographystyle#1{%
+  \if@filesw\immediate\write\@auxout
+  {\string\bibstyle{#1}}\fi
+  \def\@biblabel##1{##1.}%
+  \def\bibsetup{}%
+  }
+
+%% the rest is for the pagenumbers in the bibliography
+%%
+\newcommand{\@citextra}[1]{\index{P}{#1}}
+\newcommand{\old@citex}{} \let\old@citex\@citex
+\def\@citex[#1]#2{\old@citex[{#1}]{#2}\@citextra{#2}}
+
+%% \finbibitem will be inserted in .bbl by boi.bst
+\newcommand{\finbibitem}[1]{%
+  \expandafter\ifx\csname#1@pages\endcsname\relax 
+  \else
+  \ {\itshape\csname#1@pages\endcsname.}%
+  \fi}
+
+%% \bibpagesentry will be inserted in P.ind by boi-P.ist
+\newcommand{\bibpagesentry}[2]{%
+  \expandafter\gdef\csname#1@pages\endcsname{#2}}
+
+\renewcommand{\thebibliography}[1]{%
+  %% no bibpages for citations in the bibliography 
+  \renewcommand{\@citextra}[1]{}%
+  \@input{P.ind}%
+  \@xp\chapter\@xp*\@xp{\bibname}%
+  \normalfont\footnotesize\labelsep .5em\relax
+  %% some preliminary text
+  \the\bibliopreliminary
+  \renewcommand\theenumiv{\arabic{enumiv}}\let\p@enumiv\@empty
+  \list{\@biblabel{\theenumiv}}{\settowidth\labelwidth{\@biblabel{#1}}%
+    \leftmargin\labelwidth \advance\leftmargin\labelsep
+    \usecounter{enumiv}}%
+  \sloppy \clubpenalty\@M \widowpenalty\clubpenalty
+  \sfcode`\.=\@m
+  %% the parskip avoids underfull \vboxes
+  \parskip=0pt plus 1pt \relax
+}
+\newcommand{\bibliopreliminary}{}
+\newtoks\bibliopreliminary
+
+%%%  INDEX
+%% multiple standard amsbook index, taken from multind.sty by F. W. Long
+\renewcommand{\printindex}[2]{\def\indexname{#2}\@input{#1.ind}}%
+\def\makeindex#1{\begingroup
+  \makeatletter
+  \if@filesw \expandafter\newwrite\csname #1@idxfile\endcsname
+  \expandafter\immediate\openout \csname #1@idxfile\endcsname #1.idx\relax
+  \typeout{Writing index file #1.idx }\fi \endgroup}
+\def\index#1{\@bsphack\begingroup
+               \def\protect##1{\string##1\space}\@sanitize
+               \@wrindex{#1}}
+\def\@wrindex#1#2{\let\thepage\relax
+   \xdef\@gtempa{\@ifundefined{#1@idxfile}{}{\expandafter
+      \write\csname #1@idxfile\endcsname{\string
+      \indexentry{#2}{\thepage}}}}\endgroup\@gtempa
+   \if@nobreak \ifvmode\nobreak\fi\fi\@esphack}
+
+%% index{A}: Index
+%% index{B}: Notations 
+%% here we do a \raggedright (via indexstyle BoI-B.ist)
+%% this inhibits hyphenations (and overfull \hboxes) 
+%% \rightskip=0pt plus 2pt would be an alternative
+%% index{P}: auxiliary index for the pagenumbers in the bibliography
+
+%%%  GENERAL LAYOUT
+
+%% the parskip has in plain-tex or latex some stretch (plus 1pt)
+%% but not in amslatex.
+%% The stretch seems to be appropriate in parts which consist
+%% mainly of text (no displays, etc.).
+%% We give the stretch at the beginning of each chapter,
+%% but this will be reset after the first section.
+%% Moreover Notes have the stretch.
+
+\def\chapter{\parskip=0pt plus 1pt
+  \cleardoublepage \thispagestyle{plain}\global\@topnum\z@
+  \@afterindenttrue \secdef\@chapter\@schapter}
+
+%% all numbers (for sections, footnotes, etc.) 
+%% are independent from chapternumbers
+\def\cl@chapter{} 
+%%\@addtoreset{footnote}{chapter} % in case we want to change back
+
+%% no numberings of subsubsections
+\setcounter{secnumdepth}{2} 
+
+%% chapternumbers are in Roman letters
+\renewcommand{\thechapter}{\Roman{chapter}} 
+
+%% sections have a \S sign
+\def\section{\parskip=0pt\@startsection{section}{1}%
+  \z@{.7\linespacing\@plus\linespacing}{.5\linespacing}%
+  {\normalfont\bfseries\centering\Sorig}}
+\def\sectionrunhead#1#2#3{%
+  \@ifnotempty{#2}{\uppercase{\Sorig#1#2}\@ifnotempty{#3}{. }}%
+  \def\@tempa{#3}%
+  \ifx\@empty\@tempa\else\uppercasenonmath\@tempa\@tempa\fi}
+
+%% subsectionnumbers are from capital alphabet 
+\renewcommand{\thesubsection}{\thesection.\Alph{subsection}}
+
+%% subsubsections bold with little vertical space
+%% edited from amsbook.cls
+\def\subsubsection{\@startsection{subsubsection}{3}%
+  \normalparindent{.2\linespacing\@plus.2\linespacing}{-.5em}%
+  {\normalfont\bfseries}}
+
+%%%  THMS
+
+%%% theorems 
+\numberwithin{equation}{section}
+\theoremstyle{plain} %
+\newtheorem*{thmA}{Theorem} % In chapter I
+\newtheorem{thm}[equation]{Theorem}
+\newtheorem{prop}[equation]{Proposition}
+\newtheorem{cor}[equation]{Corollary}
+\newtheorem{lem}[equation]{Lemma}
+\theoremstyle{definition} %
+\newtheorem{example}[equation]{Example}
+\newtheorem{examples}[equation]{Examples}
+\newtheorem{remark}[equation]{Remark}
+\newtheorem{remarks}[equation]{Remarks}
+\newtheorem{defn}[equation]{Definition}
+\newtheorem{defns}[equation]{Definitions}
+\newtheorem*{claim}{Claim}
+
+%%% thmslayout: use of \newtheoremstyle seems not convenient
+%%  better edit the definitions from amsthm.sty
+
+%% start with number in brackets
+\def\thmhead@plain#1#2#3{%
+  \thmnumber{\@ifnotempty{#1}{}(#2) }\thmname{#1}%
+  \thmnote{ \textmd{\upshape(#3)}}}
+
+%% thms in bold
+\def\th@plain{%
+%%  \let\thm@indent\indent
+%%  \thm@headfont{\scshape}% heading font small caps
+  \let\thm@indent\relax
+  \thm@headfont{\bfseries}% heading bold
+%%
+  \let\thmhead\thmhead@plain \let\swappedhead\swappedhead@plain
+  \thm@preskip.5\baselineskip\@plus.2\baselineskip
+                                    \@minus.2\baselineskip
+  \thm@postskip\thm@preskip
+  \itshape
+}
+%% definitions in bold
+\def\th@definition{%
+%%  \let\thm@indent\indent
+%%  \thm@headfont{\scshape}% heading font small caps
+  \let\thm@indent\relax
+  \thm@headfont{\bfseries}% heading bold
+%%
+  \let\thmhead\thmhead@plain \let\swappedhead\swappedhead@plain
+  \thm@preskip.5\baselineskip\@plus.2\baselineskip
+                                    \@minus.2\baselineskip
+  \thm@postskip\thm@preskip
+  \upshape
+}
+%% \thm@headpunct after \thmnote not bold
+\def\@begintheorem#1#2[#3]{%
+  \item[\normalfont % reset in case body font is abnormal
+  \hskip\labelsep
+  \the\thm@headfont
+  \thm@indent
+  \@ifempty{#1}{\let\thmname\@gobble}{\let\thmname\@iden}%
+  \@ifempty{#2}{\let\thmnumber\@gobble}{\let\thmnumber\@iden}%
+  \@ifempty{#3}{\let\thmnote\@gobble}{\let\thmnote\@iden
+    \thm@headpunct{\textmd{\upshape.}}}%
+  \thm@swap\swappedhead\thmhead{#1}{#2}{#3}%
+  \the\thm@headpunct]%
+  \@restorelabelsep
+  \thmheadnl % possibly a newline.
+  \ignorespaces}
+
+%% For upshape paranthesis and colon (): 
+\newcommand{\upp}{} \let\upp\textup
+
+%% equation numbers in bold, edited from amsmath.sty
+%%\def\tagform@#1{\maketag@@@{\bf(\ignorespaces#1\unskip)}}
+%% the \boldmath is only for \tag{$*$} in Chap.1
+\def\tagform@#1{\maketag@@@{\bfseries\boldmath(\ignorespaces#1\unskip)}}
+
+%% \ref's
+\newcommand{\OLDref}{} \let\OLDref\ref
+%% \ref in upshape
+\renewcommand{\ref}[1]{\textup{\OLDref{#1}}}
+%% \eqref = (\ref) ref's to equations
+\def\eqref#1{\textup{(\OLDref{#1})}} 
+%% \thmref was introduced for ref's to thms but not to equations
+%% But there was never a difference between \eqref and \thmref
+%% \thmref has not been used everywhere
+\newcommand{\thmref}{} \let\thmref\eqref 
+%% \Eqref for referencing Lemma (30.2.1) with Lemma~\Eqref{label1}{label2}
+\newcommand{\Eqref}[2]{\textup{(\OLDref{#1}.\OLDref{#2})}}
+
+%%% proofs
+%% edited from amsbook.cls
+\renewenvironment{proof}[1][Proof]{\par \normalfont
+  \topsep6\p@\@plus6\p@ \trivlist \itemindent0pt%\normalparindent
+  \item[\hskip\labelsep\itshape%\scshape
+    #1\/\upshape\@addpunct{:}]\ignorespaces
+}{%
+  \qed\endtrivlist
+  \par  % the \par is new
+}
+%% proofitem
+\newcommand{\pitem}{} \def\pitem#1:{#1\Enspace\ignorespaces} 
+%% if \end{proof} does not end the proof
+\newcommand{\noqed}{\let\qed\relax}
+
+%%%  LISTINGS
+
+\renewcommand{\labelenumi}{\textup{(\theenumi)}}
+\renewcommand{\theenumi}{\arabic{enumi}}
+\renewcommand{\labelenumii}{\textup{(\theenumii)}}
+\renewcommand{\theenumii}{\alph{enumii}}
+\renewcommand{\p@enumii}{} % Use \Eqref instead
+
+%% Space after the numbers
+%% width {(0)\hskip\standardlabelwidth} = \parindent
+\newdimen{\standardlabelwidth}
+\settowidth{\standardlabelwidth}{\textup{(0)}}
+\standardlabelwidth-\standardlabelwidth
+  \advance\standardlabelwidth by \normalparindent
+\newcommand{\standardlabel}[1]{#1\kern\standardlabelwidth}
+%%\standardlabelwidth = 5.22218pt
+%% Use it also in \pitem
+\newcommand{\Enspace}{\kern\standardlabelwidth}
+
+%% listings in text
+%% like a standard enumerate 
+\newenvironment{enumerateT}{%
+\renewcommand{\theenumi}{\alph{enumi}}%
+\setlength{\labelsep}{5pt}%
+\settowidth\leftmargini{\textup{(a)}\hskip\labelsep}%
+  \advance\leftmargini by \normalparindent
+\begin{enumerate}
+\labelwidth=\leftmargini \advance\labelwidth-\labelsep
+}{\end{enumerate}}
+
+%% listings in theorems
+%% Just like usual text with \par\noindent for each item
+%% The labels should be leftflush, like the equation numbers
+\newenvironment{enumerateA}{%
+\setlength{\labelsep}{0pt}%
+\setlength{\leftmargini}{0pt}%
+\begin{enumerate}%
+\renewcommand{\makelabel}{\standardlabel}%
+\setlength{\labelwidth}{0pt}%
+\setlength{\itemindent}{0pt}%
+}{\end{enumerate}}
+
+%% sublistings in theorems 
+%% the same as \enumerateT, but for use
+%% inside \enumerateA or equivalent ones
+\newenvironment{enumerateAa}
+{\setlength{\labelsep}{5pt}%
+\settowidth\leftmarginii{\textup{(a)}\hskip\labelsep}%
+  \advance\leftmarginii by \normalparindent
+\begin{enumerate}
+\labelwidth=\leftmarginii \advance\labelwidth-\labelsep
+}{\end{enumerate}}
+
+%% listings of short examples
+%% the same as \enumerateA
+\newenvironment{enumerateb}{}{}
+\let\enumerateb\enumerateA
+\let\endenumerateb\endenumerateA
+
+%% listings of long examples
+%% the same as \enumerateb but
+%% add a little vertical space between the items
+\newenvironment{enumerateB}{%
+\begin{enumerateb}%
+\addtolength{\itemsep}{\smallskipamount}%
+}{\end{enumerateb}}
+
+\newcommand{\itemJP}[1]{\relax\item #1.\enspace\ignorespaces}
+\newcommand{\itemJPone}[1]{#1.\enspace\ignorespaces}
+
+%% Exercises
+%% This is like the xcb-environment of amsbook.cls
+\newenvironment{Exercises}
+{\bigbreak\specialsection*{Exercises}% 
+  \settowidth{\leftmargini}{00.\hskip\labelsep}%
+  \settowidth{\leftmarginii}{(d.)\hskip\labelsep}%
+  \enumerate
+  \renewcommand{\labelenumi}{\theenumi.}
+}{\endenumerate}
+
+%% In chapter 10 we have only one poor Exercise
+\newenvironment{Exercise}
+{\bigbreak\specialsection*{Exercise}% 
+  \settowidth{\leftmargini}{00.\hskip\labelsep}%
+  \settowidth{\leftmarginii}{(d.)\hskip\labelsep}%
+  \enumerate
+  \renewcommand{\labelenumi}{\theenumi.}
+}{\endenumerate}
+
+%% listings inside an exercise
+\newenvironment{enumerateE}{}{}
+\let\enumerateE\enumerate
+\let\endenumerateE\endenumerate
+
+\newcommand{\Hint}[1][Hint]{\emph{#1}: \ignorespaces}
+
+%% In Notes \itemN has one  argument. It inserts \S "." and a sapce
+%% \itemNN inserts \S\S 
+%% \itemNChapTen appears only in boi-10.tex
+%%\newcommand{\beforeitemN}{\medbreak\noindent\indent}
+\newcommand{\beforeitemN}{\vskip 0pt plus 1pt}
+\newcommand{\afteritemN}{.\enspace\ignorespaces}
+\newcommand{\itemN}[1]{\beforeitemN\S#1\afteritemN}
+\newcommand{\itemNN}[1]{\beforeitemN\Sorig\S#1\afteritemN}
+\newcommand{\itemNChapTen}[1]{%
+  \beforeitemN#1\enspace\ignorespaces}
+\newenvironment{Notes}{\bigbreak\specialsection*{Notes}%
+\parskip=0pt plus 1pt\relax}{\par}
+
+%% sublistings in Notes
+%% the same as \enumerateT
+\newenvironment{enumerateNn}{\listisep=0pt%
+\begin{enumerateT}}{\end{enumerateT}}
+
+\newenvironment{enumerateNnn}{
+\renewcommand{\theenumii}{\roman{enumii}}
+\begin{enumerate}}{\end{enumerate}}
+
+%% This is appears only once in boi-8.tex.
+\newcommand{\itemBb}[1][]{\par#1:\enspace\ignorespaces}
+\newenvironment{enumerateBb}{}{\par}
+
+%% Tits's resume in chap.9
+\newenvironment{Tits}{\bigbreak\small\narrower}%
+{\message{*** Look at the page break in Tits's resume ***^^J}%
+  \bigbreak}
+
+%%% Displays, diagrams, etc
+
+%% no fullwidth in diplays (e.g., in standard \item-lists)
+\def\fullwidthdisplay{}
+
+%% centered cases edited from amstex.sty
+\newenvironment{casesc}
+{\left\{\def\arraystretch{1.2}\hskip-\arraycolsep \array{c@{\quad}l}}
+  {\endarray\hskip-\arraycolsep\right.}
+
+%% enumerate aligned equations:
+%% see boi-8.tex for an example
+\newcounter{eqalignnumcnt}
+\newenvironment{eqalignnum}{\setcounter{eqalignnumcnt}0%
+  \renewcommand{\theeqalignnumcnt}{\arabic{eqalignnumcnt}}%
+  \renewcommand{\@currentlabel}{\theeqalignnumcnt}%
+  \renewcommand{\intertext}[1]{\noalign{\vspace{1ex}%
+      \advance\baselineskip-1ex\noindent##1}}%
+  \par %
+  \advance\baselineskip1ex
+  \def\\{\cr}%
+  \halign to\hsize \bgroup\addtocounter{eqalignnumcnt}1%
+  \noindent\textup{(\theeqalignnumcnt)}##\tabskip=0ptplus1fil&\tabskip=0pt
+  \hfill$##$&${}##$\hfill\tabskip=0ptplus1fil\cr}
+{\crcr\egroup\vspace{1ex}\par\noindent\endtrivlist}
+
+%% To give sometimes explicit non-bold eq-numbers 
+%% see boi-8.tex for usage
+\newenvironment{equationleqno}[1][???]{%
+  \renewcommand{\@currentlabel}{#1}  
+  \newcommand{\thist@g}{\textup{(\ignorespaces#1\unskip)}}$$}
+{\leqno\thist@g$$\global\@ignoretrue}
+
+%% commutative diagrams.
+%% edited from amscd.sty, to avoid some messages
+\atdef@>#1>#2>{\ampersand@
+  \ifCD@ \global\bigaw@\minCDarrowwidth \else \global\bigaw@\minaw@ \fi
+  \setboxz@h{$\m@th\scriptstyle\;{#1}\;\;$}%
+  \ifdim\wdz@>\bigaw@\global\bigaw@\wdz@\fi
+  \@ifnotempty{#2}{\setbox\@ne\hbox{$\m@th\scriptstyle\;{#2}\;\;$}%
+    \ifdim\wd\@ne>\bigaw@\global\bigaw@\wd\@ne\fi}%
+ \ifCD@\enskip\fi
+%%   \mathrel{\mathop{\hbox to\bigaw@{\rightarrowfill@\displaystyle}}%
+   \mathrel{\mathop{\hbox to\bigaw@{\hss\rightarrowfill@\displaystyle}}%
+     \limits^{#1}\@ifnotempty{#2}{_{#2}}}%
+ \ifCD@\enskip\fi \ampersand@}
+
+%% cd-environment: shorter arrows for wide diagrams (in chap.7)
+%% one optional argument: stretchfactor for longrightarrow
+\newenvironment{cd}[1][1]{\setbox0\hbox{$\longrightarrow$}%
+  \minCDarrowwidth #1\wd0 \begin{CD}}{\end{CD}}
+
+%% tables of root systems in chap.6
+\newcommand{\hcenter}[1]{{\leavevmode\setbox0\hbox{#1}\kern-.5\wd0\box0}}
+\newenvironment{roottable}[2]{%  
+  \bigbreak{\bfseries #1. }#2
+  \nopagebreak \medskip
+  \par
+  \noindent
+  \mathsurround=0pt
+  \setlength{\unitlength}{0.5ex}%
+  \renewcommand{\arraystretch}{1.3}%
+  \roottableaux}{}
+\newenvironment{roottableEXC}[1]{%
+  \message{*** Look at the page break in the table of rootsystems ***^^J}%
+  \bigbreak{\bfseries #1. }
+  \nopagebreak \medskip
+  \par
+  \noindent
+  \mathsurround=0pt
+  \setlength{\unitlength}{0.5ex}%
+  \renewcommand{\arraystretch}{1.3}%
+  }{}
+\newcommand{\roottableaux}[8]{%
+  \begin{tabular}{@{}l@{\quad}l@{\quad}l}
+    Root system  &:& #1 %
+    Root lattice &:& #2 %
+    Weight lattice &:& #3 %
+    Simple roots &:& #4 %
+    Dynkin diagram &:& #5 %
+    $\Aut\bigl(\Dyn(\Phi)\bigr)$ &:& #6 %
+    Dominant weights &:& #7 %
+    Minimal weights &:& #8 %
+  \end{tabular}}
+
+%% A very expensive macro for the iterated cases in chap.3, exerc.10
+\newcommand{\casesspecial}[7]{\[
+\def\arraystretch{1.2}
+#1=
+\left\{
+\vphantom{
+\array{l@{\quad}l@{\quad}l}
+#2&\text{if}\smash[t]{\begin{cases}#3\\#4\end{cases}}\vadjust{\vspace{1ex}}\\
+#5&\text{if}\smash[b]{\begin{cases}#6\\#7\end{cases}}\\
+\endarray}
+\right.
+\hskip-\arraycolsep\array{l@{\quad}l@{\quad}l}
+#2&\text{if}\begin{cases}#3\\#4\end{cases}\vadjust{\vspace{1ex}}\\
+#5&\text{if}\begin{cases}#6\\#7\end{cases}\\
+\endarray\hskip-\arraycolsep
+\]} 
+%% Maybe this too artificial? Then change back:
+%%\renewcommand{\casesspecial}[7]{
+%%  \begin{alignat*}2
+%%    #1&=#2&\quad&\text{if }\begin{cases}#3\\#4\end{cases}\\[1ex] 
+%%    #1&=#5&&\text{if }\begin{cases}#6\\#7\end{cases}
+%%  \end{alignat*}}
+
+%%  end of environ.sty
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "boi"
+%%% End: 
