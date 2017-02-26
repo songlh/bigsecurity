@@ -96,6 +96,8 @@ the number of actions taken either by $u$ or by $v$.
 
 $$p_{u,v} = \frac{|A_{u2v}|}{|A_{u|v}|}$$ 
 
+
+
 On top of the Bernoulli distribution and the Jaccord index,
 we add an additional consideration called {\em partial credit}.
 When $v$ takes an action $a$, it may be influenced by the combination of all its neighbors $S_v(a)$ 
@@ -118,37 +120,49 @@ dividing by the number of actions taken either by $u$ or by $v$.
 $$p_{u,v} = \frac{\sum\limits_{a \in A_{u2v}}{credit_{u,v}(a)}}{|A_{u|v}|}$$
 
 
+Since $|A_{u|v}|$ is not less than $|A_u|$, 
+$p_{u,v}$ calculated by Jaccard index is not larger than $p_{u,v}$ calculated by Bernoulli distribution. 
+For Bernoulli distribution and Jaccard index, 
+considering partial credit will decrease $p_{u,v}$ calculated by both of them. 
 
-
+\input{section/fig_heatmap}
 \subsection{Model Evaluation}
 \label{sec:predict}
+
+
 
 \noindent{\underline{\textit{Training stage methodology.}}}
 We split all the \pe\ submissions we collected into a training set and a testing set based on the SHA256 values of the submitted files. 
 We place all submissions with SHA256 values starting with a numeric character, 
-i.e., from ‘0’ to ‘9’, into training set
+i.e., from `0' to `9', into training set
 and all the rest into the testing set.
 
 We implement the training process by several stages of map, filter, and reduce in Spark. 
-Specifically, we first reduce submission records according to submitted files. 
-We then sort submission records chronologically.
-For each remaining file, we compute four maps based on its submissions.
-There is one one-dimension map, 
-containing the number of actions taken by each vendor, 
-or the number of malwares identified by each vendor. 
-There are three two-dimension maps, 
+Specifically, we first reduce submission records according to their submitted files. 
+We filter out files not in training set and not with action propagation. 
+We then sort submission records for each remaining submitted file chronologically in a map stage.
+In the next map stage, we compute four hash tables for each submitted file based on all its submissions.   
+There is one one-dimension hash table, containing whether the action to identify the submitted file as malware is taken by each vendor ($|A_{u}|$). 
+There are three two-dimension hash tables, 
 containing an entry for each pair of vendors $(u,v)$, 
-representing actions taken by both $u$ and $v$, actions propagated from $u$ to $v$, 
-and partial credits taken by $u$ for actions propagated from $u$ to $v$. 
-Finally, we reduce these 4 maps from different files, 
+representing whether both $u$ and $v$ take the action ($|A_{u\&v}|$),  
+whether the action is propagated from $u$ to $v$ ($|A_{u2v}|$),
+and partial credit taken by $u$ if the action propagated from $u$ to $v$ ($credit_{u,v}(a)$).
+After this stage, $|A_{u}|$, $|A_{u\&v}|$, and $|A_{u2v}|$ are either 0 or 1,
+and $credit_{u,v}(a)$ is 0 or less than 1, since all these values are calculated for one single submitted file. 
+In the final stage, 
+we reduce these 4 hash tables from different files,
 and calculate $p_{u,v}$ for the four static models. 
+
+
+
 
 After training the four static models, 
 we filter out engines taking fewer than 10000 actions,
 since engines taking too few actions cannot produce meaningful results.
 There are 59 engines left
 and the average number of actions taken by these engines is around 190K. %190140, which is much larger than 10000.
-For confidentiality reasons, we omit vendors’ name in the following discussion
+For confidentiality reasons, we omit vendors' name in the following discussion
 and use numbers from 0 to 58 to represent these vendors.
 
 \noindent{\underline{\textit{Training results.}}}
@@ -160,7 +174,7 @@ Jaccard index has the second largest value,
 Bernoulli with partial credit has the third largest value,
 and Jaccard index with partial credit has the least value. 
 
-\input{section/fig_heatmap}
+
 
 We draw heat maps for all learned influence tables in Figure~\ref{fig:heat}. 
 Given a $cell(u, v)$ with $u$ as row number and $v$ as column number, 
@@ -222,23 +236,23 @@ behavior of malware detection. }
 
 \subsection{Discussion}
 
-\if 0
+%\if 0
 There are also time models proposed by~\citet{Influence}.
 When analyzing Flickr data, time models leverage accurate action time to provide better prediction performance. 
 However, we do not use time models, 
 because time information we access is when a submission is conducted, 
 or when an engine analyzes a submission, 
 is not when an engine changes its detection label for a file.
-The time information we have can only provide a relative order about when each vendor identifies a file as a malware.  
+The time information we have can only provide a relative order about when each vendor identifies a file as malware.  
 
-\underline{Limitation.}
-Our data collection ends on 09/06/2016. 
+%\underline{Limitation.}
+Our data collection ends on September 6th, 2016. 
 We could count extra FPs, where we predict engines will label files as malwares, engines have not, but will do in the future, 
 and TNs, where we predict engine will not label, engines have not, but will in the future. 
 Monitoring \vt for a longer time will make the evaluation of our prediction models more precise. 
 
-\underline{How to use?}
-\fi
+%\underline{How to use?}
+%\fi
 
 Our findings in this section rings an alert toward using detection rate as the pure measurement of the likelihood of a file being malware
 and shed light on how vendors can influence each other.
