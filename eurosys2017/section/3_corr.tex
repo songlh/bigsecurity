@@ -1,19 +1,25 @@
 \section{Correlation between Submission Properties and Detection Rate}
 \label{sec:corr}
-This section presents our study of the correlation between various properties of \pe\ submissions and the detection rate of \pe\ submissions.
-Detection rate is what most \vt\ users use to decide whether their submissions are benign or malware 
-and the first thing that a user of \vt\ uses.
-Therefore, it is important to study what factors affects or correlates to detection rate
-and the results can guide security researchers and vendors to have targeted investigation over {\em suspicious} files, 
+This section presents our study of the correlation between various properties of
+\pe\ submissions and their detection rate. 
+Detection rate is what most \vt\ users refer to decide whether their submissions
+are benign or malware and the first thing that a user of \vt\ uses. 
+Therefore, it is important to study what factors affect or correlate to detection rates. 
+We focus on \vt\ submissions' properties, which can be obtained without executable binary files and more lightweight than static features.
+The results provide a lightweight mechanism to guide security researchers 
+and vendors to have targeted investigation over
+{\em suspicious} files, 
 files that have the factors that we identify as highly correlated to detection rate.
 
 We studied a range of properties and their correlation with detection rate
 and found that three factors have higher correlation:
 submission file size,
 historical submission properties, and the reputation of source IDs.
-We present these correlation study results in this section.
+We also built a regression model based on these three factors to predict detection rate.
+We present these correlation study results and our regression model in this section.
 In the next section, we will present our further analysis of what can affect the detection result of anti-virus engines
 and if detection rate is a perfect measurement of the likelihood of malware.
+
 
 \input{section/fig_size}
 
@@ -44,7 +50,6 @@ malware functions while files that are too big are difficult to spread.
 \subsection{Submission History}
 \label{sec:history}
 
-%\input{section/fig_2corr2}
 
 \input{section/fig_SubHistory}
 
@@ -52,10 +57,7 @@ As discussed in Section~\ref{sec:basicanal}, there are files that have been subm
 It is worthwhile to investigate this {\em history of submission} and how history affects future.
 We study the correlation between submission history and the detection rate of the current submission.
 Among the different types of historical information that we study,
-we find that two types have higher correlation to detection rate:
-the number of submissions made in history and the number of source IDs that made submissions of the same file in history.
-%Given a submission, we also study whether information for historical 
-%submissions of the same file influences detection rate for the current submission. 
+we find that the number of submissions made in history has higher correlation to detection rate.
 
 %\noindent{\textit{\underline{The number of submissions in history.}}}
 To study the submission history, we first sort all submissions for each file chronologically
@@ -76,39 +78,11 @@ In the range that detection rate drops,
 VirusTotal users stop submitting files that have already been identified as malwares,
 and the increase of percentage of benign files submitted to VirusTotal dominates. 
 
-%\noindent{\textit{\underline{Number of submitted source IDs in history.}}}
-%One file can be submitted by one source ID multiple times 
-%and can also be submitted by different source IDs multiple times. 
-%We now study the correlation between the number of source IDs in the submission history and the detection rate. 
 
-%\yiying{the whole explanation for this figure needs to be filled here.}
-%Figure~\ref{fig:hisid} plots the detection rate and confidence interval as the number of historical source IDs increases. 
-%Confidence intervals increases when there are more than 50 source IDs. 
-%Detection rate is higher for historical source IDs less than 12, compared with historical source IDs more than 12.
-%{\color{red} The X for the largest point is 11. }
-%\yiying{is it 12? I cannot tell for sure by just looking at the figure}
-%The number of historical source IDs reflects the popularity of a submitted file.
-%When the popularity of a file is larger than a certain value, 12 for our dataset, 
-%file popularity is unrelated to detection rate. 
-%{\color{red} When a file is submitted more than certain number of users, or popular than centain threshold, 
-%it is likely to be thoroughly analyzed by all engines, and all vendors have made their decision. 
-%They either consider the file as malware or not. They will not change decision. }
-%\yiying{why?}
 
 {\bf Observation 5:} 
 {\em The number of submissions made in history has correlation with detection rate, but the correlation is non-linear and is affected by multiple factors.}
 
-\if 0
-\noindent{\textit{\underline{Historical source country.}}}
-One file could also be submitted from different countries. 
-The number of historical source countries also reflect the popularity of a submitted file. 
-The correlation between detection rate and the number of historical source countries in 
-Figure~\ref{fig:hiscountry} shows similar trend as the correlation between detection rate 
-and the number of historical source IDs in Figure~\ref{fig:hiscountry}. 
-
-Figure~\ref{fig:hisnum}, Figure~\ref{fig:hisid}, and Figure~\ref{fig:hiscountry} show that 
-when historical numbers fall into certain range, they are correlated with detection rate. 
-\fi
 
 \subsection{Reputation of Source ID}
 \label{sec:reputation}
@@ -116,15 +90,15 @@ when historical numbers fall into certain range, they are correlated with detect
 \input{section/fig_IDReputation}
 Different users of online services such as \vt\ often have different {\em reputation} 
 because of different motivations, objectives, and backgrounds.
-For example, some users can randomly trying out \vt\ with no specific objective and thus submit random files
+For example, some users can randomly trying out \vt\ with no specific objective and thus submit random files,
 while other users have clear goals and motivations and thus only submit suspicious files.
 The rationale behind reputation is that \vt{} users would have a roughly constant submission pattern, 
 and it is promising to use their historical submission to predict their future submission.
-Previous work~\cite{GuoICSE2010} reported that there is a correlation between bug reporter’s reputation and the likelihood for the bug being fixed. 
-We also observe correlation between the reputation of source ID and submission’s detection rate. 
+Previous work~\cite{GuoICSE2010} reported that there is a correlation between bug reporter's reputation and the likelihood for the bug being fixed. 
+We also observe correlation between the reputation of source ID and submission's detection rate. 
 
 Intuitively, a user that have submitted more files that were detected as malware suggest 
-that she is more likely to use \vt\ to detect malwares in suspicious files 
+that she is more likely to use \vt\ to detect malware in suspicious files 
 and thus should be given higher reputation.
 To quantify this, we define the reputation of a source ID as the follow.
 The reputation of a source ID is not a fixed value and can change over time. 
@@ -136,14 +110,8 @@ we define the reputation of $N$ when conducting the submission $S$ as the averag
 If $N$ did not make any submission before, we define the reputation to be $-1$. 
 \end{definition}
 
-Before conducting our source ID reputation analysis, we first filter out submissions without source ID information (for a small amount of submissions, \vt\ fails to provide source ID),
-files that are only submitted once, and files that are submitted more than 1 million times (bogus or robots).
-%For around 14\% PE submissions, VirusTotal fails to provide source ID information. 
-%We filter out these submissions, when computing reputation.
-%All other PE submissions are conducted by 613 thousand source IDs. 
-%66\% source IDs only conduct submission once. 
-%We filter source IDs conducting more than 1 million PE submissions in our data set, 
-%because we think these are anti-virus vendors routinely test their products. 
+Before conducting our source ID reputation analysis, we first filter out submissions
+without source ID information, and submissions by source ID with more than 1 million submissions (bogus or robots).
 To calculate source ID reputation, we first sort all submissions from the same source ID chronologically, 
 and calculate reputation for each source id when conducting each submission. 
 We further separate normal users from vendors and analyze the correlation of their ID reputation and detection rate.
@@ -168,23 +136,41 @@ Vendors do not have this behavior and their detection rate always increases with
 {\em There is a high correlation between user reputation and detection rate of their submissions for both normal users and anti-virus vendors.}
 
 
+\subsection{Regression Model}
+
+We build a linear regression model to predict the detection rate for a submission, 
+by using factors we discussed above.  
+We filter submissions without source ID reputation information, as we discussed in Section~\ref{sec:reputation}. 
+We then randomly divide remaining submissions into training set and testing set with equal size. 
+We choose random guess as baseline model, 
+which is to guess the detection rate for any submission 
+as the mean of detection rate for all training submissions. 
+We calculate the mean absolute error (mae)~\cite{mae} 
+and the mean squared error (mse)~\cite{mse} to compare our regression model and baseline model. 
+
+For in sample testing, mae and mse for our regression model are 0.2227 and 0.0718 respectively, 
+while for baseline model they are 0.3345 and 0.1327. 
+For out of sample testing, mae and mse for our regression model is 0.2223 and 0.0716 respectively, 
+and they are 0.3342 and 0.1325 for baseline model. 
+For both in sample testing and out of sample testing, our regression model can beat baseline model significantly. 
+
+
+{\bf Observation 7:} 
+{\em Regression model based on studied factors can help the prediction of detection rate for malware submissions.}
+
+
 \subsection{Discussion}
 
-%\noindent{\textit{\underline{How to use our data?}}}
-From our analysis, file size, number of submissions in history, and source ID reputation
-are all highly correlated with detection rate. 
-These results suggest that future researchers and vendors can use these values to have an initial estimation or prediction of future submissions.
+
+From our analysis, file size, number of submissions in history, 
+and source ID reputation are all highly correlated with detection rate.
+Our regression model based on these three factors can effectively help predict detection rate for \vt\ submissions, and this also verifies our correlation studying results. 
+All the three studied factors can be obtained without analyzing binary executable files.
+These factors plus our regression model provide a lightweight estimation or prediction for future submissions.  
 Doing so can help reduce researchers' and vendors' effort to focus on more interesting files---files that are more likely to be malicious.
-Anti-virus vendors can also inspect results which are variant from our studying results 
+Anti-virus vendors can also inspect results which are variant from our prediction results 
 to identify possible false positives or false negatives in their products. 
+File size information can be accessed in \vt~'metadata. 
+Number of submissions in history and source ID reputation are computed by ourselves. 
+Our studying results suggest that \vt should also track number of submissions in history for each file and reputation for each source ID in the future. 
 
-%Linhai, it's not good to say things that you haven't done, esp. in a system paper. so I deleted the regression model discussion
-%A possible future work is to train a regression model to combine all these factors together and 
-%predict how many engines could detect a malware or how likely a file is a malware. 
-%Using the regression model or our studying results alone, 
-%security experts can prioritize malwares and focus their efforts on malwares which are more malicious. 
-%Anti-virus vendors could inspect results which are variant from our studying results 
-%to identify possible false positives or false negatives in their products. 
-
-
-%In the future, we could design our reputation and historical metrics based on a tunable time windows, and investigate whether correlations still exist.   
