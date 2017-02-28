@@ -15,7 +15,7 @@ and serve as the foundation for our more advanced analysis in the next two secti
 
 \subsection{Submission Temporal, Geo-location, and Size Distribution}
 \label{sec:basicanal}
-\input{section/fig_subnum}
+%\input{section/fig_subnum}
 
 Figure~\ref{fig:subnum} plots the number of submissions of all types and the number of \pe\ submissions per day 
 over the whole collection period.
@@ -26,7 +26,7 @@ The same conclusion can be made to \pe\ submissions.
 One PE file could be submitted more than once to VirusTotal. 
 On average, each PE file was submitted 1.19 times and 6.72\% PE files were submitted more than once. 
 
-\input{section/fig_countryPie}
+%\input{section/fig_countryPie}
 
 For around 16\% of PE submission, 
 \vt\ fails to provide their source country information. 
@@ -34,7 +34,8 @@ All other submissions are conducted from 221 countries.
 The top 6 countries in PE submission number are US, Canada, France, Russia, Germany, and China, 
 as shown in Figure~\ref{fig:countryPie}.
 
-\input{section/fig_pesize}
+\input{section/fig4-6}
+%\input{section/fig_pesize}
 
 Figure~\ref{fig:pesize} shows the file size distribution for \pe\ submissions. 
 The smallest \pe\ file is only 187 bytes, and the largest one is more than 1\,GB. 
@@ -49,9 +50,9 @@ but some files are submitted many times.}
 \subsection{Source ID}
 \label{sec:source_id}
 
-\input{section/fig_iddistribute}
+%\input{section/fig_iddistribute}
 
-Both normal users and anti-virus vendors use \vt\ to detect malwares or evaluate products.
+Both normal users and anti-virus vendors use \vt\ to detect malware or evaluate products.
 Usually, vendors tend to make more submissions than normal users, since they need to test their products on many files.
 Thus, we use the number of submissions to measure what type of users a source ID is.
 
@@ -71,9 +72,10 @@ Thus, we categorize the source IDs as normal user if they have less than 100 sub
 
 \subsection{Anti-virus Engines}
 
-\input{section/fig_vendornum}
-\input{section/fig_detectionrate}
+%\input{section/fig_vendornum}
+%\input{section/fig_detectionrate}
 
+\input{section/fig7-9}
 
 After learning the basic properties of submissions and source IDs, 
 we now move to the basic analysis of anti-virus engines and their detection of malware.
@@ -92,7 +94,7 @@ Detection rate represents the percentage of engines labeling the submission as m
 $$ \textrm{\textit{Detection Rate}} = \dfrac{positives}{total + 1}$$
 
 We add one to {\bf total} to avoid divide-by-zero exception, and more importantly, 
-to have higher detection rate to submissions labeled as malwares by more engines.
+to have higher detection rate to submissions labeled as malware by more engines.
 For example, submissions analyzed by 50 engines and detected by 50 engines 
 has a higher detection rate 
 than submissions analyzed by one engine and detected by one engine. 
@@ -118,3 +120,10 @@ both normal users and vendors will try to test them with \vt.
 submissions made by normal user and by anti-virus vendors have similar probabilities of being labeled as malware.}
 
 
+\subsection{Discussion}
+This section presents the basic properties of the \vt\ data repository.
+It demonstrates the rich set of data that comes from the real world.
+These analysis results motivated this paper and we 
+hope that they can encourage future researchers to investigate online malware big data as well.
+
+Our experience here also showed that while \vt\ and other online detection services provide many types of submission metadata, not all of them are important and of interest to malware and anti-virus engine analysis, as will be seen in the next two sections. 

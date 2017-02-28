@@ -6,8 +6,6 @@ discusses how we collect data from \vt\ and pre-process them.
 We also present the analysis results of their basic properties, 
 before delving into more advanced analysis in later sections.
 
-\input{section/tbl_metadata}
-
 \subsection{VirusTotal}
 
 \vt\ is a free online malware scan service.
@@ -30,10 +28,23 @@ After a user opens the distribution API and starts to download data from \vt,
 
 \vt\ provides rich metadata.
 Table~\ref{tab:fields} shows the metadata fields and their meaning.  
+We use many of these metadata types in our study throughout this paper.
+\if 0
 The original submitted files from \vt\ can be downloaded using the {\bf link} field in the metadata.
-{\color{red} TODO: discuss what metadata we use in Section 3 and Section 4}
+{\color{red}In Section~\ref{sec:corr}, we use {\bf positives} and {\bf total} to calculate detection rate, 
+use {\bf sha256} to identify submissions with the same files, 
+and use {\bf source\_id} to identify submissions from the same users. 
+We study how detection rate changes with file {\bf size}, 
+submission history of the submitted files, 
+submitted history of the \vt\ users. 
+In Section~\ref{sec:influ}, we use {\bf report} to figure out whether vendors 
+change their labeling for the same files in different submissions, 
+and study how influence propagates among different vendors. }
+\fi
 
-\input{section/fig_type}
+\input{section/fig1-3}
+
+%\input{section/fig_type}
 
 \subsection{Data Collection and Preprocessing}
 
@@ -61,12 +72,12 @@ with 12\% and 8\% of all submissions respectively.
 Other popular file types include PDF, Text, compressed files, and Java files. 
 This result shows that even though new types of malware such as Android apps have
 increased significantly in recent years, 
-traditional types of malwares such as \pe\ files and web pages are still the 
+traditional types of malware such as \pe\ files and web pages are still the 
 most commonly targeted by attackers.
 
 Since PE files are the most common type,
 we focus our study in this paper on \pe\ files 
-and leave studies on other types of malwares for future. 
+and leave studies on other types of malware for future. 
 %If the type field for a submission is either ``Win32EXE'' or ``Win32DLL'', 
 %we consider the submission is a PE file. 
 In total, we collected 76 million \pe\ submissions.
@@ -83,6 +94,6 @@ It could be possible that some files are submitted to \vt,
 but are not downloaded. %we fail to get their information from \vt.
 Although we have collected huge amount of malware information from \vt,
 we do believe that there are malware never submitted to \vt, 
-or submitted to \vt much later than when they appear in the real world. 
+or submitted to \vt{} much later than when they appear in the real world. 
 However, there are no conceivable ways to study them.
 We believe that the 4-month malware information we collect can serve as a representative sample for malware in the real world. 
