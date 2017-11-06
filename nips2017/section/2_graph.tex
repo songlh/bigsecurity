@@ -1,3 +1,4 @@
+\vspace{-0.05in}
 \section{Influence Graph}
 \label{sec:model}
 We now discuss our proposed mechanism to analyze the influence among anti-virus engines.
@@ -43,10 +44,11 @@ The probability that $v$ will follow its neighbors to take the same action can t
 p_v(S_v(a)) = 1 - \prod\limits_{u \in S_v(a)}(1 - p_{u,v})
 \end{equation}
 
+
 We can use $p_{u,v}$ to further estimate the trustworthiness of an engine, $T_v$.
 Intuitively, if an anti-virus engine gets more influence from others,
 it is less reliable and trustworthy. Thus, we have
-
+\vspace{-0.05in}
 \begin{equation} \label{eq:trust}
 T_v = \frac{1}{\sum\limits_{u \neq v}{p_{u,v}}}
 \end{equation}

@@ -1,25 +1,28 @@
+\vspace{-0.05in}
 \section{Introduction}
 \label{sec:intro}
 
 Malware grows exponentially~\cite{avtest} and places an imperative threat to human society. 
 For example, more than 390000 new malware are registered in AVTest institute every day~\cite{avtest}.
 As another example, a new type of threat, ransomware, cost more than 1 billion dollars in 2016~\cite{ransomware}. 
-To fight against malware and detect these new types of malware, 
-anti-virus tools are improving rapidly,
-by constantly updating their signature databases, 
-by using more advanced techniques like deep learning~\cite{cylance}, 
-or by utilizing more data. 
+%To fight against malware and detect these new types of malware, 
+%anti-virus tools are improving rapidly,
+%by constantly updating their signature databases, 
+%by using more advanced techniques like deep learning~\cite{cylance}, 
+%or by utilizing more data. 
 
+To fight against malware, it is essential to understand existing anti-virus engines.
 There are many anti-virus engines in the real world~\cite{virustotal}.
 One question that has never been studied before is: 
 {\em is there influence across different anti-virus vendors?}
 That is, can an anti-virus vendor's decision is affected 
 by other vendors' malware detection results. 
-The answer to this question can help individual users better select anti-virus engines,
-and help the whole security community better aggregate detection results from different vendors. 
+%The answer to this question can help individual users better select anti-virus engines,
+%and help the whole security community better aggregate detection results from different vendors. 
 
-Fortunately, we live in the ``big data'' era and there is no shortage of data on malware and different anti-virus engines' 
-detection results in the real world. 
+Fortunately, we live in the ``big data'' era and there is no shortage of data on malware 
+and different anti-virus engines' 
+detection results. 
 One such type of data repositories is online malware analysis services. 
 There are many online malware analysis services~\cite{virustotal,malwr,vxstream,anubis} 
 that use malware sandboxes and state-of-the-art
@@ -56,7 +59,7 @@ Analyzing historical detection results can help capture how influence propagates
 
 In this paper, we conduct an extensive, 
 large-scale study on anti-virus engines
-using 4 months’ data collected from \vt.
+using 4 months' data collected from \vt.
 Specifically, we study the question of whether or not different anti-virus vendors can influence each other.
 Anecdotally, anti-virus vendors frequently leverage VirusTotal to identify false negatives in their products, 
 which are malware detected by others' products but not detected by their own products. 
@@ -65,7 +68,7 @@ To verify this hypothesis, we used the detection history from VirusTotal to crea
 {\em influence graph} to model the influence relationship across vendors.
 We further developed a set of statistical models on top of the influence graph to quantify the influence between vendors
 and a prediction model to predict how likely the decision of a vendor is influenced by others. 
-With this method, we confirmed that there do exist high influence between vendors;
+With this method, we confirmed that there does exist high influence between vendors;
 certain vendors are highly influenced by the detection results of other vendors 
 and use this information to change their detection results.
 
@@ -77,7 +80,7 @@ Specifically, this paper makes the following main contributions.
 %to better understand anti-virus engines and better leverage their detection results.
 
 
-\vspace{-0.05in}
+%\vspace{-0.05in}
 \begin{itemize}
 %\item 
 %Online malware detection services offer rich sets of real-world data that are representative of 

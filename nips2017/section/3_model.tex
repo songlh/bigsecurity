@@ -1,5 +1,9 @@
+\vspace{-0.05in}
 \section{Influence Probability Estimation Model}
 \label{sec:influenceprob}
+
+\input{section/fig_heatmap}
+
 From the above analysis, we can see that the influence probability is the key of our anti-virus engine
 influence problem.
 After knowing the value of the influence probability $p_{u,v}$ between all engine pairs $u$ and $v$,
@@ -67,4 +71,4 @@ $$p_{u,v} = \frac{\sum\limits_{a \in A_{u2v}}{credit_{u,v}(a)}}{|A_{u|v}|}$$
 %For Bernoulli distribution and Jaccard index, 
 %considering partial credit will decrease $p_{u,v}$ calculated by both of them. 
 
-\input{section/fig_heatmap}
+
