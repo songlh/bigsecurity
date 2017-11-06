@@ -1,0 +1,100 @@
+\section{Introduction}
+\label{sec:intro}
+
+Malware grows exponentially~\cite{avtest} and places an imperative threat to human society. 
+For example, more than 390000 new malware are registered in AVTest institute every day~\cite{avtest}.
+As another example, a new type of threat, ransomware, cost more than 1 billion dollars in 2016~\cite{ransomware}. 
+To fight against malware and detect these new types of malware, 
+anti-virus tools are improving rapidly,
+by constantly updating their signature databases, 
+by using more advanced techniques like deep learning~\cite{cylance}, 
+or by utilizing more data. 
+
+There are many anti-virus engines in the real world~\cite{virustotal}.
+One question that has never been studied before is: 
+{\em is there influence across different anti-virus vendors?}
+That is, can an anti-virus vendor's decision is affected 
+by other vendors' malware detection results. 
+The answer to this question can help individual users better select anti-virus engines,
+and help the whole security community better aggregate detection results from different vendors. 
+
+Fortunately, we live in the ``big data'' era and there is no shortage of data on malware and different anti-virus engines' 
+detection results in the real world. 
+One such type of data repositories is online malware analysis services. 
+There are many online malware analysis services~\cite{virustotal,malwr,vxstream,anubis} 
+that use malware sandboxes and state-of-the-art
+anti-virus engines to analyze user-submitted files 
+or URLs and produce detailed detection reports. 
+
+We propose to use the vast amount of malware big data in online malware services 
+to study the relationship between different anti-virus engines, 
+to quantify the influence across them, 
+and to predict whether one engine's detection results will be affected by other vendors. 
+To achieve all these goals, we utilized the biggest open data repository
+that contains billions of real-world malware, {\em \vt}.
+
+\vt{} is a free online malware scanning service
+that applies a set of state-of-the-art anti-virus engines to analyze user-submitted files 
+and sends a detection report back to user.
+\vt{} provides public access to all its submitted files and analysis results. 
+\vt{} is a valuable resource to study and 
+understand real-world anti-virus engines for the following two reasons. 
+
+First, there are a huge amount of suspicious files submitted to VirusTotal. 
+For example, within our data collection window, 
+there were around 40 million submissions to \vt\ each month. 
+These submissions cover a large variety of file types and 
+are conducted by a large variety of \vt\ users from all over the world. 
+This amount of diverse data on VirusTotal serves as a 
+good representation of malware in the real world to study influence across anti-virus vendors. 
+
+Second, for almost all submissions, 
+VirusTotal applies no less than 50 state-of-the-art anti-virus engines to analyze them. 
+These engines cover almost all popular anti-virus engines.
+VirusTotal keeps detailed engines' detection results and provides an open access to these results. 
+Analyzing historical detection results can help capture how influence propagates among different anti-virus vendors. 
+
+In this paper, we conduct an extensive, 
+large-scale study on anti-virus engines
+using 4 months’ data collected from \vt.
+Specifically, we study the question of whether or not different anti-virus vendors can influence each other.
+Anecdotally, anti-virus vendors frequently leverage VirusTotal to identify false negatives in their products, 
+which are malware detected by others' products but not detected by their own products. 
+
+To verify this hypothesis, we used the detection history from VirusTotal to create a new type of graph that we call 
+{\em influence graph} to model the influence relationship across vendors.
+We further developed a set of statistical models on top of the influence graph to quantify the influence between vendors
+and a prediction model to predict how likely the decision of a vendor is influenced by others. 
+With this method, we confirmed that there do exist high influence between vendors;
+certain vendors are highly influenced by the detection results of other vendors 
+and use this information to change their detection results.
+
+Our study advances the understanding of anti-virus engines in the real world 
+and provides various valuable insights for future researchers and vendors, 
+some of which are surprising and have never been revealed in the past.
+Specifically, this paper makes the following main contributions.
+%We hope that our findings and our methodologies can help future security researchers and practitioners 
+%to better understand anti-virus engines and better leverage their detection results.
+
+
+\vspace{-0.05in}
+\begin{itemize}
+%\item 
+%Online malware detection services offer rich sets of real-world data that are representative of 
+%both the latest malware and malware in history.
+%Our study show that it is not only feasible and but also valuable to study these data in large scale.
+%Thus, we call attention from our research community to investigate these online repositories more closely.
+
+\item
+As far as we know, we are the first to perform a big data analysis on anti-virus engines themselves.
+Our influence study results in the surprising finding that there are anti-virus vendors who are influenced by almost all other vendors,
+while some vendors influence many other vendors. 
+This result alerts normal users and security experts to be treat detection results from anti-virus vendors with more caution.
+
+\item
+We developed a set of analytical methodologies, statistical models, and prediction methods to study anti-virus engines.
+They can assist future researchers and practitioners to perform more analysis 
+on other malware data and develop more advanced analytical techniques.
+
+
+\end{itemize}

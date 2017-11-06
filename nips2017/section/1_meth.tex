@@ -1,0 +1,32 @@
+\section{Data Collection}
+\label{sec:meth}
+
+This section introduces \vt\ and 
+discusses how we collect data from \vt\ and pre-process them.
+
+\noindent{\underline{\textit{\vt}}}
+is a free online malware scan service.
+It was founded in 2004 and was acquired by google in 2012. 
+\vt\ is widely used by both normal users and anti-virus vendors~\cite{huangvt2016bigdata, neeles}. 
+For each submission, \vt\ applies a set of anti-virus engines to analyze it. 
+\vt\ keeps information about whether the submission is labeled as malware by each engine, 
+and detailed tags for identified malware from each engine. 
+
+
+\noindent{\underline{\textit{Data Collection and Preprocessing.}}}
+We collected all metadata for all submissions to \vt\ from May 7th, 2016 to September 6th, 2016,
+with a total of 151 million submissions. 
+Our collected data is larger than or comparable to previous works on studying \vt~\cite{SongAPsys2016,huangvt2016bigdata}.
+We performed our data collection using \vt{}'s distribution API.
+We insert all collected metadata into a table in Cassandra~\cite{cassandra} 
+using the combination of sha256, source\_id, and timestamp as the key.
+We then used Spark~\cite{spark} to efficiently analyze the vast amount of data.
+All our analysis is conducted by using Spark 1.4.0 on a cluster with 19 nodes, 266 cores, and 560 GB memory. 
+
+Among all file types, Windows \textit{Portable Executable} ({\em \pe}) files 
+are the most frequently submitted type,
+accounting for 51\% of all submissions.
+Since PE files are the most common type,
+we focus our study in this paper on anti-virus engines targeting \pe\ files 
+and leave studies on other types of anti-virus engines for future. 
+

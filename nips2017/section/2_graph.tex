@@ -1,0 +1,52 @@
+\section{Influence Graph}
+\label{sec:model}
+We now discuss our proposed mechanism to analyze the influence among anti-virus engines.
+Our goal is to estimate the {\em trustworthiness} of an anti-virus engine $i$, $T_i$.
+
+We propose to model the anti-virus engine influence problem as a graph problem.
+Influence propagation in social networks is a well-studied topic in the web mining area. 
+Inspired by social graph solutions~\cite{Influence}, we propose to use graphs to represent the relationship between vendors 
+and model influence among different vendors based on static models.
+
+We first build a complete directed graph $G = (V, E)$ called {\em influence graph} for the influence problem, 
+where the nodes $V$ are vendors and edges model the likelihood of influence between two vendors. 
+We choose to use a complete graph because we initially assume that it is possible to have influence from one vendor to any other vendor.
+
+We use {\em action} to describe the detection result of an engine to a submission. Since a file can be
+submitted more than once and an engine can analyze it multiple times, we need to associate action with
+time. We formally define an action, $a$, at time $t$ as $(u, a, t)$ or $(u, \bar{a}, t)$,
+where the former represents an anti-virus engine identifies the submission as malware 
+and the latter represents it identifies the submission as benign.
+
+We limit the goal of this study to detecting whether or not a vendor changes its labeling of a file from
+benign to malware because other vendor(s) have labeled it as malware (what we call {\em positive influence}). 
+Thus, we do not consider the case of changing from labeling malware to benign ({\em negative influence}). 
+We also assume that after a vendor labels a file as malware it will not change its decision.
+A similar model can be applied to study negative influence and we leave it for future work.
+
+We associate each edge $(u, v) \in E$ in the graph $G$ 
+with an {\em influence probability} $p_{u,v}$,
+which represents the probability that after $u$ takes an action, 
+$v$ will follow $u$ to take the same action.
+Since we only consider positive influence, 
+when calculating $p_{u,v}$, we only consider cases where after $u$ has labeled a submission as malware, 
+$v$ will change its label from benign to malware in a later time, i.e., 
+$\exists$  $(u, a, t_1)$, $(v, \bar{a}, t_2)$, $(v, a, t_3)$ where $t_1<t_3$ and $t_3>t_2$. 
+
+To capture how many engines influence one engine, we use the neighbor relationship in the influence graph. 
+We define $S_v(a)$ to be the set of $v$'s neighbors that take action $a$ before $v$ in time. 
+The probability that $v$ will follow its neighbors to take the same action can then be calculated as:
+
+
+\begin{equation} \label{eq:setp}
+%$$p_v(S_v(a)) = 1 - \prod\limits_{u \in S_v(a)}(1 - p_{u,v})$$
+p_v(S_v(a)) = 1 - \prod\limits_{u \in S_v(a)}(1 - p_{u,v})
+\end{equation}
+
+We can use $p_{u,v}$ to further estimate the trustworthiness of an engine, $T_v$.
+Intuitively, if an anti-virus engine gets more influence from others,
+it is less reliable and trustworthy. Thus, we have
+
+\begin{equation} \label{eq:trust}
+T_v = \frac{1}{\sum\limits_{u \neq v}{p_{u,v}}}
+\end{equation}
