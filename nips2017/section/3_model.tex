@@ -54,21 +54,21 @@ and calculate the partial credit for $u$ who takes an action $a$ before $v$ as
 $$credit_{u,v}(a) = \frac{1}{|S_v(a)|}$$
 
 {\bf Bernoulli distribution with partial credit} 
-estimates $p_{u,v}$ as the sum of all partial credits taking by $u$ for actions propagated from $u$ to $v$, 
+estimates $p_{u,v}$ as the sum of all partial credits taken by $u$ for actions propagated from $u$ to $v$, 
 dividing by the number of actions taken by $u$. 
 
 $$p_{u,v} = \frac{\sum\limits_{a \in A_{u2v}}{credit_{u,v}(a)}}{|A_u|}$$
 
 {\bf Jaccard index with partial credit} 
-estimates $p_{u,v}$ as the sum of all partial credits taking by $u$ for actions propagated from $u$ to $v$, 
+estimates $p_{u,v}$ as the sum of all partial credits taken by $u$ for actions propagated from $u$ to $v$, 
 dividing by the number of actions taken either by $u$ or by $v$. 
 
 $$p_{u,v} = \frac{\sum\limits_{a \in A_{u2v}}{credit_{u,v}(a)}}{|A_{u|v}|}$$
 
 
-%Since $|A_{u|v}|$ is not less than $|A_u|$, 
-%$p_{u,v}$ calculated by Jaccard index is not larger than $p_{u,v}$ calculated by Bernoulli distribution. 
-%For Bernoulli distribution and Jaccard index, 
-%considering partial credit will decrease $p_{u,v}$ calculated by both of them. 
+Since $|A_{u|v}|$ is not less than $|A_u|$, 
+$p_{u,v}$ calculated by Jaccard index is not larger than $p_{u,v}$ calculated by Bernoulli distribution. 
+For Bernoulli distribution and Jaccard index, 
+considering partial credit will decrease $p_{u,v}$ calculated by both of them. 
 
 
