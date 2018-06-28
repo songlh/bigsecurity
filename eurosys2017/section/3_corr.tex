@@ -124,11 +124,12 @@ The reputation of a source ID is not a fixed value and can change over time.
 To quantify this value, we define the reputation of a source ID, the unique identifier of a \vt\ user, as the follow.
 
 %\theoremstyle{definition}
-\begin{definition}{Reputation:}
-Given a submission $S$ with source ID $N$, 
+%\begin{definition}{Reputation:}
+
+Reputation: Given a submission $S$ with source ID $N$, 
 we define the reputation of $N$ when conducting the submission $S$ as the average detection rate for all submissions conducted by $N$ before $S$. 
 If $N$ did not make any submission before, we define the reputation to be $-1$. 
-\end{definition}
+%\end{definition}
 
 Before conducting our source ID reputation analysis, we first filter out submissions
 that have no source ID information and submissions by source IDs with more than 1 million submissions (these are likely to be bogus or coming from robots).

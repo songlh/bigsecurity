@@ -2,8 +2,10 @@
 
 
 %\documentclass[pldi]{sigplanconf-pldi16}
-\documentclass[sigconf,review,anonymous]{acmart}
-\acmConference[ESEC/FSE 2017]{11th Joint Meeting of the European Software Engineering Conference and the ACM SIGSOFT Symposium on the Foundations of Software Engineering}{4--8 September, 2017}{Paderborn, Germany}
+\documentclass[conference]{IEEEtran}
+\pagestyle{plain}
+
+%\acmConference[ESEC/FSE 2017]{11th Joint Meeting of the European Software Engineering Conference and the ACM SIGSOFT Symposium on the Foundations of Software Engineering}{4--8 September, 2017}{Paderborn, Germany}
 
 % standard LaTeX packages
 %\usepackage{changebar}
@@ -117,11 +119,6 @@
 \title{Understanding Real-World Malwares and Anti-Virus Engines}
 
 
-\author{Linhai Song}
-\affiliation{%
-  \institution{ACM member}
-}
-\email{songlinhai0543@gmail.com}
 
 
 
@@ -132,7 +129,7 @@
 %\theoremstyle{definition}
 %\newtheorem{definition}{Definition}[section]
 
-
+\maketitle
 
 \begin{abstract}
 \input{section/abstract}
@@ -141,7 +138,7 @@
 
 
 
-\maketitle
+
 
 \input{section/0_intro}
 \input{section/1_meth}
