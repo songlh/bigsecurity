@@ -1,0 +1,18 @@
+\section{Literature Review - How Researchers Use VirusTotal}
+
+In this section, we introduce our findings of how current researchers make use of \vt. We collected 102 conference papers by searching \vt\ in Google Scholar. They come from many conferences include Usenix Security, NDSS, S\&P, etc. The number of papers from each conference is listed in Figure~(ref).
+
+First, there are 89 papers use \vt\ to label or collect data set among the 102 papers. The rest 13 papers only mentioned \vt. 
+
+Second, among the 89 papers, only 8 consider vendor impact. 
+“we send each sample to the VirusTotal service and inspect the output of ten common anti-virus scanners (AntiVir, AVG, BitDefender, ClamAV, ESET, F-Secure, Kaspersky, McAfee, Panda, Sophos)
+” from a NDSS paper (index 14)
+
+c. 4/89 papers consider results could change over time
+“
+Please note that we fetched the VirusTotal results for each file in our dataset several months (and in some cases even years) after the file was first submitted. This ensures that the AV signatures were up to date, and files were not misclassified just because they belonged to a new or emerging malware family
+” from a Usenix security paper (index 5)
+
+d. 17/89 papers do not mention how they merge results from different vendors. 26/89 consider a submission as malicious if any vendor can detect. 46/89 consider a ratio or a threshold of number of vendors. 
+
+
