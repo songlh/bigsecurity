@@ -1,0 +1,52 @@
+\section{Literature Review - How Researchers Use VirusTotal}
+
+In this section, we introduce our findings of how current researchers make use of \vt. 
+We collected 102 conference papers by searching \vt\ in Google Scholar. 
+They are from many conferences include Usenix Security, NDSS, S\&P, etc. 
+The number of papers from each conference is listed in Figure~(ref). %TODO: add a figure
+The papers cover a large range of topics. 
+Many of them are related to the detection or techniques of malwares, such as Android apps \cite{arp2014drebin,huangvt2016bigdata}, ransomware \cite{kharraz2016unveil} and Flash \cite{ford2009analyzing}. 
+They mainly use \vt's detection results as baseline or ground truth. 
+There are 89 papers use \vt\ to label or collect data set among the 102 papers. 
+The rest 13 papers mention \vt\ for other purposes. 
+We mainly focus on how the 89 papers use the detection result of \vt.
+
+There several issues that researchers need to consider in using the results. 
+First, researchers could collect detection results from multiple vendors. 
+It is necessary to aggregate the results into one as the label of malware or benign for some works. 
+We would like to know how researchers aggregate them. 
+Second, the detection results could change over time and it is more reliable to collect the results from \vt\ during a period of time. 
+We would also like to know the practice on collecting results from \vt\ over time. 
+Thrid, vendors could have different impacts. 
+It is also interesting to know whether and how researchers considered the different impacts of vendors.
+
+%Last but not least, it is worth considering how we merge results from different vendors. 
+First, we look at how researchers merge detection results. 
+In most cases, researchers get results from more than 40 or 50 vendors and merge the results as one for their dataset. 
+There are mainly two ways of merging: 1) considering a submission as malicious if any vendor can detect; 2) considering a ratio or a threshold for the number of vendors. 
+For instance, Ford et al. \cite{ford2009analyzing} report it as malicious as long as there is a vendor reporting malicioustowards a file, while Carmony et al. use a threshold of 15 files. 
+Among the 89 papers, 26 papers (29.2\%) use the first way and 46 papers  (51.7\%) use the second way. 
+The rest 17 papers (19.1\%) do not mention how they merge results from different vendors.
+
+Second, there are only 4 papers (4.5\%) consider that the detection results could change over time, and collect the results from \vt\ during a period of time. 
+The length of time could vary from several days \cite{kharraz2016unveil, rajab2013camp} to months \cite{neeles, wressnegger2017looking}. 
+
+Third, among the 89 papers, only 8 papers (9.0\%) consider that different vendors shall have different impact. 
+Most of them pick out three to more than ten vendors to discuss their impact, because of their influence in industry or good performance on detection rate. 
+For instance, Arp et al. \cite{arp2014drebin} inspected the output of ten vendors and list their detection rate anonymously. 
+In addition, all of the papers treat the vendors equally. %Thomas et al. \cite{thomas2015ad} listed detection rate of 3 vendors. 
+
+We summarize our findings as follows. 
+1) Most researchers use \vt\ as the source of building their dataset. 
+2) There is a large variation of how researchers aggregate detection results from different vendors. 
+3) Only a few papers wait for the detection results to become stable.
+4) Only a few papers consider the difference of impacts among  vendors.
+%“we send each sample to the VirusTotal service and inspect the output of ten common anti-virus scanners (AntiVir, AVG, BitDefender, ClamAV, ESET, F-Secure, Kaspersky, McAfee, Panda, Sophos)
+%” from a NDSS paper (index 14)
+
+
+%They collected  Kharraz et al. \cite{kharraz2016unveil} Graziano et al. \cite{neeles} Rajab et al. \cite{rajab2013camp} and Wressnegger et al. \cite{wressnegger2017looking}.
+
+
+
+
