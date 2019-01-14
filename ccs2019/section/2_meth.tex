@@ -27,16 +27,26 @@ Covering a longer time.
 
 How the data set is built?
 
+First, we introduce our data source, VirusTotal, and how we make use of their APIs. VirusTotal offers a lot of APIs for researchers. Their private APIs could return the detailed detection results of vendors. We applied for an private API key for our data collection. We mainly use two APIs for collecting data: \texttt{report} and \texttt{rescan}. \texttt{report} takes a hash value of a sample as input, and returns a detailed report of the sample if the sample exists in the library of VirusTotal. The report contains the detection results of the sample from all the vendors that VirusTotal could provide. \texttt{rescan} also takes a hash value as input. This API sets VirusTotal to rescan the specified sample. This could make VirusTotal to update the detection results of samples.
+
+Then we introduce how to collect the data set. First, at day 0, we obtained about 20,000 Portable Executable (PE, the executable file format on Windows) files together with their detection results from an anti-virus vendor. The vendor receives about 20,000 new PE files each day, and study them. The files we obtained were the new files they received at day 0. Then, we randomly chose 14,423 files from them, according to the detection result of the vendor. This is to ensure that the data set is balanced: the number of files that could be determined as malicious or benign should both be large enough for our experiment. We then submitted the 14423 files to VirusTotal at the same day, and got the detection results from VirusTotal. For each day later on, we first call \texttt{rescan} on the 14423 files respectively. Then, we wait 2 hours for VirusTotal updating the detection results. After 2 hours, we call \texttt{report} on each files to get the updated detection results. We keep collecting data for over 60 days. 
+
 What information we can get? I mean the data format. 
+
+The API \texttt{report} returns a lot of information of the sample, including but not limited to hashcodes (MD5, SHA1, etc.) of the sample, scan date, and detailed scan results of many vendors. For each vendor in the detailed scan results, there are 4 fields: \texttt{detected}, \texttt{version}, \texttt{result}, and \texttt{update}. \vt\ does not provide detailed documentation of the fields, but it is easy to infer from the results and other documents (such as https://www.virustotal.com/en/faq/). \texttt{detected} tells if the sample is detected as malicious by this vendor. \texttt{version} tells the version used in the scan. \texttt{result} is how the vendor classifies the sample. \texttt{update} is the date of the vendor providing the antivirus tool.
 
 Basic properties of the data set 
 
 a. Detection results from the first scan
 
+There 7197 malicious files and 7226 benign files. We say ``malicious'' as long as there is one vendor reporting malicious.
+
 b. Vendor distribution
 
-c. How VirusTotal update engines? Scanning time vs. update vs. version 
+'''''''''''''''''''need clarification%TODO: need clarification
 
+c. How VirusTotal update engines? Scanning time vs. update vs. version 
+%TODO: need more data
 \subsection{Caveats}
 
 Discuss errors during our data collection. 
