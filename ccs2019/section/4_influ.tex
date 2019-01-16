@@ -1,11 +1,89 @@
 \section{Influence model}
 
-\subsection{Influence graph}
+%\subsection{Influence graph}
 
-How we model vendors? influence
+\textcolor{gray}{How we model vendors? influence}
+
+As we have mentioned in section (blah), vendors could rely on each other to decide their own detection results. 
+To measure such influence among vendors, we adapt the static influence model on social networks by Goyal et al. \cite{goyal2010learning}. 
+This model takes the a list of actions as input, and calculates a graph of influence among nodes in a social network. 
+We assume each vendor could influence any other vendors, and calculate the influence on a complete graph. 
+Since we use a complete graph in this paper, the model is slightly different from the original model. 
+We introduce our influence model in this section.
+
+%\subsection{Basic Definitions}
+First, we introduce some basic definitions of action, and how to generate an action $(v, a , t)$ or actions in action list $Actions$ from a time sequence $s$. 
+For a vendor $v$, it could mark a file $f$ as malicious or benign at some day $d$. 
+We denote the action `marking as malicious' as $(v, f_1, d)$ and `marking as benign' as $(v, f_0, d)$.  
+\textcolor{red}{Currently, we consider all the detection results in each day as an action. Should we eliminate some of the actions?}
+
+Then we define action propagation among vendors. 
+We denote $prop(a, v_i, v_j, \Delta d)$ as ``an action $a$ propagates from $v_i$ to $v_j$ in $\Delta d$ days'', where $\Delta d = d_j-d_i$. 
+This happens iff. $\exists (v_i, a, d_i), (v_j, a, d_j) \in Actions$ with $d_j-d_i>d_w$, where $d_w$ is the time window of vendors reference other vendors. \textcolor{red}{We would like to know the results under different time windows.} 
+
+Now we define how to calculate the influence among vendors. 
+We write $A_v$ as the number of actions performed by vendor $v$. 
+Formally, we have 
+\begin{equation}
+A_v = |\{(u, a, d) | (u, a, d) \in Actions \land u=v\}| 
+\end{equation}
+
+Then, we consider the actions that two vendors $u$ and $v$ performed together: 
+\begin{multline}
+A_{u\&v} = |\{(u, a, d) | (u, a_u, d_u) \in Actions \\ \land (v, a_v, d_v) \in Actions \land a_u=a_v \}|
+\end{multline}
+
+The number of actions that performed by either vendors could be calculated as: 
+\begin{equation}
+A_{u|v} = A_u+A_v-A_{a\&v}
+\end{equation}
+
+We also have 
+\begin{multline}
+A_{u2v} = |\{(u, a_u, d_u) | (u, a_u, d_u) \in Actions \\ \land (v, a_v, d_v) \in Actions \land a_u=a_v \land d_u<d_v \}|
+\end{multline}
+ as the number of actions propagated from $u$ to $v$. 
+
+With the values, we could calculate the influences, which is defined on a complete graph $G= (V,E)$. $V$ is the set of vendors, and $\forall u,v \in V, \exists (u,v,p_{u,v}) \in E$, where 
+$p_{u,v}$ is the influence probability of $v$ influenced by $u$. 
 
 \subsection{Influence measurement}
-The four metrics
+We have 4 metrics of calculating probability $p_{u,v}$ as follows:
+
+\textbf{Bernoulli Distribution:} This model estimates $p_{u,v}$ as the ratio of the number of actions propagated from $u$ to $v$ over the total number of actions taken by $u$.
+
+\begin{equation}
+p_{u,v} = \frac{A_{u2v}}{A_u}
+\end{equation}
+
+\textbf{Jaccard Index:} This model estimates $p_{u,v}$ as the ratio of the number of actions propagated from $u$ to $v$ over the total number of actions taken by either $u$ or $v$.
+
+\begin{equation}
+p_{u,v} = \frac{A_{u2v}}{A_{u|v}}
+\end{equation}
+
+We also consider partial credit to improve the two metrics above.
+The partial credit is explained as follows. When $v$ takes an action $a$, it may be influenced by the combination of all its neighbors taking the action $a$ before $v$. To account for this effect, we use partial credit and calculate the partial credit for $u$ who takes an action $a$ before $v$ as
+
+\begin{equation}
+credit_{u,v}(a) = \frac{1}{\sum_{w \in V}I(\exists a. prop(a, w, v, \Delta d))}
+\end{equation}
+
+where $I$ is the indicator: $I(P)$ equals to 1 when $P$ is true, otherwise it is 0. Then we have another two metrics:
+
+\textbf{Bernoulli Distribution with Partial Credit:} This model estimates $p_{u,v}$ as the sum of all partial credits taking by u for actions propagated from $u$ to $v$, dividing by the number of actions taken by $u$.
+
+\begin{equation}
+p_{u,v} = \frac{\sum_{a\in A_{u2v}}credit_{u,v}(a)}{A_{u}}
+\end{equation}
+
+\textbf{Jaccard Index with Partial Credit:} This model estimates $p_{u,v}$ as the sum of all partial credits taking by u for actions propagated from $u$ to $v$, dividing by the number of actions taken by $u$.
+
+\begin{equation}
+p_{u,v} = \frac{\sum_{a\in A_{u2v}}credit_{u,v}(a)}{A_{u|v}}
+\end{equation}
+
+%How we generate the dataset is illustrated as in Figure \ref{fig:action}. In this figure, there are three vendors, $u$, $v$, and $w$. $v$ flips at time 4 and 9, from benign to malicious. $w$ flips from benign and malicious at time 5. For $v$, it could be influenced by $u$ at time 3 and time 8, and $w$ at time 8. For $w$, it could be influenced by both $u$ and $v$ at time 8. Therefore, for this small case, we have the following action propagations: $(u, f_1, 3) \to (v, f_1, 4)$, $(u, f_1, 8) \to (v, f_1, 9)$, and $(w, f_1, 8) \to (v, f_1, 9)$.
 
 \subsection{Results}
 
