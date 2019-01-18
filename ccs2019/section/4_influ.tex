@@ -6,16 +6,38 @@
 
 As we have mentioned in section (blah), vendors could rely on each other to decide their own detection results. 
 To measure such influence among vendors, we adapt the static influence model on social networks by Goyal et al. \cite{goyal2010learning}. 
-This model takes the a list of actions as input, and calculates a graph of influence among nodes in a social network. 
+Their model calculates influences among nodes in a social network based on chronological relationships of the actions they have taken.
+The influences are probabilities of how one node could affect another.
+In this paper, there 3 main differences from the original model. 
+First, we do not have a graph that explicitly shows how vendors connects with each other. 
 We assume each vendor could influence any other vendors, and calculate the influence on a complete graph. 
-Since we use a complete graph in this paper, the model is slightly different from the original model. 
-We introduce our influence model in this section.
+Second, we do not know the exact time point that a vendor executes an action: we only have many time series of detection results. 
+We assume that when detection results of a sample change, the vendor executes an action.
+Third, an action could be executed by a vendor more than once in our scenario, while the original model only allows an action to be executed by a node only once. 
+This makes it hard to decide which and how many execution(s) of an action influences another, which is important to decide how to calculate the probabilities.
+In this paper, we assume that an execution is only affected by only one another execution per vendor.
+We also adjusted the method of calculating the probabilities. We enlarge the event space so that when actions are executed multiple times, the probabilities could be calculated reasonably. 
+
+%One important problem in this scenario is that we should decide when there are multiple executions of an action, 
+%In the original model, this would cause the probabilities larger than 1.
+
+Now we introduce our model. First, we sample almost everyday for each sample, and get more than 70 vendors' detection results. 
+For a vendor $v$, it could mark a file $f$ as malicious or benign at some day $d$. 
+We denote the sampling result `marking as malicious' as $(v, f_1, d) \in S$ and `marking as benign' as $(v, f_0, d) \in S$. 
+As we have mentioned, when the detection result of $v$ flips from benign to malicious, we consider it as an action is performed. We write 
+$flip(v, f, d) = \exists d' d=prev(v, f, d) \land (v, f_0, d') \land (v, f_1, d) $ to indicate that vendor $v$ flips its detection result on sample file $f$ at day $d$, where $prev(d)$ represents the previous day that we sampled: 
+$prev(v, f, d) = \max \{d| (v, f_0, d)\in S \lor (v, f_1, d)\in S\}$.
+
+When a flip happens, we consider how the vendor learns from other vendors. The vendor $v$ could learn from another vendor $u$, where there are a sampling $(u, f_1, d_u)$ that $d_u < d$. In this case, we consider vendor $u$ affects vendor $v$. 
+We count the number of actions propagated from $u$ to $v$ as follows:
+\begin{equation}
+A_{u2v} = |\{(v, f_1, d)| \exists (u, f_1, d_u)\in S. flip(v, f, d) \land d_u<d \}|
+\end{equation}
 
 %\subsection{Basic Definitions}
-First, we introduce some basic definitions of action, and how to generate an action $(v, a , t)$ or actions in action list $Actions$ from a time sequence $s$. 
-For a vendor $v$, it could mark a file $f$ as malicious or benign at some day $d$. 
-We denote the action `marking as malicious' as $(v, f_1, d)$ and `marking as benign' as $(v, f_0, d)$.  
-\textcolor{red}{Currently, we consider all the detection results in each day as an action. Should we eliminate some of the actions?}
+First, we introduce some basic definitions of actions. 
+%, and how to generate an action $(v, a , t)$ or actions in action list $Actions$ from a time sequence $s$. 
+%\textcolor{red}{Currently, we consider all the detection results in each day as an action. Should we eliminate some of the actions?}
 
 Then we define action propagation among vendors. 
 We denote $prop(a, v_i, v_j, \Delta d)$ as ``an action $a$ propagates from $v_i$ to $v_j$ in $\Delta d$ days'', where $\Delta d = d_j-d_i$. 
