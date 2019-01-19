@@ -24,9 +24,9 @@
 
 In this section, we introduce how we collect data. 
 
-\subsection{How the data set is built?}
+\subsection{Methodology}
 
-First, we introduce our data source, VirusTotal, and how we make use of their APIs. VirusTotal offers a lot of APIs for researchers. Their private APIs could return the detailed detection results of vendors. We applied for an private API key for our data collection. We mainly use two APIs for collecting data: \texttt{report} and \texttt{rescan}. \texttt{report} takes a hash value of a sample as input, and returns a detailed report of the sample if the sample exists in the library of VirusTotal. The report contains the detection results of the sample from all the vendors that VirusTotal could provide. \texttt{rescan} also takes a hash value as input. This API sets VirusTotal to rescan the specified sample. This could make VirusTotal to update the detection results of samples.
+First, we introduce our data source, VirusTotal, and how we make use of their APIs. VirusTotal offers a lot of APIs for researchers. Their private APIs could return the detailed detection results of vendors. We applied for a private API key for our data collection. We mainly use two APIs for collecting data: \texttt{report} and \texttt{rescan}. \texttt{report} takes a hash value of a sample as input, and returns a detailed report of the sample if the sample exists in the library of VirusTotal. The report contains the detection results of the sample from all the vendors that VirusTotal could provide. \texttt{rescan} also takes a hash value as input. This API sets VirusTotal to rescan the specified sample. This could make VirusTotal to update the detection results of samples.
 
 Then we introduce how to collect the data set. 
 First, at day 0, we obtained about 14,423 new Portable Executable (PE, the executable file format on Windows) files from an anti-virus vendor. 
@@ -54,7 +54,13 @@ From the two figures, we could conclude that the dataset is mostly complete.
 \input{section/fig_dataset.tex}
 
 \subsection{How VirusTotal update engines?}
-There are 
+As we mentioned above, we use \texttt{rescan} and \texttt{report} to get the latest detection results from VirusTotal for each day. Actually, how VirtusTotal update the antivirus engines? With our data set for 75 days, we first check whether antivirus bases and versions update over time. We find that more than 78\% of the detection results updates consistently with time went on. So we can get new detection results from VirusTotal when we \texttt{rescan} samples and \texttt{report} detction results 2 hours later.
+
+
+\input{section/3_fig_frequency.tex}
+
+Figure \ref{fig:requency} presents the distribution of updating frequency for vendors. Overall, more than 44 vendors(total 70) update their detction results with at least 1 day. Only 6 vendors' updating frequency are less than 0.05, and 4 of them seems not change their antivirus engines during these 75 days. Averagely, about 56 vendors will be updated with at least 2 days. 
+
 %c. How VirusTotal update engines? Scanning time vs. update vs. version 
 %TODO: need more data
 \subsection{Caveats}
