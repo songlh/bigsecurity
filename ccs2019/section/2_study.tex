@@ -10,42 +10,61 @@ and then we will present our findings and implications.
 We leverage published academic papers to understand 
 how academic people use \vt,
 since published papers usually contain detailed descriptions 
-about the authors use \vt\ in their projects if \vt\ is involved. 
+about how the authors use \vt\ in their projects, if \vt\ is involved. 
 
 To collect academic papers, we search for keyword ``\vt'' in Google Scholar. 
 In total, we find 101 conference papers published in the last ten years.
 We then manually inspect descriptions related to \vt\ in these papers. 
-In 87 papers, the authors either use \vt\ to build a data set for their evaluation~\cite{} 
+In 87 papers, the authors either use \vt\ 
+to build a data set for their evaluation~\cite{ford2009analyzing,android-1,email-vt-1,kharraz2016unveil} 
 or leverage querying \vt\ as one building block of their
 techniques~\cite{vt-component-1,vt-component-2,vt-component-3}. 
 These 87 papers are targets of our \vt{} usage study. 
 For the left 14 papers, their authors just discuss \vt\ as a part 
-of technical background~\cite{not-use-1,bayer2009scalable,jiang2012dissecting} and 
+of technical background~\cite{not-use-1,bayer2009scalable,jiang2012dissecting}, and 
 they do not use \vt\ in building their techniques or evaluation. 
 Therefore, we ignore these papers in our study. 
 
 
+\input{section/fig-study}
+
+As shown in Figure~\ref{fig:conference}, 
+our collected papers mainly come from famous academic conferences 
+in four research areas, security, software engineering, data science, and web. 
+For example, in total, we study 62 papers published in security conferences,
+and 28 of them come from the top four security conferences, 
+IEEE S\&P, CCS, Usenix Security, and NDSS.
+As shown in Figure~\ref{fig:year}, 
+we have at least one studied papers 
+published in each year from 2008 to 2018. 
+19 studied papers are published in 2014, 
+and it is the year with largest number. 
+Our studied papers cover different types of malware, 
+such as Android APK~\cite{android-1,arp2014drebin,huangvt2016bigdata}, 
+Portable Executable (PE) files~\cite{bayer2009scalable,pe-vt-1,pe-vt-2}, 
+Flash~\cite{ford2009analyzing,wressnegger2017looking}, 
+PDF~\cite{pdf-vt-1,carmony2016extract}, and so on. 
+To sum up, we believe our studied paper is a representative data set 
+to understand how academic people use \vt{}. 
+
+\subsection{Findings and Implications}
+We mainly want to answer two questions through our study.
+First, \vt{} applies multiple antivirus engines to scan every submitted file, 
+and returns all detection results to user.
+Different engines may disagree with each other.
+We want to understand how academic users aggregate results from different vendors.
+Second, \vt{} keeps updating antivirus engines. 
+Intuitively, detection results could change when the same file is submitted twice.
+We want to know whether or not academic users consider 
+possible result changes on \vt{} over time.   
+
+\noindent{\underline{How results are merged?}}
+
+\noindent{\underline{Whether possible changes are considered?}}
 
 
 
 
-In this section, we introduce our findings of how current researchers make use of \vt. 
-We collected 101 conference papers by searching \vt\ in Google Scholar. 
-They are from many conferences include Usenix Security, NDSS, S\&P, etc. 
-\input{section/tbl_literature_confs.tex}
-%\input{section/tbl_literature_years.tex}
-\input{section/fig_literature_years.tex}
-The number of papers from each conference is shown in Figure~\ref{fig:literature_confs}. 
-Their publication year ranges from 2008 to 2018. The detailed distributions is shown in Figure~\ref{fig:literature_years}.
-
-c. Topic distribution 
-
-The papers cover a large range of topics. 
-Many of them are related to the detection or techniques of malwares, such as Android apps \cite{arp2014drebin,huangvt2016bigdata}, ransomware \cite{kharraz2016unveil} and Flash \cite{ford2009analyzing}. 
-They mainly use \vt's detection results as baseline or ground truth. 
-There are 89 papers use \vt\ to label or collect data set among the 101 papers. 
-The rest 13 papers mention \vt\ for other purposes. 
-We mainly focus on how the 89 papers use the detection result of \vt.
 
 There several issues that researchers need to consider in using the results. 
 First, researchers could collect detection results from multiple vendors. 
