@@ -72,46 +72,53 @@ if any engine labels it as malware.
 For another {\color{red} XXX} papers, their authors 
 use a absolute threshold number that is larger than one. 
 Authors of {\color{red} XXX} papers use a ratio as their threshold.  
-For the left 17 papers, their descriptions about how to merge results 
+For the left 17 papers, their descriptions about how to merge \vt{} results 
 are not clear enough for us to study. 
 
+Since academic users widely use a threshold 
+to decide a submitted file is malicious or not, 
+we want to understand how the threshold is counted or calculated. 
+Specifically, we want to know whether every engine 
+on \vt{} is counted in the same way, or they have different weights.   
+In most cases (64/72), the paper authors treat each engine equally.
+For the other 8 papers, the authors think that different engines 
+may have different reputations, 
+and they only consider a small set of engines with 
+good reputation.
+For example, \citet{five-vendors-1} only consider five vendors' results, 
+while \citet{arp2014drebin} only inspect results from ten vendors. 
+
+\noindent{\underline{\bf{Observation 1:}}}
+{\it{
+Academic users usually use threshold to interpret detection results from \vt{}, 
+and they mainly treat different vendors equally during the calculation of the threshold value, 
+without considering possible difference across vendors.  
+}}
 
 
 \noindent{\underline{Whether possible changes are considered?}}
+When a new malware sample is developed, 
+it is likely that very few engines can detect it. 
+It takes vendors some time to reverse engineer the sample.
+Intuitively, there will be more and more engines 
+that can detect the sample as time goes on. 
+Therefore, we anticipate that when the same file 
+is submitted to \vt{} more than once,
+the detection results could change. 
+However, we find that only three papers in our paper set
+consider the evolution of engines and possible 
+changes of detection results on \vt{}. 
+For example, \citet{neeles} only consider files submitted to \vt{} 
+several months ago to make sure that their collected samples 
+are correctly classified by \vt{} vendors. 
+\citet{wressnegger2017looking} submit the same samples multiple 
+times to identify samples that were previously missed by \vt{} engines.  
+
+\noindent{\underline{\bf{Observation 2:}}}
+{\it{
+Academic users seldom consider possible 
+result changes of anti-virus engines on \vt{}, 
+and they usually rely on analysis results from only \vt{} scanning. 
+}}
 
 
-
-
-
-There several issues that researchers need to consider in using the results. 
-First, researchers could collect detection results from multiple vendors. 
-It is necessary to aggregate the results into one as the label of malware or benign for some works. 
-We would like to know how researchers aggregate them. 
-Second, the detection results could change over time and it is more reliable to collect the results from \vt\ during a period of time. 
-We would also like to know the practice on collecting results from \vt\ over time. 
-Thrid, vendors could have different impacts. 
-It is also interesting to know whether and how researchers considered the different impacts of vendors.
-
-%Last but not least, it is worth considering how we merge results from different vendors. 
-First, we look at how researchers merge detection results. 
-In most cases, researchers get results from more than 40 or 50 vendors and merge the results as one for their dataset. 
-There are mainly two ways of merging: 1) considering a submission as malicious if any vendor can detect; 2) considering a ratio or a threshold for the number of vendors. 
-For instance, Ford et al. \cite{ford2009analyzing} report it as malicious as long as there is a vendor reporting malicious
-towards a file, while Carmony et al. use a threshold of 15 files. 
-Among the 89 papers, 26 papers (29.2\%) use the first way and 46 papers  (51.7\%) use the second way. 
-The rest 17 papers (19.1\%) do not mention how they merge results from different vendors.
-
-Second, there are only 4 papers (4.5\%) consider that the detection results could change over time, and collect the results from \vt\ during a period of time. 
-The length of time could vary from several days \cite{kharraz2016unveil, rajab2013camp} to months \cite{neeles, wressnegger2017looking}. 
-
-Third, among the 89 papers, only 8 papers (9.0\%) consider that different vendors shall have different impact. 
-Most of them pick out three to more than ten vendors to discuss their impact, because of their influence in industry or good performance on detection rate. 
-For instance, Arp et al. \cite{arp2014drebin} inspected the output of ten vendors and list their detection rate anonymously. 
-In addition, all of the papers treat the vendors equally. %Thomas et al. \cite{thomas2015ad} listed detection rate of 3 vendors. 
-\subsection{Findings}
-a. Do not wait until results become stable
-
-b. Treat vendors equally
-
-\subsection{Discussion}
-What if the current usage is not correct? 
