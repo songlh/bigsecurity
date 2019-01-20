@@ -41,6 +41,7 @@ For each day later on, we first call \texttt{rescan} on the 14423 files respecti
 After 2 hours, we call \texttt{report} on each files to get the updated detection results. 
 We keep collecting data for 75 days. 
 
+\input{section/tbl_metadata.tex}
 \subsection{What information can we get from VirusTotal?}% I mean the data format. 
 
 The API \texttt{report} returns a lot of information of the sample, including but not limited to hashcodes (MD5, SHA1, etc.) of the sample, scan date, and detailed scan results of many vendors. For each vendor in the detailed scan results, there are 4 fields: \texttt{detected}, \texttt{version}, \texttt{result}, and \texttt{update}. \vt\ does not provide detailed documentation of the fields, but it is easy to infer from the results and other documents (such as https://www.virustotal.com/en/faq/). \texttt{detected} tells if the sample is detected as malicious by this vendor. \texttt{version} tells the version used in the scan. \texttt{result} is how the vendor classifies the sample. \texttt{update} is the date of the vendor providing the anti-virus tool.
