@@ -1,35 +1,42 @@
-\begin{table}[htbp]
-	\centering
-	\caption{Add caption}\small
-	\begin{tabularx}{\columnwidth}{p{8.9em}|X}
-		\hline\hline
-		Metadata Fields & Explanation \\\hline
-		vhash, sha256, md5,\newline ssdeep, sha1 & hashes or digests of the sample  \\\hline
-		scan\_date & the scan date of the sample \\
-		scan\_id & ID of the scan record \\
-		verbose\_msg & a string of detailed scan status \\
-		total & the total number of vendors in the results\\
-		positives & the number of vendors reporting malicious \\
-		scans & an array of vendors' detailed results \\
-		\qquad detected & true if the vendor detected the sample \\
-		\qquad version & version of the vendor's AV tool \\
-		\qquad result & a string of vendor's classification \\
-		\qquad update & the update date of the AV tool \\\hline
-		submission\_names & an array of the sample's file name \\
-		size  & file size \\
-		additional\_info & info parsed from the file \\
-		times\_submitted & the number of times \\
-		type, tags & file type info (such as PE/DLL) \\
-		permalink & the permanant link to this detection result \\
-		last\_seen, first\_seen & when the same file was first or last submitted \\
-		ITW\_urls & urls spreading the sample \\
-		unique\_sources & \textcolor{red}{(I guess it should be the number of unique sources of the sample)} \\\hline
-		authentihash & \textcolor{red}{unknown} \\
-		resource & the hash that are used in requesting the info \\
-		response\_code & \textcolor{red}{unknown} \\
-		malicious\_votes & community voting the sample as malicious  \\
-		harmless\_votes & community voting the sample as benign \\
-		community\_reputation & the reputation of community votes \\\hline
-	\end{tabularx}%
-	\label{tab:metadata}%
-\end{table}%
+
+\begin{table}[h!]
+\centering
+\footnotesize
+{
+\begin{tabular}{l|l}
+\hline
+Metadata Field & Explanation \\
+\hline                            
+
+{\bf size} & file size \\
+{\bf type} & file type \\
+{\bf tags} & labels with more specific information for each {\bf type}\\
+{\bf first\_seen} & when the file was first submitted \\
+{\bf last\_seen} & when the file was last submitted \\
+{\bf hashes or digests} & sha1, sha256, md5, vhash, and ssdeep\\ \hline
+
+{\bf scan\_date} & the latest scanning date for the file  \\
+{\bf scan\_id} & ID of the scanning record \\
+{\bf verbose\_msg} & a string for detailed scanning status \\
+{\bf total} & \# of engines analyzing the file \\
+{\bf positives} & \# of engines that flagged the file as malicious \\
+{\bf scans} & a map containig engines' detailed analysis results \\
+	\qquad {{\bf detected}} & true if the engine's label is malicious \\
+	\qquad {{\bf version}}  & the version of the engine \\
+	\qquad {{\bf result}}   & malware label \\
+	\qquad {{\bf update}}   & the update date of the engine \\
+\hline
+\end{tabular}
+\vspace{0.1in}
+}
+\mycaption{tab:fields}{VirusTotal Metadata.} 
+{Fields retrieved from VirusTotal \texttt{report} and their explanation.
+Some fields unrelated to this paper are not included.}
+%\label{tab:fields}
+\end{table}
+
+
+
+
+
+
