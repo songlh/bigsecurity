@@ -62,18 +62,18 @@ possible result changes on \vt{} over time.
 
 
 \noindent{\underline{How detection results are merged?}}
-For 72 out of 89 (80.89\%) studied papers, 
+For 68 out of 89 (76.40\%) studied papers, 
 their authors leverage a threshold to decide whether a submitted file is 
 malicious or not. 
 The threshold can either be a absolute number, 
 or a ratio of the number of engines with malicious labels over all engines.
-There are 26 studied papers, 
+There are 24 studied papers, 
 whose authors consider a submission is malicious, 
 if any engine labels it as malware. 
-For another {\color{red} XXX} papers, their authors 
+For another {\color{red} 29} papers, their authors 
 use a absolute threshold number that is larger than one. 
-Authors of {\color{red} XXX} papers use a ratio as their threshold.  
-For the left 17 papers, their descriptions about how to merge \vt{} results 
+Authors of {\color{red} 15} papers use a ratio as their threshold.  
+For the left 21 papers, their descriptions about how to merge \vt{} results 
 are not clear enough for us to study. 
 
 Since academic users widely use a threshold 
@@ -81,8 +81,8 @@ to decide a submitted file is malicious or not,
 we want to understand how the threshold is counted or calculated. 
 Specifically, we want to know whether every engine 
 on \vt{} is counted in the same way, or they have different weights.   
-In most cases (64/72), the paper authors treat each engine equally.
-For the other 8 papers, the authors think that different engines 
+In most cases (59/68), the paper authors treat each engine equally.
+For the other 9 papers, the authors think that different engines 
 may have different reputations, 
 and they only consider a small set of engines with 
 good reputation.
