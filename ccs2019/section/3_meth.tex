@@ -1,7 +1,7 @@
 \section{Data Collection and Basic Analysis}
 \label{sec:data}
 
-\input{section/tbl_metadata.tex}
+\input{section/tbl-metadata.tex}
 
 This section introduces \vt{} and how we collect data from \vt{}. 
 We also conduct simple analysis to understand 
@@ -15,18 +15,18 @@ in their products~\cite{huangvt2016bigdata, neeles},
 and individual users, including many academic people, 
 as we discussed in Section~\ref{sec:label}.
 
-
-
 For each submitted sample, \vt{} applies a set of anti-virus engines to analyze it. 
 \vt{} keeps information about whether the submission is labeled as malware by each engine, 
 and detailed tags for identified malware from each engine. 
 \vt{} provides open APIs for users to interact with \vt{} 
 and access the metadata of all submissions and latest detection results.
 For example, \texttt{rescan} api asks \vt{} to analyze a previously submitted file again. 
-\texttt{report} api returns detailed metadata and latest 
-detection results for a file as shown in Table~\ref{tab:fields}. 
+\texttt{report} api returns detailed metadata and latest detection results 
+for a file as shown in Table~\ref{tab:fields}. 
 \texttt{distribution} api works like a pipe and keeps 
 downloading information for latest submitted data from \vt{}. 
+
+
 
 \subsection{Data Collection}
 
@@ -34,7 +34,7 @@ We started our data collection on August 31th, 2018.
 We randomly sampled 14423 PE files that was firstly submitted to \vt{} 
 on that day using \texttt{distribution} api.
 The reason we focus on PE files is that there are more 
-than half \vt{} submissions are PE files~\cite{SongAPsys2016}. 
+than half of \vt{} submissions are PE files~\cite{SongAPsys2016}. 
 We control our sample to have roughly 
 half files labeled as benign by all vendors 
 and the left half labeled as malicious by at least one vendor.
@@ -48,8 +48,17 @@ To write this paper, we use data from August 31th, 2018 to
 November 13th, 2018 to conduct experiments in future sections. 
 In total, we use data collected in consecutive 75 days. 
 
-\subsection{Basic Properties}
+Due to some network issues and bugs in our code, 
+we fail to get some scanning reports. 
+In total, the missed reports account for less than 3\% 
+of scanning reports\footnote{We should have 14432 * 75 = 1082400 scanning reports, but there are only 1050172 in our data set.}
+we should get. 
+Since the percentage of missed reports is low, 
+we think they will not have large impact on any 
+conclusion we get in future sections. 
 
+
+\subsection{Basic Properties}
 
 We conduct a set of analysis 
 to learn various basic properties of our collected data.
@@ -61,47 +70,58 @@ advanced analysis in the next three sections.
 All our sampled PE files are in 32 bit. 
 Among them, 5798 are Win32 DLL files, 
 and 8625 are Win32 EXE files.
-For file size, more than 95\% sampled 
-files are in the range from 4KB to 4MB. 
+For file size, more than 95\% of sampled files are 
+in the range from 4KB to 4MB. 
 The smallest sampled file is only 800B, 
-and the largest one is 389MB.
+and the largest one is larger than 389MB.
 
 \noindent{\underline{Engine Usage Properties.}}
-When scanning submitted files, \vt{} applies 
-a suite of anti-virus engines. 
-In different scanning, used anti-virus 
-engines may be different 
-different from each others. 
+\vt{} applies a suite of anti-virus engines to scan submitted files.
+In different scannings, used anti-virus engines may be different 
+from each others. 
+In total, there are 72 different engines scanning 
+at least one file once in our data set. 
+We conduct analysis from two aspects to 
+understand how engines are used by \vt{}.
 
+\input{section/fig-vendor-usage}
 
+First, we study how many engines are used in each scanning. 
+As shown in Figure~\ref{fig:vendor_scanning}, 
+at least 65 engines are used in more 
+than 99.11\% of scannings. 
+The scannings, where less than 20 engines are used, 
+are less than 0.01\%.
+On average, 68.19 engines are used in one scanning. 
 
+Second, we study how many scannings are conducted by each engine. 
+Figure~\ref{fig:scanning_dis} shows how the cumulative percentage of engines changes 
+over the percentage of scannings. 
+64 engines are used in more than 90\% of 
+the scannings in our data set. 
+{\color{red} Todo: If an engine is not used frequently enough, 
+we may not get meaningful conclusions for the engine. 
+Therefore, in the following sections, 
+we only consider the 64 engines that are used in more than 90\% of the scannings.}
 
-\subsection{What information can we get from VirusTotal?}% I mean the data format. 
+\noindent{\underline{Engine Update Properties.}}
+When building our data set, 
+we query \vt{} every day with the 
+hope to get the latest detection results from different vendors. 
+One question we want to ask here is whether a more recent scanning 
+is really conducted by more recent versions of engines. 
+As shown in Table~\ref{tab:fields},
+\vt{} provide the information about when 
+an engine is updated for each scanning.  
+To answer the question, we sort scannings conducted by the same engine 
+on the same file chronologically.
+For every pair of consecutive scannings, we compare their update information. 
+More than 78\% of consecutive pairs, the update date for the later scanning is more recent.
+More than {\color{red} xx\%} of consecutive pairs, the update date of the later 
+scanning is not earlier than the previous scanning. 
+Overall, more recent scannings are largely conducted
+by more recent versions of engines. 
 
-
-\subsection{Basic properties of the data set}
-
-Now we take a look at the data set. First, there are 7197 malicious files and 7226 benign files according to the results from first scan. We say ``malicious'' as long as there is one vendor reporting malicious. This indicates that our dataset is balanced.
-
-Then we check the completeness of the dataset by observing two distributions. 
-Our dataset could be regarded as a set of tuples $(f, v, t)$ that sample $f$ is scanned at time $t$ by vendor $v$. Ideally, there should be one tuple for all $f, v, $ and $t$ in all 14423 files, more than 70 vendors and 75 days. 
-However, not all valid tuples exist in the downloaded information. Some tuples may miss because of VirusTotal or our crawling configuration. So we calculated two distributions of the data set to check the completeness.
-First, Figure~\ref{fig:dataset_submission_vendor_distri} shows the distribution of how many vendors have scanned a sample in a detection result. A point $(x, y)$ on the curve represents that there are $y$ detection results with $x$ vendors scanned. From the chart, we can know that most of the detection results are detected by more than 65 vendors. 
-In addition, Figure~\ref{fig:dataset_no_vendors_scanned_moste_files_in_x_days} shows  how many vendors scan most of the files in how many days. More specifically, $(x, y)$ in the chart represents there are $y$ vendors that scans more than 90\% of the total files in $x$ days. The figure indicates that most of the vendors 
-From the two figures, we could conclude that the dataset is mostly complete.
-
-\input{section/fig_dataset.tex}
-
-\subsection{How VirusTotal update engines?}
-As we mentioned above, we use \texttt{rescan} and \texttt{report} to get the latest detection results from VirusTotal for each day. Actually, how VirtusTotal update the antivirus engines? With our data set for 75 days, we first check whether antivirus bases and versions update over time. We find that more than 78\% of the detection results updates consistently with time went on. So we can get new detection results from VirusTotal when we \texttt{rescan} samples and \texttt{report} detction results 2 hours later.
-
-
-\input{section/3_fig_frequency.tex}
-
-Figure \ref{fig:requency} presents the distribution of updating frequency for vendors. Overall, more than 44 vendors(total 70) update their detction results with at least 1 day. Only 6 vendors' updating frequency are less than 0.05, and 4 of them seems not change their antivirus engines during these 75 days. Averagely, about 56 vendors will be updated with at least 2 days. 
-
-%c. How VirusTotal update engines? Scanning time vs. update vs. version 
-%TODO: need more data
-\subsection{Caveats}
-
-Discuss errors during our data collection. 
+We also study the update frequency for different engines. 
+Different engines have different update frequency. 
+{\color{red} TODO}. 
