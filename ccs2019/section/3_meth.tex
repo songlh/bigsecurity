@@ -61,25 +61,32 @@ advanced analysis in the next three sections.
 All our sampled PE files are in 32 bit. 
 Among them, 5798 are Win32 DLL files, 
 and 8625 are Win32 EXE files.
-For file size, more than 95\% sampled 
-files are in the range from 4KB to 4MB. 
+For file size, more than 95\% of sampled files are 
+in the range from 4KB to 4MB. 
 The smallest sampled file is only 800B, 
 and the largest one is larger than 389MB.
 
 
-\subsection{What information can we get from VirusTotal?}% I mean the data format. 
+\noindent{\underline{Engine Usage Properties.}}
+\vt{} applies a suite of anti-virus engines to scan submitted files.
+In different scanning, used anti-virus engines may be different 
+from each others. 
+In total, there are 72 different engines scanning 
+at least one file once in our data set. 
+We conduct analysis from two aspects to 
+understand how engines are used by \vt{}.
+
+First, we study how many engines used in each scanning. 
+As shown in Figure~\ref{xxx}, at least 65 engines are used in more 
+than 99.11\% of scanning. 
+For less than 0.01\% of scanning, 
+less than 20 engines are used. 
+On average, 68.19 engines are used in one scanning. 
 
 
-\subsection{Basic properties of the data set}
 
-Now we take a look at the data set. First, there are 7197 malicious files and 7226 benign files according to the results from first scan. We say ``malicious'' as long as there is one vendor reporting malicious. This indicates that our dataset is balanced.
 
-Then we check the completeness of the dataset by observing two distributions. 
-Our dataset could be regarded as a set of tuples $(f, v, t)$ that sample $f$ is scanned at time $t$ by vendor $v$. Ideally, there should be one tuple for all $f, v, $ and $t$ in all 14423 files, more than 70 vendors and 75 days. 
-However, not all valid tuples exist in the downloaded information. Some tuples may miss because of VirusTotal or our crawling configuration. So we calculated two distributions of the data set to check the completeness.
-First, Figure~\ref{fig:dataset_submission_vendor_distri} shows the distribution of how many vendors have scanned a sample in a detection result. A point $(x, y)$ on the curve represents that there are $y$ detection results with $x$ vendors scanned. From the chart, we can know that most of the detection results are detected by more than 65 vendors. 
-In addition, Figure~\ref{fig:dataset_no_vendors_scanned_moste_files_in_x_days} shows  how many vendors scan most of the files in how many days. More specifically, $(x, y)$ in the chart represents there are $y$ vendors that scans more than 90\% of the total files in $x$ days. The figure indicates that most of the vendors 
-From the two figures, we could conclude that the dataset is mostly complete.
+
 
 \input{section/fig_dataset.tex}
 
