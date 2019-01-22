@@ -105,28 +105,29 @@ We also consider partial credit to improve the two metrics above.
 The partial credit is explained as follows. When $v$ takes an action $a$, it may be influenced by the combination of all its neighbors taking the action $a$ before $v$. To account for this effect, we use partial credit and calculate the partial credit for $u$ who takes an action $a$ before $v$ as
 
 \begin{equation}
-A_{u2v} = \{(v, f_1, d)| \exists (u, f_1, d_u)\in S. flip(v, f, d) \land d_u<d \}
-
-credit_{v}(f_1, d) = \frac{1}{\sum_{w \in V}I(\exists (w, )}
+%A_{u2v} = \{(v, f_1, d)| \exists (u, f_1, d_u)\in S. flip(v, f, d) \land d_u<d \}
+credit(f_1, d) = \frac{1}{\sum_{w \in V}I(\exists (w, f_1, d_w) \in S \land d_w<d}
 \end{equation}
 
-where $I$ is the indicator: $I(P)$ equals to 1 when $P$ is true, otherwise it is 0. Then we have another two metrics:
+where $V$ is the set of vendors and $I$ is the indicator: $I(P)$ equals to 1 when $P$ is true, otherwise it is 0. Then we have another two metrics:
 
 \textbf{Bernoulli Distribution with Partial Credit:} This model estimates $p_{u,v}$ as the sum of all partial credits taking by u for actions propagated from $u$ to $v$, dividing by the number of actions taken by $u$.
 
 \begin{equation}
-p_{u,v} = \frac{\sum_{a\in A_{u2v}}credit_{u,v}(a)}{A_{u}}
+p_{u,v} = \frac{\sum_{(v,f_1,d)\in A_{u2v}}credit(f_1, d)}{|S_{u}|}
 \end{equation}
 
 \textbf{Jaccard Index with Partial Credit:} This model estimates $p_{u,v}$ as the sum of all partial credits taking by u for actions propagated from $u$ to $v$, dividing by the number of actions taken by $u$.
 
 \begin{equation}
-p_{u,v} = \frac{\sum_{a\in A_{u2v}}credit_{u,v}(a)}{A_{u|v}}
+p_{u,v} = \frac{\sum_{(v,f_1,d)\in A_{u2v}}credit(f_1, d)}{|S_{u|v}|}
 \end{equation}
 
 %How we generate the dataset is illustrated as in Figure \ref{fig:action}. In this figure, there are three vendors, $u$, $v$, and $w$. $v$ flips at time 4 and 9, from benign to malicious. $w$ flips from benign and malicious at time 5. For $v$, it could be influenced by $u$ at time 3 and time 8, and $w$ at time 8. For $w$, it could be influenced by both $u$ and $v$ at time 8. Therefore, for this small case, we have the following action propagations: $(u, f_1, 3) \to (v, f_1, 4)$, $(u, f_1, 8) \to (v, f_1, 9)$, and $(w, f_1, 8) \to (v, f_1, 9)$.
-
+\textcolor{red}{malicious to benign is easy to calculate. We can calculate all the probabilities among vendors and have a complete graph. We illustrate the sum of edges and heatmap. Also some vendor pairs with high impact.}
 \subsection{Results}
+
+A heatmap illustrated in one figure
 
 a. On the small data set
 
