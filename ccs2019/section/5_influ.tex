@@ -126,8 +126,32 @@ p_{u,v} = \frac{\sum_{(v,f_1,d)\in A_{u2v}}credit(f_1, d)}{|S_{u|v}|}
 %How we generate the dataset is illustrated as in Figure \ref{fig:action}. In this figure, there are three vendors, $u$, $v$, and $w$. $v$ flips at time 4 and 9, from benign to malicious. $w$ flips from benign and malicious at time 5. For $v$, it could be influenced by $u$ at time 3 and time 8, and $w$ at time 8. For $w$, it could be influenced by both $u$ and $v$ at time 8. Therefore, for this small case, we have the following action propagations: $(u, f_1, 3) \to (v, f_1, 4)$, $(u, f_1, 8) \to (v, f_1, 9)$, and $(w, f_1, 8) \to (v, f_1, 9)$.
 \textcolor{red}{malicious to benign is easy to calculate. We can calculate all the probabilities among vendors and have a complete graph. We illustrate the sum of edges and heatmap. Also some vendor pairs with high impact.}
 \subsection{Results}
-
-A heatmap illustrated in one figure
+Top 10 vendors with the highest incoming edges in Bernoulli distribution model:
+\begin{verbatim}
+AegisLab	0.07834658408
+Kingsoft	0.05933836502
+Arcabit	0.04190110679
+Zillya	0.03940425584
+F-Secure	0.03931471921
+Emsisoft	0.0219863533
+Jiangmin	0.02072772929
+Paloalto	0.01829599588
+Tencent	0.01170284421
+\end{verbatim}
+last 10 vendors:
+\begin{verbatim}
+Avast-Mobile	0
+eGambit	0
+Babable	2.24E-05
+ZoneAlarm	0.0001465144815
+Kaspersky	0.0001566890983
+Endgame	0.0001933177187
+MAX	0.0002136669522
+TotalDefense	0.000252330496
+DrWeb	0.0002686098828\end{verbatim}
+Full data in
+\verb|https://docs.google.com/spreadsheets/d/1dbcRlUOIUHJfrFQINhdDw-SeWfEOXf9F-tCk_tnl-LI/edit?usp=sharing|
+A heatmap is illustrated in one figure. 
 
 a. On the small data set
 
