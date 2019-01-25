@@ -1,24 +1,59 @@
-\section{Flipping and stable study}
+\section{Hazard and Flipping study}
 
-In this section, we present how we analyze our collected data during these 75 days, and try to find some patterns on the detection results of 14423 samples from 70 vendors. 
+As we discussed in section 2, although detection results from VirusTotal could change over time, many academic users do not consider these changes when they use the anti-virus engines on Virustotal. In this section, we present how detection result changes on VirusTotal in our collected data set.
 
-Based on our obversation, we first give some definitions of different patterns: (1) Stable pattern: This pattern means that the detection results of a file from an vendor or all vendors would never change. (2)Flip pattern: Some vendors will change the detection result of a file from malicious to benign or from benign to malicious one time in the sequence. (3)Hazard pattern: The results would be updated from benign to malicious at one day, and then back to benign again. The same situation would also happen on malicious files. 
+\input{section/fig-hazard-study.tex}
 
+\subsection{Hazard Study}
 
-\subsection{Hazard discussion}
+Based on our observation, some engines could continuously change their detection results when they scanned some files. We call this case as hazard flipping. In the following, we first present how hazard flipping distributes over time, and then we try to figure out reasons that could caused hazard flipping.
 
-\input{section/3_fig1-3}
+First, we study how hazard flipping distribute over time in our data set. Figure \ref{fig:hazard_day} present the distribution of hazard flipping across 75 days. We can see from the figure that hazard flippling widely exist in our data set. Since we missed some reports on day 60, we can not decide whether hazard flipping appears from day 59 to 61. Except for the first day and the last day, about 70 out of 75 (93.33\%) days,
 
-Hazard pattern is an abnormal situation in the dection result sequences. It could affect the study of the other two patterns. So we first caculated the distribution of hazards over vendors, sampling files and days in our original data set.
+\noindent{\underline{\bf{Observation 3:}}}
+{\it{Hazard flipping appears almost every day in our data set, and we could not get correct results if we do not consider hazard flipping over time and only use VirusTotal with its scanning results. 
+}}
 
-In our statistics, only 3 vendors have no hazard patterns and other 67 vendors have hazards with different percentage. Hazards from the top 3 vendors accounts half of hazards and 13 vendors can cover more than 87\% hazards. Other 54 vendors have less than 1\% hazards, as shown in Figure \ref{fig:hazard_vendorAll}. Hazard pattern is quite frequently among vendors and sampling files.
+An immediate question is that whether some anti-virus engines or VirusTotal API caused hazard flipping? Therefore, we then study how hazard flipping distributes over anti-virus engines and sampled files.
 
-Figure \ref{fig:hazard_vendorFile} shows the percentage of hazard files from top 16 vendors. Other vendors contains less than 10\% hazard files. "Comodo" contains the most hazards but has less than half of hazard files. We can make a conclusion from these results that hazard pattern is not caused by the engine misfunction. 
+First, we study how many hazard files scanned by each engine. As we described in section 3, we use 64 engines to build our data set. Figure \ref{fig:hazard_vendor_file} shows how the cumulative percentage of engines changes over the percentage of hazard files. Only 2 engines have no hazard files, and we find hazard flipping from other 62 engines. Some engines could report hazard flipping results on about 50\% sampled files.
 
-Figure \ref{fig:hazard_day} plots hazards distribution of files and vendors over every day. Overall, we find that hazard files randomly appear almost every day during these 75 days. The same conclusion can be made to hazard vendors. 
+\noindent{\underline{\bf{Observation 4: }}}
+{\it{More than 96.8\% anti-virus engines could report hazard flipping results when they scanned the same files for multiple times over time. Therefore, hazard flipping could not caused by misfunction of anti-virus engines. 
+}}
 
-Figure \ref{fig:hazard_fileVendor} presents hazard file distribution over vendors. Only 4 hazard files involves more than 30 vendors and we did not find a file that its detection results from 70 vendors have hazard patterns. Thus, hazard pattern may not caused by the VirusTotal API.
+Second, we study how the percentage of hazard files for each day. As shown in Figure \ref{fig:hazard_day_file}, not too many sampled files involve hazard flippings every day. The largest percentage is 23.08\%, and the smallest one is more than 0.6\% of 14,423 sampled files. 
 
+\noindent{\underline{\bf{Observation 5: }}}
+{\it{Although hazard flipping widely exist in anti-virus engines almost every day, we can not find all sampled files have hazard flipping per day. Hazard flipping could not caused by VirusTotal API.
+}}
+
+\input{section/fig-flip-study.tex}
+
+\subsection{Flipping Study}
+
+Some anti-virus engines could change their detcetion results for some random days. We call this change as flipping. In this section, we first study how flipping distributes over sampled files and engines in our data set, and then we present how result changes if we remove hazard from our data set.
+
+In total, 7475 files have flipping results when we sumbitted 14,423 sampled files to VirusTotal for 75 days. As shown in Figure \ref{fig:flip_file}, the largest flipping times is 169, and some files flip only once in our data set. About 99.56\% flipping files have less than 120 flippings. 
+
+\noindent{\underline{\bf{Observation 6: }}}
+{\it{More than 51.8\% sampled files would have flipping detection results in our original data set. Therefore, we can not ignore the flipping of detection results when we use anti-virus engines on VirusTotal.
+}}
+
+Figure \ref{fig:flip_file_smooth} presents how flipping distributes over sampled files after removing hazards. For 7381 out of 14423 files have flipping results in our data set without hazards, and the larget flipping times 69. 
+
+\noindent{\underline{\bf{Observation 7: }}}
+{\it{Although removing hazards could reduce the flipping times of sampled files, more than 51.1\% of files have flipping results. 
+}}
+%Figure y presents the cumulative percentage of flipping files over the number of engines. For a sampled file, at most 39 engines would change their detection results during 75 days. About 99.5\% flipping files involve less than 30 engines in our data set. 
+
+%Obeservation 7: For a file, at most 60.9\% engines would change their detection results over time. 
+
+Figure \ref{fig:flip_vendor} shows how the cumulative percentage of engines over the percentage of sampled files. More than 96.8\% anti-virus engines have flipping detection results, and only 2 engines report no flipping results during 75 days in our data set. For each engine, it would change their detection results on at most 43.34\% sampled files. When we removed hazards from our data set, there are still 62 vendors could change their detection results.
+
+\noindent{\underline{\bf{Observation 8: }}}
+{\it{Most anti-virus engines could change detection results with flipping. For each engine, it could change its detection result on some sampled files. We should consider flipping results from engines when we use VirusTotal.
+}}
 
 
 %Todo: add hazard discussion in this part before discussing flipping. 
@@ -32,35 +67,10 @@ Figure \ref{fig:hazard_fileVendor} presents hazard file distribution over vendor
 %Conclusion: remove hazard before studying flipping?
 
 %Run experiments both with and without hazard
-\textbf{Summary:} Hazard pattern is obviously common in our results and it affects lots of files and vendors. An immediate question that follows is what the results would be if we remove hazards before studying flipping and stable patterns? We will give more explanations of our experiments in the following sections.  
-
-\subsection{Flipping Study}
-%a. For each file, we count  of flipping vendors and  of flipping times
-
-\input{section/3_fig4-6}
-
-This section presents our results of flipping pattern study. As we discussed above, flipping pattern is an important pattern that affects a file to be stable. To study the flipping pattern, we calculate fippling distribution over files and vendors respectively in our original data set. Then, we remove hazards from our data set and recaulate the distributions for further comparison. 
-
-Figure \ref{fig:flip_all} shows the distribution of flipping times for each file. Totally, we find that 7754 files have flipping patterns(total 14423), and the number drops to 7657 after smoothing hazards. Only 1 file have the largest flipping times of 193, and most files have only one flip. Without hazards, the largest flipping times is 80 and most files contian less flippings. For example, more than 421 files contain 22 flipping patterns. We can make the similar conclusion from the distribution of flipping vendors for each file, as shown in Figure \ref{fig:flip_file}. 
-
-%b. For each vendor, we count  of flipping,  of flipping files, average flipping per file
-
-To figure out the distribution of flipping pattern for each vendor, we calculate the flipping times, the number of flipping files from each vendor and the average flipping times per file. We run the same experiments both on our original data set and data set without hazards.
-
-Overall, 68 vendors have flipping patterns(total 70), and "Comodo" contains more flipping patterns than other vendors. Some vendors, such as "Avast-Mobile" and "eGambit", have no flippings during the detction period. We present top 16 vendors ranking in the flipping list in Figure \ref{fig:flip_vendorAll}. Compared with results from the original data set, removing hazards has greatly reduced the flipping times for each vendor. 
-
-Figure \ref{fig:flip_vendorFile} shows the distribution of flipping files for each vendor. 7 vendors have more than 40 percentage fippling files(total 14423). Removing hazards almostly does not affect the number of flipping files of some vendors. For some vendors, such as "Acrabit", "Zillya", "F-Secure", "CrowdStrike", we find the number of flipping files dramatically drops when we remove hazards from the original data set.
-
-Figure \ref{fig:flip_vedorAvg} plots the average flipping times of a file from each vendor. We present 28 vendors that have more than 2 flipping times per file averagely, while other 42 vendors hold less than 2 flippings for each file. The most frequent flipping happens on "Comodo". On average, it contains more than 30 flipping times per file. Without hazards, the average flipping times significantly fall into almost half of original results. 
-
-\input{section/3_fig7-9}
-
-\textbf{Summary:} Flipping pattern widely exists in our experiments. Statistically, more than 50\% files and 97\% vendors have flipping patterns. Removing hazards is an effective approach to reduce flipping patterns for some vendors, but only 97 files have no flipping pattern after smoothing hazards. A large numbers of files and vendors still have flipping patterns. Flipping pattern is the most important reason that results in many files and vendors to be unstable.
+%\textbf{Summary:} Hazard pattern is obviously common in our results and it affects lots of files and vendors. An immediate question that follows is what our results would be if we remove hazards before studying the flipping pattern? We will give more explanations of our experiments in the following sections.  
 
 
-\subsection{Stable Study}
-a. We need some metrics to support our definition of ?stable? is reasonable.
+%\textbf{Summary:} Flipping pattern widely exists in our experiments. Statistically, more than 50\% files and 97\% vendors have flipping patterns. Removing hazards is an effective approach to reduce flipping patterns for some vendors, but only 97 files have no flipping pattern after smoothing hazards. A large numbers of files and vendors still have flipping patterns. Flipping pattern is the most important reason that results in many files and vendors to be unstable.
 
-b. Some metrics to show how long we need to wait until results become stable
 
 \subsection{Conclusions}
